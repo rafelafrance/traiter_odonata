@@ -2,25 +2,19 @@
 
 """Extract odonata traits from scientific literature (PDFs to text)."""
 
-from pathlib import Path
+import traiter.pdf as pdf
 
-from pdfminer.high_level import extract_text
-
-from odonata.pylib.segmenter import clean_pdf
-
-PDF_DIR = Path('.') / 'data' / 'pdf'
-TXT_DIR = Path('.') / 'data' / 'txt'
-
-DOCS = ['The_Dragonflies_and_Damselflies_of_Nebraska.pdf']
+from odonata.pylib.util import PDF_DIR, TXT_DIR
 
 
 def main():
-    """Extract data from the PDFs."""
-    for path in DOCS:
-        path = str(PDF_DIR / path)
-        text = extract_text(path)
-        text = clean_pdf(text)
-        print(text)
+    """Extract data from the files."""
+    pdf.pdf2txt(PDF_DIR, TXT_DIR)
+    for txt in TXT_DIR.glob('*.txt'):
+        with open(txt) as txt_file:
+            text = txt_file.read()
+            text = pdf.clean_text(text)
+        break
 
 
 if __name__ == '__main__':
