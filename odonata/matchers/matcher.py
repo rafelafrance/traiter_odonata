@@ -13,7 +13,7 @@ MATCHERS = (
 class Matcher(TraitMatcher):
     """Base matcher object."""
 
-    def __init__(self, nlp, attach=True, as_entities=True):
+    def __init__(self, nlp, as_entities=True):
         super().__init__(nlp, as_entities=as_entities)
 
         terms = TERMS
@@ -22,12 +22,8 @@ class Matcher(TraitMatcher):
         self.add_terms(terms)
 
         traiters = []
-        attachers = []
 
         for matcher in MATCHERS:
             traiters += matcher.get('traits', [])
-            attachers += matcher.get('attachers', [])
 
         self.add_patterns(traiters, 'traits')
-        if attach:
-            self.add_patterns(attachers, 'attachers')

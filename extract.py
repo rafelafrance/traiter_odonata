@@ -16,7 +16,7 @@ def main():
     pdf.pdf2txt(PDF_DIR, TXT_DIR)
     for i, txt in enumerate(TXT_DIR.glob('*.txt')):
         print(txt)
-        if i == 0:
+        if i < 3:
             continue
         with open(txt) as txt_file:
             text = txt_file.read()
