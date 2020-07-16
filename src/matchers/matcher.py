@@ -2,12 +2,13 @@
 
 from traiter.trait_matcher import TraitMatcher  # pylint: disable=import-error
 
+from .header import HEADER
 from .scientific_name import SCI_NAME
 from .vernacular import VERNACULAR
 from ..pylib.terms import TERMS, get_common_names, itis_terms
 
 MATCHERS = (
-    SCI_NAME, VERNACULAR)
+    HEADER, SCI_NAME, VERNACULAR)
 
 
 class Matcher(TraitMatcher):
@@ -22,8 +23,11 @@ class Matcher(TraitMatcher):
         self.add_terms(terms)
 
         traiters = []
+        headers = []
 
         for matcher in MATCHERS:
             traiters += matcher.get('traits', [])
+            headers += matcher.get('headers', [])
 
         self.add_patterns(traiters, 'traits')
+        self.add_patterns(headers, 'headers')

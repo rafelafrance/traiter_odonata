@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
-"""Extract odonata traits from scientific literature (PDFs to text)."""
+"""Extract src traits from scientific literature (PDFs to text)."""
 
 import re
 
+import pandas as pd
 import traiter.pdf as pdf
 from traiter.util import FLAGS
 
-from odonata.pylib.pipeline import parse
-from odonata.pylib.util import PDF_DIR, TXT_DIR
+from src.pylib.pipeline import parse
+from src.pylib.util import PDF_DIR, TXT_DIR
 
 
 def main():
@@ -24,8 +25,12 @@ def main():
             text = clean_text_more(text)
             traits = parse(text)
 
+            df = pd.DataFrame(traits['description'])
+            df.to_csv(str(txt) + '.csv', index=False)
+
             # from pprint import pp
             # pp(dict(traits))
+            # pp(sents)
             break
 
 

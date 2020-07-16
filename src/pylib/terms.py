@@ -5,7 +5,7 @@ import sqlite3
 
 from .util import DATA_DIR, VOCAB_DIR
 
-ODONATA_TERMS = VOCAB_DIR / 'odonata.csv'
+ODONATA_TERMS = VOCAB_DIR / 'src.csv'
 # COMMON_TERMS = VOCAB_DIR / 'common.csv'
 ITIS_DB = DATA_DIR / 'ITIS.sqlite'
 
@@ -58,7 +58,7 @@ def itis_terms(name, kingdom_id=5, rank_id=220, abbrev=False):
             'label': name,
             'pattern': taxon,
             'attr': 'lower',
-            'replace': taxon,
+            'replace': taxon.capitalize(),
         })
         if abbrev:
             words = taxon.split()
@@ -70,7 +70,7 @@ def itis_terms(name, kingdom_id=5, rank_id=220, abbrev=False):
                     'label': name,
                     'pattern': f'{first}. {rest}',
                     'attr': 'lower',
-                    'replace': taxon,
+                    'replace': taxon.capitalize(),
                 })
 
     for term in terms:
