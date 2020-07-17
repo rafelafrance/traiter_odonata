@@ -11,9 +11,6 @@ PDF_DIR = DOC_DIR / 'pdf'
 TXT_DIR = DOC_DIR / 'txt'
 VOCAB_DIR = Path('.') / 'src' / 'vocabulary'
 
-OK = 0
-ERROR = 1
-
 
 def log(msg):
     """Log a status message."""

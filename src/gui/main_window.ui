@@ -6,53 +6,72 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1166</width>
-    <height>645</height>
+    <width>1238</width>
+    <height>887</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Traiter</string>
+   <string>Traiter (Odonata)</string>
+  </property>
+  <property name="toolTip">
+   <string extracomment="Setup the database"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="pdf_tab_3">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
-      <width>1151</width>
-      <height>591</height>
+      <y>0</y>
+      <width>1211</width>
+      <height>831</height>
      </rect>
-    </property>
-    <property name="tabShape">
-     <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
      <number>1</number>
     </property>
-    <widget class="QWidget" name="extract_tab">
+    <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Extract</string>
+      <string>Import</string>
      </attribute>
-    </widget>
-    <widget class="QWidget" name="pdf_tab">
-     <attribute name="title">
-      <string>PDF</string>
-     </attribute>
-     <widget class="QWidget" name="verticalLayoutWidget_3">
+     <widget class="QWidget" name="horizontalLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>80</y>
-        <width>1131</width>
-        <height>471</height>
+        <x>930</x>
+        <y>20</y>
+        <width>267</width>
+        <height>31</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QTableView" name="guides_table"/>
+        <widget class="QPushButton" name="backup_db_btn">
+         <property name="text">
+          <string>Backup Database</string>
+         </property>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="build_db_btn">
+         <property name="text">
+          <string>Rebuild Database</string>
+         </property>
+         <property name="shortcut">
+          <string>Del</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -60,72 +79,320 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>60</y>
-        <width>659</width>
+        <y>80</y>
+        <width>121</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>Extracted</string>
+       <string>PDFs in Database</string>
+      </property>
+      <property name="buddy">
+       <cstring>guides_table</cstring>
       </property>
      </widget>
-     <widget class="QPushButton" name="ocr_pdf_btn">
-      <property name="geometry">
-       <rect>
-        <x>1000</x>
-        <y>10</y>
-        <width>141</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>OCR PDF</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pdf_to_text_btn">
+     <widget class="QTableView" name="guides_table">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
-        <width>171</width>
-        <height>25</height>
+        <y>100</y>
+        <width>921</width>
+        <height>341</height>
        </rect>
       </property>
-      <property name="text">
-       <string>PDF to Text</string>
+      <property name="sortingEnabled">
+       <bool>true</bool>
       </property>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>321</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="pdf_to_text_btn">
+         <property name="text">
+          <string>PDF to Text</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="load_text_btn">
+         <property name="text">
+          <string>Load Text</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ocr_pdf_btn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>OCR PDF</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
-    <widget class="QWidget" name="util_tab">
+    <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Utilities</string>
+      <string>Edit</string>
      </attribute>
-     <widget class="QPushButton" name="build_db_btn">
-      <property name="geometry">
-       <rect>
-        <x>1000</x>
-        <y>10</y>
-        <width>141</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Build Database</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="backup_db_btn">
+     <widget class="QTextEdit" name="doc_edit">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
-        <width>141</width>
-        <height>25</height>
+        <y>80</y>
+        <width>1191</width>
+        <height>431</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Backup Database</string>
-      </property>
      </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>870</x>
+        <y>760</y>
+        <width>331</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="save_edits_btn">
+         <property name="text">
+          <string>Save</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cancel_edits_btn">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="reset_edits_btn">
+         <property name="text">
+          <string>Reset Text</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>640</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="text">
+          <string>Replace</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="text">
+          <string>Replace All</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_5">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>610</y>
+        <width>401</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QCheckBox" name="checkBox_3">
+         <property name="text">
+          <string>Case Sensitive</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_2">
+         <property name="text">
+          <string>Whole Words</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Regular Expression</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>610</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>Findn Next</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Find Previous</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="formLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>530</y>
+        <width>811</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Find</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Replace</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEdit_2"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="lineEdit"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>NER</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>NEL</string>
+     </attribute>
     </widget>
    </widget>
   </widget>
@@ -134,13 +401,22 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1166</width>
+     <width>1238</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>pdf_to_text_btn</tabstop>
+  <tabstop>load_text_btn</tabstop>
+  <tabstop>ocr_pdf_btn</tabstop>
+  <tabstop>guides_table</tabstop>
+  <tabstop>backup_db_btn</tabstop>
+  <tabstop>build_db_btn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

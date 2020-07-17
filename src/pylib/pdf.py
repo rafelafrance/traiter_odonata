@@ -19,18 +19,21 @@ def pdfs_to_text(pdfs):
 def pdf_to_text(path):
     """Load one PDF into the database."""
     path = Path(path)
-    name = path.name
+    doc_id = path.name
 
     with open(path, 'rb') as handle:
         pdf = pdftotext.PDF(handle)
     text = '\n\n'.join(pdf)
 
     sql = """
-        INSERT OR REPLACE INTO guides
-            (name, path, date, method, pdf) VALUES (?, ?, ?, ?, ?);
+        INSERT OR REPLACE INTO docs
+            (doc_id, path, loaded, edited, extracted, method, raw, edits)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
         """
     with connect() as cxn:
-        cxn.execute(sql, (name, str(path), now(), 'pdf to text', text))
+        cxn.execute(
+            sql,
+            (doc_id, str(path), now(), '', '', 'pdf to text', text, text))
 
 
 def clean_text_more(text):
