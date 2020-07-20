@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1238</width>
-    <height>887</height>
+    <width>1230</width>
+    <height>697</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,15 +23,24 @@
       <x>10</x>
       <y>0</y>
       <width>1211</width>
-      <height>831</height>
+      <height>641</height>
      </rect>
     </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
       <string>Import</string>
+     </attribute>
+     <attribute name="toolTip">
+      <string>Import files into the database</string>
      </attribute>
      <widget class="QWidget" name="horizontalLayoutWidget_2">
       <property name="geometry">
@@ -44,7 +53,13 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QPushButton" name="backup_db_btn">
+        <widget class="QPushButton" name="db_backup_btn">
+         <property name="toolTip">
+          <string>Create a copy of the database</string>
+         </property>
+         <property name="statusTip">
+          <string>Save a copy fo the database</string>
+         </property>
          <property name="text">
           <string>Backup Database</string>
          </property>
@@ -64,7 +79,10 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="build_db_btn">
+        <widget class="QPushButton" name="db_rebuild_btn">
+         <property name="toolTip">
+          <string>Delete all data and rebuild the database</string>
+         </property>
          <property name="text">
           <string>Rebuild Database</string>
          </property>
@@ -79,25 +97,25 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>80</y>
-        <width>121</width>
+        <y>70</y>
+        <width>171</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>PDFs in Database</string>
+       <string>Documents in Database</string>
       </property>
       <property name="buddy">
-       <cstring>guides_table</cstring>
+       <cstring>docs_tbl</cstring>
       </property>
      </widget>
-     <widget class="QTableView" name="guides_table">
+     <widget class="QTableView" name="docs_tbl">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>100</y>
-        <width>921</width>
-        <height>341</height>
+        <y>90</y>
+        <width>1191</width>
+        <height>421</height>
        </rect>
       </property>
       <property name="sortingEnabled">
@@ -116,6 +134,12 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QPushButton" name="pdf_to_text_btn">
+         <property name="toolTip">
+          <string>Read text from a PDF file and import it into the database</string>
+         </property>
+         <property name="statusTip">
+          <string>Convert a PDF file to text and import it into the database</string>
+         </property>
          <property name="text">
           <string>PDF to Text</string>
          </property>
@@ -135,9 +159,12 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="load_text_btn">
+        <widget class="QPushButton" name="import_text_btn">
+         <property name="toolTip">
+          <string>Import a text file into the database</string>
+         </property>
          <property name="text">
-          <string>Load Text</string>
+          <string>Import Text</string>
          </property>
         </widget>
        </item>
@@ -159,6 +186,9 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="toolTip">
+          <string>OCR text in PDF images and import them into the database </string>
+         </property>
          <property name="text">
           <string>OCR PDF</string>
          </property>
@@ -171,7 +201,10 @@
      <attribute name="title">
       <string>Edit</string>
      </attribute>
-     <widget class="QTextEdit" name="doc_edit">
+     <attribute name="toolTip">
+      <string>Edit files to prepare for further processing</string>
+     </attribute>
+     <widget class="QTextEdit" name="doc_edit_text">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -180,19 +213,28 @@
         <height>431</height>
        </rect>
       </property>
+      <property name="lineWrapMode">
+       <enum>QTextEdit::NoWrap</enum>
+      </property>
      </widget>
      <widget class="QWidget" name="horizontalLayoutWidget_3">
       <property name="geometry">
        <rect>
         <x>870</x>
-        <y>760</y>
+        <y>570</y>
         <width>331</width>
         <height>31</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QPushButton" name="save_edits_btn">
+        <widget class="QPushButton" name="doc_edits_save_btn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Save your edits</string>
+         </property>
          <property name="text">
           <string>Save</string>
          </property>
@@ -212,7 +254,13 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="cancel_edits_btn">
+        <widget class="QPushButton" name="doc_edits_cancel_btn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Undo all edits back to the last save</string>
+         </property>
          <property name="text">
           <string>Cancel</string>
          </property>
@@ -232,7 +280,13 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="reset_edits_btn">
+        <widget class="QPushButton" name="doc_edits_reset_btn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Reset text all the way back to its imported state</string>
+         </property>
          <property name="text">
           <string>Reset Text</string>
          </property>
@@ -240,158 +294,121 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget_4">
+     <widget class="QComboBox" name="edit_doc_cbox">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>640</y>
-        <width>221</width>
-        <height>31</height>
+        <x>20</x>
+        <y>30</y>
+        <width>421</width>
+        <height>25</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="text">
-          <string>Replace</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>Replace All</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <property name="toolTip">
+       <string>Choose a file to edit. The text will be shown below</string>
+      </property>
      </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget_5">
+     <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>610</y>
-        <width>401</width>
-        <height>31</height>
+        <x>20</x>
+        <y>10</y>
+        <width>121</width>
+        <height>17</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QCheckBox" name="checkBox_3">
-         <property name="text">
-          <string>Case Sensitive</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_2">
-         <property name="text">
-          <string>Whole Words</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox">
-         <property name="text">
-          <string>Regular Expression</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <property name="text">
+       <string>Document to Edit</string>
+      </property>
      </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget_6">
+     <widget class="QPushButton" name="run_pipe_btn">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>610</y>
-        <width>221</width>
-        <height>31</height>
+        <x>600</x>
+        <y>540</y>
+        <width>81</width>
+        <height>25</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Findn Next</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Find Previous</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <property name="text">
+       <string>Run Pipe</string>
+      </property>
      </widget>
-     <widget class="QWidget" name="formLayoutWidget">
+     <widget class="QComboBox" name="select_pipe_cbox">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>530</y>
-        <width>811</width>
-        <height>80</height>
+        <x>20</x>
+        <y>540</y>
+        <width>541</width>
+        <height>25</height>
        </rect>
       </property>
-      <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Find</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Replace</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_2"/>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit"/>
-       </item>
-      </layout>
+      <property name="editable">
+       <bool>true</bool>
+      </property>
+      <property name="maxVisibleItems">
+       <number>20</number>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="edit_pipes_btn">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>540</y>
+        <width>81</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Edit Pipes</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>520</y>
+        <width>41</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pipe</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="add_pipe_btn">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>540</y>
+        <width>21</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Add the current pipe to the list of pipes</string>
+      </property>
+      <property name="text">
+       <string>+</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>NER</string>
+      <string>Recognize</string>
      </attribute>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
-      <string>NEL</string>
+      <string>Link</string>
      </attribute>
     </widget>
    </widget>
@@ -401,7 +418,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1238</width>
+     <width>1230</width>
      <height>22</height>
     </rect>
    </property>
@@ -411,11 +428,20 @@
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>pdf_to_text_btn</tabstop>
-  <tabstop>load_text_btn</tabstop>
+  <tabstop>import_text_btn</tabstop>
   <tabstop>ocr_pdf_btn</tabstop>
-  <tabstop>guides_table</tabstop>
-  <tabstop>backup_db_btn</tabstop>
-  <tabstop>build_db_btn</tabstop>
+  <tabstop>docs_tbl</tabstop>
+  <tabstop>db_backup_btn</tabstop>
+  <tabstop>db_rebuild_btn</tabstop>
+  <tabstop>edit_doc_cbox</tabstop>
+  <tabstop>doc_edit_text</tabstop>
+  <tabstop>select_pipe_cbox</tabstop>
+  <tabstop>add_pipe_btn</tabstop>
+  <tabstop>run_pipe_btn</tabstop>
+  <tabstop>edit_pipes_btn</tabstop>
+  <tabstop>doc_edits_save_btn</tabstop>
+  <tabstop>doc_edits_cancel_btn</tabstop>
+  <tabstop>doc_edits_reset_btn</tabstop>
  </tabstops>
  <resources/>
  <connections/>

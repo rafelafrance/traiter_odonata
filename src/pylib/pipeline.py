@@ -38,6 +38,8 @@ def parse(text, with_sents=False):
             description['description'] += sent.text
 
     # for token in doc:
+    #     label = token.ent_type_
+    #     data = token._.data
     #     if (token._.step in ('traits', ) and token._.data
     #             and not token._.aux.get('skip')):
     #         data = {k: v for k, v in token._.data.items()

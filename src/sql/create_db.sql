@@ -11,6 +11,17 @@ create table docs (
 );
 
 
+drop table if exists pipes;
+create table pipes (
+    pipe_id text primary key,
+    pipe    blob,
+    order_  integer,
+    parent  text
+);
+create index pipes_parent on pipes (parent);
+create index pipes_order on pipes (pipe_id, order_);
+
+
 drop table if exists traits;
 create table traits (
     trait_id integer primary key,
