@@ -24,7 +24,6 @@ ERROR = 1
 signal(SIGPIPE, SIG_DFL)
 
 
-# TODO: Break this into smaller more manageable modules
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     """Main page of the app."""
 
@@ -44,8 +43,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Import tab controls
         self.pdf_to_text_btn.clicked.connect(self.pdf_to_text_clicked)
         self.import_text_btn.clicked.connect(self.import_text_clicked)
-        self.db_backup_btn.clicked.connect(
-            lambda: self.event_status(db.backup_database))
+        # self.db_backup_btn.clicked.connect(
+        #     lambda: self.event_status(db.backup_database))
         self.db_rebuild_btn.clicked.connect(self.reset_db_clicked)
 
         docs = self.load_dataframe(doc.select_docs)

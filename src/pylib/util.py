@@ -20,3 +20,8 @@ def log(msg):
 def now():
     """Generate a timestamp."""
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+
+def today():
+    """Get today's date."""
+    return now()[:10]

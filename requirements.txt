@@ -1,5 +1,4 @@
-traiter~=0.7.0
-regex~=2020.7.14
 pandas~=1.0.5
-PySide2~=5.15.0
-pdftotext~=2.1.4
+regex~=2020.7.14
+traiter~=0.7.0
+PyPDF2~=1.26.0

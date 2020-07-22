@@ -1,3 +1,12 @@
+DROP TABLE IF EXISTS metadata;
+CREATE TABLE metadata (
+    label text primary key,
+    datum text
+);
+insert into metadata (label, datum) VALUES ('traiter', 'true');
+insert into metadata (label, datum) VALUES ('version', '0.8');
+
+
 drop table if exists docs;
 create table docs (
     doc_id    text primary key,
