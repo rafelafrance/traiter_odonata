@@ -83,7 +83,7 @@ def select_docs(cxn):
     return df
 
 
-def select_doc(cxn, doc_id):
+def select_doc_edits(cxn, doc_id):
     """Get a document for editing."""
     sql = """select edits from docs where doc_id = ?;"""
     with cxn:

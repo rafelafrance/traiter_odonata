@@ -5,8 +5,8 @@ import sqlite3
 
 from .util import DATA_DIR, VOCAB_DIR
 
-ODONATA_TERMS = VOCAB_DIR / 'src.csv'
-# COMMON_TERMS = VOCAB_DIR / 'common.csv'
+ODONATA_TERMS = VOCAB_DIR / 'odonata.csv'
+COMMON_TERMS = VOCAB_DIR / 'common.csv'
 ITIS_DB = DATA_DIR / 'ITIS.sqlite'
 
 
@@ -18,12 +18,12 @@ def read_terms(term_path):
 
 
 TERMS = read_terms(ODONATA_TERMS)
-# TERMS += read_terms(COMMON_TERMS)
+TERMS += read_terms(COMMON_TERMS)
 
 REPLACE = {t['pattern']: r for t in TERMS if (r := t.get('replace'))}
 
 
-def itis_terms(name, kingdom_id=5, rank_id=220, abbrev=False):
+def itis_terms(name, kingdom_id=5, rank_id=220, abbrev=False, species=False):
     """Get terms from the ITIS database.
 
         kingdom_id =   5 == Animalia
@@ -71,6 +71,16 @@ def itis_terms(name, kingdom_id=5, rank_id=220, abbrev=False):
                     'pattern': f'{first}. {rest}',
                     'attr': 'lower',
                     'replace': taxon.capitalize(),
+                })
+        if species:
+            words = taxon.split()
+            if len(words) > 1:
+                genus, species, *rest = words
+                terms.append({
+                    'label': 'species',
+                    'pattern': species,
+                    'attr': 'lower',
+                    'replace': species.lower(),
                 })
 
     for term in terms:

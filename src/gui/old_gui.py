@@ -109,7 +109,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         """Show the document for editing."""
         self.doc_id = doc_id
         if doc_id:
-            text = self.get_doc_edits(doc.select_doc, doc_id) if doc_id else ''
+            text = self.get_doc_edits(doc.select_doc_edits, doc_id) if doc_id else ''
             self.doc_edit_text.setPlainText(text)
             self.run_pipe_btn.setEnabled(True)
             self.doc_edits_save_btn.setEnabled(True)
@@ -177,14 +177,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def cancel_edits_clicked(self):
         """Cancel changes to the doc."""
-        edits = self.get_doc_edits(doc.select_doc, self.doc_id)
+        edits = self.get_doc_edits(doc.select_doc_edits, self.doc_id)
         doc.update_doc(self.doc_id, edits)
         self.doc_edit_text.setPlainText(edits)
 
     def reset_edits_clicked(self):
         """Rest the doc back to its original form."""
         doc.reset_doc(self.doc_id)
-        edits = self.get_doc_edits(doc.select_doc, self.doc_id)
+        edits = self.get_doc_edits(doc.select_doc_edits, self.doc_id)
         self.doc_edit_text.setPlainText(edits)
 
     def get_doc_edits(self, func, *args, **kwargs):
