@@ -11,3 +11,19 @@ length_units,millimeters,lower,mm
 length_units,mm,lower,mm
 length_units,µm,lower,µm
 total_length,tl:,lower,total length
+habitat,habitat,lower,
+habitat,habitats,lower,
+habitat,stream,lower,
+habitat,streams,lower,
+habitat,river,lower,
+habitat,rivers,lower,
+habitat,pond,lower,
+habitat,ponds,lower,
+habitat,lake,lower,
+habitat,lakes,lower,
+habitat,marsh,lower,
+habitat,marshes,lower,
+habitat,puddle,lower,
+habitat,puddles,lower,
+habitat,wet grassy,lower,
+habitat,marshy,lower,

@@ -9,7 +9,7 @@ NUMBER = r'^\d+(\.\d*)?$'
 OPEN = ' ( [ '.split()
 PLUS = ' + '.split()
 SLASH = ' / '.split()
-QUOTE = ' " \' '.split()
+QUOTE = ' “ ” " \' '.split()
 LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split()
 
 PER_COUNTS = ['pair', 'pairs']

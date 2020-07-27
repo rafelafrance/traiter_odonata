@@ -109,7 +109,7 @@ class App(tk.Tk):
         """Open a database and fill the fields with its data."""
         path = filedialog.askopenfile(
             initialdir=self.db_dir, title='Open a Traiter Database',
-            filetypes=(('db files', '*.traiter'), ('all files', '*.*')))
+            filetypes=(('db files', '*.db'), ('all files', '*.*')))
         if not path:
             return
         self.db_dir = dirname(path.name)
@@ -121,7 +121,7 @@ class App(tk.Tk):
         """Open a database and fill the fields with its data."""
         path = filedialog.asksaveasfilename(
             initialdir=self.db_dir, title='Create a New Database',
-            filetypes=(('db files', '*.traiter'), ('all files', '*.*')))
+            filetypes=(('db files', '*.db'), ('all files', '*.*')))
         if not path:
             return
         self.db_dir = dirname(path)
@@ -134,7 +134,7 @@ class App(tk.Tk):
         """Open a database and fill the fields with its data."""
         path = filedialog.asksaveasfilename(
             initialdir=self.db_dir, title='Save the Database',
-            filetypes=(('db files', '*.traiter'), ('all files', '*.*')))
+            filetypes=(('db files', '*.db'), ('all files', '*.*')))
         if not path:
             return
         copy(self.path, path)
