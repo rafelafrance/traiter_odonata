@@ -6,7 +6,7 @@ import tempfile
 from pathlib import Path
 
 import pandas as pd
-from traiter.util import FLAGS
+from traiter.pylib.util import FLAGS
 
 from .util import now
 
