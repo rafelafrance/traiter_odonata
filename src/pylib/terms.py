@@ -29,10 +29,9 @@ def itis_terms(name, kingdom_id=5, rank_id=220, abbrev=False, species=False):
         kingdom_id =   5 == Animalia
         rank_id    = 220 == Species
     """
-    # TODO Bypass using this in tests for now.
     if not ITIS_DB.exists():
         print('Could not find ITIS database.')
-        return []
+        return mock_traits(name)
 
     select_tsn = """ select tsn from taxonomic_units where unit_name1 = ?; """
     select_names = """
@@ -95,26 +94,8 @@ def get_common_names(name, kingdom_id=5, rank_id=220):
         kingdom_id =   5 == Animalia
         rank_id    = 220 == Species
     """
-    # TODO Bypass using this in tests for now.
     if not ITIS_DB.exists():
-        print('Could not find ITIS database.')
-        terms = [
-            {
-                'label': 'common_name',
-                'pattern': 'western red damsel',
-                'attr': 'lower',
-                'replace': 'Amphiagrion saucium',
-            },
-            {
-                'label': 'common_name',
-                'pattern': 'plains clubtail',
-                'attr': 'lower',
-                'replace': 'Gomphurus externus',
-            },
-        ]
-        for term in terms:
-            REPLACE[term['pattern']] = term['replace']
-        return terms
+        return []
 
     select_tsn = """ select tsn from taxonomic_units where unit_name1 = ?; """
     select_names = """
@@ -146,4 +127,44 @@ def get_common_names(name, kingdom_id=5, rank_id=220):
     for term in terms:
         REPLACE[term['pattern']] = term['replace']
 
+    return terms
+
+
+def mock_traits(name):
+    """Set up traits for testing with Travis."""
+    name = name.lower()
+    terms = [
+        {
+            'label': name,
+            'pattern': 'amphiagrion saucium',
+            'attr': 'lower',
+            'replace': 'Amphiagrion saucium',
+        },
+        {
+            'label': name,
+            'pattern': 'gomphurus externus',
+            'attr': 'lower',
+            'replace': 'Gomphurus externus',
+        },
+        {
+            'label': 'species',
+            'pattern': 'abbreviatum',
+            'attr': 'lower',
+            'replace': 'abbreviatum',
+        },
+        {
+            'label': 'common_name',
+            'pattern': 'western red damsel',
+            'attr': 'lower',
+            'replace': 'Amphiagrion saucium',
+        },
+        {
+            'label': 'common_name',
+            'pattern': 'plains clubtail',
+            'attr': 'lower',
+            'replace': 'Gomphurus externus',
+        },
+    ]
+    for term in terms:
+        REPLACE[term['pattern']] = term['replace']
     return terms
