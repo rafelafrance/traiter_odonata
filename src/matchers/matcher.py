@@ -1,6 +1,6 @@
 """Base matcher object."""
 
-from traiter.trait_matcher import TraitMatcher  # pylint: disable=import-error
+from traiter.matcher import TraitMatcher  # pylint: disable=import-error
 
 from .flight_period import FLIGHT_PERIOD
 from .header import HEADER
@@ -9,7 +9,7 @@ from .range import RANGE
 from .scientific_name import SCI_NAME
 from .total_length import TOTAL_LENGTH
 from .vernacular import VERNACULAR
-from ..pylib.terms import TERMS, get_common_names, itis_terms
+from ..pylib.terms import TERMS
 
 MATCHERS = (
     FLIGHT_PERIOD, HEADER, MONTH_TIME, RANGE,
@@ -20,12 +20,10 @@ MATCHERS = (
 class Matcher(TraitMatcher):
     """Base matcher object."""
 
-    def __init__(self, nlp, as_entities=True):
-        super().__init__(nlp, as_entities=as_entities)
+    def __init__(self, nlp):
+        super().__init__(nlp)
 
         terms = TERMS
-        terms += itis_terms('Odonata', abbrev=True, species=True)
-        terms += get_common_names('Odonata')
         self.add_terms(terms)
 
         groups = []
