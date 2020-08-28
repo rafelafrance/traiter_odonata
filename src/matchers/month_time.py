@@ -1,8 +1,7 @@
 """Month ranges."""
 
 from .shared import DASH
-from ..pylib.terms import REPLACE
-from ..pylib.util import GROUP_STEP
+from ..pylib.util import GROUP_STEP, REPLACE
 
 MODIFIER = """ early mid late """.split()
 

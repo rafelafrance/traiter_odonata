@@ -1,12 +1,12 @@
 """Build the NLP pipeline."""
 
 import spacy
+from traiter.sentencizer import Sentencizer
 from traiter.spacy_nlp import setup_tokenizer
 from traiter.trait_pipeline import TraitPipeline
 
-from .util import HEADER_STEP, LINK_STEP, TRAIT_STEP
+from .util import ABBREVS, HEADER_STEP, TRAIT_STEP
 from ..matchers.matcher import Matcher
-from ..pylib.sentencizer import sentencizer
 
 
 class Pipeline(TraitPipeline):
@@ -25,13 +25,15 @@ class Pipeline(TraitPipeline):
         self.matcher = Matcher(self.nlp)
         # self.linker = LinkMatcher(self.nlp)
 
+        self.matcher = Matcher(self.nlp)
+        sentencizer = Sentencizer(ABBREVS)
+
         self.nlp.add_pipe(sentencizer, before='parser')
         self.nlp.add_pipe(self.matcher, last=True)
         # self.nlp.add_pipe(self.linker, last=True, name=LINK_STEP)
 
 
 PIPELINE = Pipeline()
-
 
 # NLP = spacy_nlp()
 # NLP.add_pipe(sentencizer, before='parser')
