@@ -14,36 +14,3 @@ TERMS += itis_terms('Odonata', abbrev=True, species=True)
 TERMS += get_common_names('Odonata')
 
 REPLACE = {t['pattern']: r for t in TERMS if (r := t.get('replace'))}
-
-# terms = [
-#     {
-#         'label': name,
-#         'pattern': 'amphiagrion saucium',
-#         'attr': 'lower',
-#         'replace': 'Amphiagrion saucium',
-#     },
-#     {
-#         'label': name,
-#         'pattern': 'gomphurus externus',
-#         'attr': 'lower',
-#         'replace': 'Gomphurus externus',
-#     },
-#     {
-#         'label': 'species',
-#         'pattern': 'abbreviatum',
-#         'attr': 'lower',
-#         'replace': 'abbreviatum',
-#     },
-#     {
-#         'label': 'common_name',
-#         'pattern': 'western red damsel',
-#         'attr': 'lower',
-#         'replace': 'Amphiagrion saucium',
-#     },
-#     {
-#         'label': 'common_name',
-#         'pattern': 'plains clubtail',
-#         'attr': 'lower',
-#         'replace': 'Gomphurus externus',
-#     },
-# ]
