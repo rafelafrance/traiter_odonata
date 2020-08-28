@@ -7,7 +7,7 @@ import html
 import src.pylib.db as db
 import src.pylib.doc as doc
 import src.pylib.util as util
-from src.pylib.pipeline import attach, parse
+from src.pylib.pipeline import link, parse
 
 
 CLASS = {
@@ -26,7 +26,7 @@ def main():
             text = doc.select_doc_edits(cxn, doc_id)
             text = ' '.join(text.split())  # TODO: Move to a pipeline
             traits = parse(text)
-            traits = attach(traits)
+            traits = link(traits)
 
             parts = []
             prev_end = 0

@@ -4,7 +4,9 @@
 
 import unittest
 
-from src.pylib.pipeline import parse
+from src.pylib.pipeline import PIPELINE
+
+NLP = PIPELINE.trait_list
 
 
 class TestFlightPeriod(unittest.TestCase):
@@ -12,7 +14,7 @@ class TestFlightPeriod(unittest.TestCase):
 
     def test_flight_period_01(self):
         self.assertEqual(
-            parse('FP: mid-June to late Aug.'),
+            NLP('FP: mid-June to late Aug.'),
             [
                 {'trait': 'flight_period',
                  'from': 'mid June', 'to': 'late August',

@@ -2,6 +2,7 @@
 
 from .shared import DASH
 from ..pylib.terms import REPLACE
+from ..pylib.util import GROUP_STEP
 
 MODIFIER = """ early mid late """.split()
 
@@ -20,8 +21,7 @@ def month_time(span):
 
 
 MONTH_TIME = {
-    'name': 'month_time',
-    'groupers': [
+    GROUP_STEP: [
         {
             'label': 'month_time',
             'on_match': month_time,

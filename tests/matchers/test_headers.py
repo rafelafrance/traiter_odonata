@@ -4,7 +4,9 @@
 
 import unittest
 
-from src.pylib.pipeline import parse
+from src.pylib.pipeline import PIPELINE
+
+NLP = PIPELINE.trait_list
 
 
 class TestHeader(unittest.TestCase):
@@ -12,7 +14,7 @@ class TestHeader(unittest.TestCase):
 
     def test_header_01(self):
         self.assertEqual(
-            parse("""Amphiagrion saucium/abbreviatum
+            NLP("""Amphiagrion saucium/abbreviatum
                     (Eastern/Western Red Damsel)"""),
             [
                 {
@@ -24,7 +26,7 @@ class TestHeader(unittest.TestCase):
 
     def test_header_02(self):
         self.assertEqual(
-            parse("""Gomphurus externus (Plains Clubtail)"""),
+            NLP("""Gomphurus externus (Plains Clubtail)"""),
             [
                 {
                  'trait': 'header',

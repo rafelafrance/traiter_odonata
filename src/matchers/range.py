@@ -2,10 +2,10 @@
 
 import re
 
-# pylint: disable=import-error
 from traiter.pylib.util import to_positive_float
 
 from .shared import DASH, NUMBER
+from ..pylib.util import GROUP_STEP
 
 
 def range_(span):
@@ -15,8 +15,7 @@ def range_(span):
 
 
 RANGE = {
-    'name': 'range',
-    'groupers': [
+    GROUP_STEP: [
         {
             'label': 'range',
             'on_match': range_,

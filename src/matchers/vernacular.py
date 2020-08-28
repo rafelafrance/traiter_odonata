@@ -1,6 +1,7 @@
 """Get common names."""
 
 from ..pylib.terms import REPLACE
+from ..pylib.util import TRAIT_STEP
 
 
 def vernacular(span):
@@ -10,8 +11,7 @@ def vernacular(span):
 
 
 VERNACULAR = {
-    'name': 'vernacular',
-    'traits': [
+    TRAIT_STEP: [
         {
             'label': 'vernacular',
             'on_match': vernacular,

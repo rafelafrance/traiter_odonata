@@ -2,8 +2,9 @@
 
 import re
 
+from .shared import CLOSE, OPEN, SLASH
 from ..pylib.terms import REPLACE
-from .shared import OPEN, CLOSE, SLASH
+from ..pylib.util import HEADER_STEP
 
 
 def header(span):
@@ -11,7 +12,7 @@ def header(span):
     data = {'trait': 'header', 'vernacular': ''}
     for token in span:
         if token.ent_type_ == 'sci_name':
-            data['sci_name'] = REPLACE[token.text.lower()]
+            data['sci_name'] = REPLACE[token.text.lower()].capitalize()
         elif token.ent_type_ == 'species':
             data['sci_name'] += '/' + token.lower_
         elif token.ent_type_ == 'vernacular':
@@ -23,7 +24,7 @@ def header(span):
 
 def invalid_species(span):
     """Get header of species that are not in the ITIS database."""
-    data = {'_relabel': 'header'}
+    data = {}
     sci_name = []
     for token in span:
         if token.ent_type_ == 'vernacular':
@@ -36,8 +37,7 @@ def invalid_species(span):
 
 
 HEADER = {
-    'name': 'header',
-    'headers': [
+    HEADER_STEP: [
         {
             'label': 'header',
             'on_match': header,
@@ -63,7 +63,7 @@ HEADER = {
             ],
         },
         {
-            'label': 'invalid_species',
+            'label': 'header',
             'on_match': invalid_species,
             'patterns': [
                 [

@@ -1,5 +1,6 @@
 """Get flight period notations."""
 
+from ..pylib.util import TRAIT_STEP
 
 TO = """ to into """.split()
 
@@ -13,8 +14,7 @@ def flight_period(span):
 
 
 FLIGHT_PERIOD = {
-    'name': 'flight_period',
-    'traits': [
+    TRAIT_STEP: [
         {
             'label': 'flight_period',
             'on_match': flight_period,
