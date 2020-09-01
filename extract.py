@@ -2,74 +2,43 @@
 
 """Extract src traits from scientific literature (PDFs to text)."""
 
-import html
+import csv
+from collections import defaultdict
 
-import src.pylib.db as db
-import src.pylib.doc as doc
 import src.pylib.util as util
-from src.pylib.pipeline import link, parse
 
-
-CLASS = {
-    'header': 'head',
-    'total_length': 'len',
-    'flight_period': 'fly',
-    'habitat': 'habit',
-}
+MARKERS = util.DATA_DIR / 'Fraser_1933_Fauna_India_Odonata_I_species.txt'
+FRASER = util.TXT_DIR / 'Fraser_1933_Fauna_India_Odonata_I.txt'
+CSV = util.DATA_DIR / 'Fraser_1933_Fauna_India_Odonata_I.csv'
 
 
 def main():
-    """Extract data from the files."""
-    with db.connect(util.DATA_DIR / 'odonata.traiter') as cxn:
-        df = doc.select_docs(cxn)
-        for doc_id in df['doc_id']:
-            text = doc.select_doc_edits(cxn, doc_id)
-            text = ' '.join(text.split())  # TODO: Move to a pipeline
-            traits = parse(text)
-            traits = link(traits)
+    """Extract data from the PDF."""
+    with open(MARKERS) as in_file:
+        markers = in_file.readlines()
+    markers = [m.strip() for m in markers if m]
+    markers = [tuple(m.split()) for m in markers]
+    markers = set(markers)
 
-            parts = []
-            prev_end = 0
-            for record in traits:
-                for trait in record:
+    sections = defaultdict(list)
+    section = ''
+    with open(FRASER) as in_file:
+        for line in in_file.readlines():
+            line = line.strip()
+            key = tuple(line.split())
+            if key in markers:
+                section = line
+            sections[section].append(line)
 
-                    if trait['start'] != prev_end:
-                        prev = text[prev_end:trait['start']]
-                        parts.append(html.escape(prev))
-
-                    prev_end = trait['end']
-                    if trait['trait'] == 'header':
-                        parts.append(f'<br/><hr/>')
-
-                    cls = CLASS[trait['trait']]
-                    span = text[trait["start"]:trait["end"]]
-                    span = html.escape(span)
-                    parts.append(f'<span class="{cls}">{span}</span>')
-
-            if prev_end != len(text):
-                parts.append(html.escape(text[prev_end:]))
-
-            result = ''.join(parts)
-            print("""
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="utf-8" />
-                <title>Traiter</title>
-                <style>
-                    .head { font-weight: bold; }
-                    .len { background-color: cyan; }
-                    .fly { background-color: lightsalmon; }
-                    .habit { background-color: lightgreen; }
-                </style>
-            </head>
-            <body>
-            """)
-            print(result)
-            print("""
-                </body>
-                </html>
-            """)
+    with open(CSV, 'w') as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerow(['species', 'description'])
+        for key, lines in sections.items():
+            if not key:
+                continue
+            _, species = key.split(maxsplit=1)
+            description = '\n'.join(lines)
+            writer.writerow([species, description])
 
 
 if __name__ == '__main__':
