@@ -1,6 +1,6 @@
 """Get flight period notations."""
 
-from ..pylib.util import TRAIT_STEP
+from .consts import TRAIT_STEP
 
 TO = """ to into """.split()
 

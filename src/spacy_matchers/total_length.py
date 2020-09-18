@@ -1,6 +1,6 @@
 """Get total length measurements."""
 
-from ..pylib.util import REPLACE, TRAIT_STEP
+from .consts import REPLACE, TRAIT_STEP
 
 
 def total_length(span):

@@ -3,8 +3,8 @@
 from traiter.spacy_nlp.pipeline import SpacyPipeline
 from traiter.spacy_nlp.sentencizer import SpacySentencizer
 
-from .util import ABBREVS, HEADER_STEP, TRAIT_STEP
-from ..matchers.matcher import Matcher
+from ..spacy_matchers.consts import ABBREVS, HEADER_STEP, TRAIT_STEP
+from ..spacy_matchers.matcher import Matcher
 
 
 class Pipeline(SpacyPipeline):

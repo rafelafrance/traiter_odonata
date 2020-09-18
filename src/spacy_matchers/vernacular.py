@@ -1,6 +1,6 @@
 """Get common names."""
 
-from ..pylib.util import REPLACE, TRAIT_STEP
+from .consts import REPLACE, TRAIT_STEP
 
 
 def vernacular(span):

@@ -9,7 +9,7 @@ from .range import RANGE
 from .scientific_name import SCI_NAME
 from .total_length import TOTAL_LENGTH
 from .vernacular import VERNACULAR
-from ..pylib.util import GROUP_STEP, HEADER_STEP, TERMS, TRAIT_STEP
+from .consts import GROUP_STEP, HEADER_STEP, TERMS, TRAIT_STEP
 
 MATCHERS = (
     FLIGHT_PERIOD, HEADER, MONTH_TIME, RANGE,
