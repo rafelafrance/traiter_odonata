@@ -1,6 +1,6 @@
 """Base matcher object."""
 
-from traiter.trait_matcher import TraitMatcher
+from traiter.spacy_nlp.matcher import SpacyMatcher
 
 from .flight_period import FLIGHT_PERIOD
 from .header import HEADER
@@ -17,7 +17,7 @@ MATCHERS = (
 )
 
 
-class Matcher(TraitMatcher):
+class Matcher(SpacyMatcher):
     """Base matcher object."""
 
     def __init__(self, nlp):
