@@ -3,14 +3,14 @@
 from traiter.spacy_nlp.pipeline import SpacyPipeline
 from traiter.spacy_nlp.sentencizer import SpacySentencizer
 
-from src.spacy_matchers.consts import ABBREVS, HEADER_STEP, TRAIT_STEP
-from src.spacy_matchers.matcher import Matcher
+from src.pylib.util import ABBREVS, HEADER_STEP, TRAIT_STEP
+from src.matchers.matcher import Matcher
 
 
 class Pipeline(SpacyPipeline):
     """Build a custom traiter pipeline."""
 
-    steps2link = {TRAIT_STEP, HEADER_STEP}
+    token2entity = {TRAIT_STEP, HEADER_STEP}
 
     def __init__(self):
         super().__init__()

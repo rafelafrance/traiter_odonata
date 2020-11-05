@@ -1,6 +1,6 @@
 """Month ranges."""
 
-from .consts import DASH, GROUP_STEP, REPLACE
+from ..pylib.util import DASH, GROUP_STEP, REPLACE
 
 MODIFIER = """ early mid late """.split()
 

@@ -4,7 +4,7 @@ import re
 
 from traiter.pylib.util import to_positive_float
 
-from .consts import DASH, GROUP_STEP, NUMBER
+from ..pylib.util import DASH, GROUP_STEP, NUMBER
 
 
 def range_(span):

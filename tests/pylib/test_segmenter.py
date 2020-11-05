@@ -6,7 +6,7 @@ import unittest
 
 from traiter.pylib.util import shorten
 
-from src.spacy_matchers.pipeline import parse
+from src.matchers.pipeline import parse
 
 
 class TestSegmenter(unittest.TestCase):

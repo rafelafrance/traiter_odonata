@@ -2,7 +2,7 @@
 
 import re
 
-from .consts import CLOSE, HEADER_STEP, OPEN, REPLACE, SLASH
+from ..pylib.util import CLOSE, HEADER_STEP, OPEN, REPLACE, SLASH
 
 
 def header(span):
