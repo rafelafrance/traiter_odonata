@@ -10,7 +10,7 @@ from src.matchers.pipeline import Pipeline
 from src.readers.fraser_reader import fraser_1933
 from src.readers.paulson_reader import paulson_2011
 
-KITS = {
+GUIDES = {
     'fraser': {
         'reader': fraser_1933,
         'matchers': FRASER_MATCHERS,
@@ -24,9 +24,9 @@ KITS = {
 
 def main(args):
     """Perform actions based on the arguments."""
-    kit = KITS[args.reader]
-    reader = kit['reader']
-    matchers = kit['matchers']
+    guide = GUIDES[args.reader]
+    reader = guide['reader']
+    matchers = guide['matchers']
 
     pipeline = Pipeline(matchers)
 
@@ -43,10 +43,10 @@ def parse_args():
         description=textwrap.dedent(description),
         fromfile_prefix_chars='@')
 
-    readers = list(KITS.keys())
+    guides = list(GUIDES.keys())
     arg_parser.add_argument(
-        '--reader', '-r', choices=readers, default=readers[0],
-        help="""Which flora to read.""")
+        '--guide', '-g', choices=guides, default=guides[0],
+        help="""Which guide to parse.""")
 
     args = arg_parser.parse_args()
     return args

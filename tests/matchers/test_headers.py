@@ -4,9 +4,7 @@
 
 import unittest
 
-from src.matchers.pipeline import PIPELINE
-
-NLP = PIPELINE.test_traits
+from tests.setup import test_traits
 
 
 class TestHeader(unittest.TestCase):
@@ -14,7 +12,7 @@ class TestHeader(unittest.TestCase):
 
     def test_header_01(self):
         self.assertEqual(
-            NLP("""Amphiagrion saucium/abbreviatum
+            test_traits("""Amphiagrion saucium/abbreviatum
                     (Eastern/Western Red Damsel)"""),
             [
                 {
@@ -26,7 +24,7 @@ class TestHeader(unittest.TestCase):
 
     def test_header_02(self):
         self.assertEqual(
-            NLP("""Gomphurus externus (Plains Clubtail)"""),
+            test_traits("""Gomphurus externus (Plains Clubtail)"""),
             [
                 {
                  'trait': 'header',

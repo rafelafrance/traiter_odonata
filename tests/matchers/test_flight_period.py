@@ -4,9 +4,7 @@
 
 import unittest
 
-from src.matchers.pipeline import PIPELINE
-
-NLP = PIPELINE.test_traits
+from tests.setup import test_traits
 
 
 class TestFlightPeriod(unittest.TestCase):
@@ -14,7 +12,7 @@ class TestFlightPeriod(unittest.TestCase):
 
     def test_flight_period_01(self):
         self.assertEqual(
-            NLP('FP: mid-June to late Aug.'),
+            test_traits('FP: mid-June to late Aug.'),
             [
                 {'trait': 'flight_period',
                  'from': 'mid June', 'to': 'late August',

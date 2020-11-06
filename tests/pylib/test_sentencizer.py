@@ -6,7 +6,7 @@ import unittest
 
 from traiter.pylib.util import shorten
 
-from src.matchers.pipeline import parse
+from tests.setup import TEST_PIPELINE
 
 
 class TestSegmenter(unittest.TestCase):
@@ -16,8 +16,14 @@ class TestSegmenter(unittest.TestCase):
         text = shorten("""
             It was common “along a tiny stream.” Argia apicalis.
         """)
-        _, sents = parse(text, with_sents=True)
+        doc = TEST_PIPELINE.nlp(text)
+        sents = list(doc.sents)
         self.assertEqual(len(sents), 2)
-        for sent in sents:
-            print(sent)
-            print()
+
+    def test_sentencizer_02(self):
+        text = shorten("""
+            It was common along a tiny stream. Argia apicalis.
+        """)
+        doc = TEST_PIPELINE.nlp(text)
+        sents = list(doc.sents)
+        self.assertEqual(len(sents), 2)
