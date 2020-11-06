@@ -9,13 +9,14 @@ def header(span):
     """Enrich the match."""
     data = {'trait': 'header', 'vernacular': ''}
     for token in span:
+        lower = token.lower_
         if token.ent_type_ == 'sci_name':
-            data['sci_name'] = REPLACE[token.text.lower()].capitalize()
+            data['sci_name'] = REPLACE.get(lower, lower).capitalize()
         elif token.ent_type_ == 'species':
-            data['sci_name'] += '/' + token.lower_
+            data['sci_name'] += '/' + lower
         elif token.ent_type_ == 'vernacular':
             data['vernacular'] += token.text
-        elif re.match(r'^[a-z]+$', token.lower_):
+        elif re.match(r'^[a-z]+$', lower):
             data['vernacular'] += token.text + '/'
     return data
 
@@ -31,6 +32,13 @@ def invalid_species(span):
             sci_name.append(token.text)
     data['sci_name'] = ' '.join(sci_name)
 
+    return data
+
+
+def paulson_header(span):
+    """Parse a header from the Paulson guide."""
+    data = {}
+    print(span)
     return data
 
 
@@ -71,6 +79,18 @@ HEADER = {
                     {'TEXT': {'IN': OPEN}},
                     {'ENT_TYPE': 'vernacular'},
                     {'TEXT': {'IN': CLOSE}},
+                ],
+            ],
+        },
+        {
+            'label': 'header',
+            'on_match': paulson_header,
+            'patterns': [
+                [
+                    {'IS_DIGIT': True},
+                    {'ENT_TYPE': 'vernacular'},
+                    {'ENT_TYPE': 'species'},
+                    {'ENT_TYPE': 'total_length'},
                 ],
             ],
         },

@@ -11,19 +11,21 @@ from .scientific_name import SCI_NAME
 from .total_length import TOTAL_LENGTH
 from .vernacular import VERNACULAR
 
-MATCHERS = [
+FRASER_MATCHERS = [
     FLIGHT_PERIOD, HEADER, MONTH_TIME, RANGE,
-    SCI_NAME, TOTAL_LENGTH, VERNACULAR,
-]
+    SCI_NAME, TOTAL_LENGTH, VERNACULAR]
+
+PAULSON_MATCHERS = [
+    HEADER, SCI_NAME, VERNACULAR]
 
 
 class Matcher(SpacyMatcher):
     """Base matcher object."""
 
-    def __init__(self, nlp):
+    def __init__(self, nlp, matchers):
         super().__init__(nlp)
 
         self.add_terms(TERMS)
-        self.add_patterns(MATCHERS, GROUP_STEP)
-        self.add_patterns(MATCHERS, TRAIT_STEP)
-        self.add_patterns(MATCHERS, HEADER_STEP)
+        self.add_patterns(matchers, GROUP_STEP)
+        self.add_patterns(matchers, TRAIT_STEP)
+        self.add_patterns(matchers, HEADER_STEP)

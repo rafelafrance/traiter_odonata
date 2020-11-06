@@ -30,7 +30,7 @@ ABBREVS = """
 
 CLOSE = ' ) ] '.split()
 CROSS = ' x × '.split()
-DASH = '– - –– --'.split()
+DASH = ' – - –– -- '.split()
 DOT = ' . '.split()
 INT = r'^\d+$'
 NUMBER = r'^\d+(\.\d*)?$'
@@ -38,7 +38,7 @@ OPEN = ' ( [ '.split()
 PLUS = ' + '.split()
 SLASH = ' / '.split()
 QUOTE = ' “ ” " \' '.split()
-LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split()
+LETTERS = list('abcdefghijklmnopqrstuvwxyz')
 
-PER_COUNTS = ['pair', 'pairs']
+PER_COUNTS = """ pair pairs """.split()
 PER_COUNT = set(PER_COUNTS)

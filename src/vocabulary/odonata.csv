@@ -10,7 +10,10 @@ length_units,meters,lower,m
 length_units,millimeters,lower,mm
 length_units,mm,lower,mm
 length_units,µm,lower,µm
-total_length,tl:,lower,total length
+total_length_key,tl,lower,total length
+total_length_key,tl:,lower,total length
+hind_wing_length_key,hw,lower,hind wing length
+hind_wing_length_key,hw:,lower,hind wing length
 habitat,habitat,lower,
 habitat,habitats,lower,
 habitat,stream,lower,

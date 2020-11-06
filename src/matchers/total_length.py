@@ -12,6 +12,9 @@ def total_length(span):
             data['high'] = token._.data['high']
         elif token.ent_type_ == 'length_units':
             data['units'] = REPLACE[token.lower_]
+
+    data['units'] = data.get('units', 'mm')
+
     return data
 
 
@@ -22,9 +25,9 @@ TOTAL_LENGTH = {
             'on_match': total_length,
             'patterns': [
                 [
-                    {'ENT_TYPE': 'total_length'},
+                    {'ENT_TYPE': 'total_length_key'},
                     {'ENT_TYPE': 'range'},
-                    {'ENT_TYPE': 'length_units'},
+                    {'ENT_TYPE': 'length_units', 'OP': '?'},
                 ],
             ],
         },
