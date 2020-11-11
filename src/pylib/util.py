@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from traiter.spacy_nlp.terms import get_common_names, itis_terms, read_terms
+import traiter.spacy_nlp.terms as terms
 
 DATA_DIR = Path.cwd() / 'data'
 DOC_DIR = DATA_DIR
@@ -15,12 +15,12 @@ TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
 LINK_STEP = 'link'
 
-ITIS_DB = DATA_DIR / 'ITIS.sqlite'
-
-TERMS = read_terms(VOCAB_DIR / 'odonata.csv')
-TERMS += read_terms(VOCAB_DIR / 'common.csv')
-TERMS += itis_terms('Odonata', abbrev=True, species=True)
-TERMS += get_common_names('Odonata')
+TERMS = terms.read_terms(VOCAB_DIR / 'odonata.csv')
+TERMS += terms.read_terms(VOCAB_DIR / 'common.csv')
+TERMS += terms.itis_terms(taxon='Odonata', label='odonata')
+TERMS += terms.itis_common_names(taxon='Odonata')
+TERMS += terms.species_only(TERMS, label='odonata')
+TERMS += terms.abbrev_species(TERMS, label='odonata')
 REPLACE = {t['pattern']: r for t in TERMS if (r := t.get('replace'))}
 
 ABBREVS = """
