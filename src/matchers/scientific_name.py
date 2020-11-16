@@ -6,7 +6,7 @@ from ..pylib.util import REPLACE, TRAIT_STEP
 def sci_name(span):
     """Enrich the match."""
     return {
-        'sci_name': REPLACE.get(span.lower_, span.lower_),
+        'sci_name': REPLACE.get(span.lower_, span.lower_.capitalize()),
         'group': span[0].ent_type_,
     }
 

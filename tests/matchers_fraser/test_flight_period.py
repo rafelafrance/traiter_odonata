@@ -4,7 +4,7 @@
 
 import unittest
 
-from tests.setup import test_traits
+from tests.setup import test_fraser
 
 
 class TestFlightPeriod(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestFlightPeriod(unittest.TestCase):
 
     def test_flight_period_01(self):
         self.assertEqual(
-            test_traits('FP: mid-June to late Aug.'),
+            test_fraser('FP: mid-June to late Aug.'),
             [
                 {'trait': 'flight_period',
                  'from': 'mid June', 'to': 'late August',

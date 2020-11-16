@@ -13,11 +13,11 @@ from src.readers.paulson_reader import paulson_2011
 GUIDES = {
     'fraser': {
         'reader': fraser_1933,
-        'matchers': FRASER_MATCHERS,
+        'matchers_fraser': FRASER_MATCHERS,
     },
     'paulson': {
         'reader': paulson_2011,
-        'matchers': PAULSON_MATCHERS,
+        'matchers_fraser': PAULSON_MATCHERS,
     },
 }
 
@@ -26,7 +26,7 @@ def main(args):
     """Perform actions based on the arguments."""
     guide = GUIDES[args.reader]
     reader = guide['reader']
-    matchers = guide['matchers']
+    matchers = guide['matchers_fraser']
 
     pipeline = Pipeline(matchers)
 

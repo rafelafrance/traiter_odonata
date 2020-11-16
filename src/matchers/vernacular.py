@@ -5,7 +5,9 @@ from ..pylib.util import REPLACE, TRAIT_STEP
 
 def vernacular(span):
     """Enrich the match."""
-    data = {'sci_name': REPLACE[span.lower_], 'group': span[0].ent_type_}
+    data = {
+        'sci_name': REPLACE.get(span.lower_, span.lower_.capitalize()),
+        'vernacular': span.lower_}
     return data
 
 

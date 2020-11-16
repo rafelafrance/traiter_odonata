@@ -29,6 +29,7 @@ ABBREVS = """
     """
 
 CLOSE = ' ) ] '.split()
+COMMA = ' , '.split()
 CROSS = ' x × '.split()
 DASH = ' – - –– -- '.split()
 DOT = ' . '.split()

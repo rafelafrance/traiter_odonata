@@ -2,7 +2,7 @@
 
 import re
 
-from ..pylib.util import CLOSE, HEADER_STEP, OPEN, REPLACE, SLASH
+from ..pylib.util import CLOSE, HEADER_STEP, OPEN, REPLACE, SLASH  # , COMMA
 
 
 def header(span):
@@ -35,11 +35,9 @@ def invalid_species(span):
     return data
 
 
-def paulson_header(span):
+def paulson_header(_):
     """Parse a header from the Paulson guide."""
-    data = {}
-    print(span)
-    return data
+    return {'_forget': True}
 
 
 HEADER = {
@@ -82,17 +80,19 @@ HEADER = {
                 ],
             ],
         },
-        {
-            'label': 'header',
-            'on_match': paulson_header,
-            'patterns': [
-                [
-                    {'IS_DIGIT': True},
-                    {'ENT_TYPE': 'vernacular'},
-                    {'ENT_TYPE': 'species'},
-                    {'ENT_TYPE': 'total_length'},
-                ],
-            ],
-        },
+        # {
+        #     'label': 'header',
+        #     'on_match': paulson_header,
+        #     'patterns': [
+        #         [
+        #             {'IS_DIGIT': True},
+        #             {'ENT_TYPE': 'vernacular'},
+        #             {'ENT_TYPE': 'sci_name'},
+        #             {'ENT_TYPE': 'total_length'},
+        #             {'TEXT': {'IN': COMMA}, 'OP': '?'},
+        #             {'ENT_TYPE': 'hind_wing_length'},
+        #         ],
+        #     ],
+        # },
     ],
 }
