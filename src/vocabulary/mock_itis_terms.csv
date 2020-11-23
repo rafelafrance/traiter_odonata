@@ -1,7 +1,4 @@
 label,pattern,attr,replace
-,amphiagrion saucium,lower,Amphiagrion saucium
-,gomphurus externus,lower,Gomphurus externus
-,Calopteryx dimidiata,lower,Calopteryx dimidiata
 common_name,western red damsel,lower,Amphiagrion saucium
 common_name,plains clubtail,lower,Gomphurus externus
 common_name,sparkling jewelwing,lower,Calopteryx dimidiata
