@@ -15,11 +15,11 @@ TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
 LINK_STEP = 'link'
 
-TERMS = terms.read_terms(VOCAB_DIR / 'odonata.csv')
-TERMS += terms.read_terms(VOCAB_DIR / 'common.csv')
-TERMS += terms.itis_terms(taxon='Odonata', label='odonata')
+TERMS = terms.read_terms(VOCAB_DIR / 'common_terms.csv')
+TERMS += terms.read_terms(VOCAB_DIR / 'odonata_terms.csv')
+TERMS += terms.read_terms(VOCAB_DIR / 'odonata_species.csv')
+# TERMS += terms.itis_terms(taxon='Odonata', label='odonata')
 TERMS += terms.itis_common_names(taxon='Odonata')
-TERMS += terms.taxon_level_terms(TERMS, label='odonata')
 TERMS += terms.abbrev_species(TERMS, label='odonata')
 REPLACE = {t['pattern']: r for t in TERMS if (r := t.get('replace'))}
 

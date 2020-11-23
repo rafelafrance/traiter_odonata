@@ -17,7 +17,7 @@ class TestHeader(unittest.TestCase):
             test_paulson(shorten("""
                 3 Sparkling Jewelwing Calopteryx dimidiata TL 37–50, HW 23–31
                 """)),
-            [{'sci_name': 'Calopteryx dimidiata', 'vernacular': 'sparkling jewelwing',
+            [{'vernacular': 'sparkling jewelwing',
               'in_header': True, 'trait': 'vernacular', 'start': 2, 'end': 21},
              {'sci_name': 'Calopteryx dimidiata', 'group': 'odonata',
               'in_header': True, 'trait': 'sci_name', 'start': 22, 'end': 42},
