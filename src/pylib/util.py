@@ -15,7 +15,11 @@ TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
 LINK_STEP = 'link'
 
-TERMS = terms.read_terms(VOCAB_DIR / 'common_terms.csv')
+TERMS = terms.shared_terms('animal_terms.csv')
+TERMS += terms.shared_terms('insect_body_terms.csv')
+TERMS += terms.shared_terms('metric_terms.csv')
+TERMS += terms.shared_terms('time_terms.csv')
+TERMS += terms.shared_terms('color_terms.csv')
 TERMS += terms.read_terms(VOCAB_DIR / 'odonata_terms.csv')
 TERMS += terms.read_terms(VOCAB_DIR / 'odonata_species.csv')
 TERMS += terms.itis_common_names(taxon='Odonata')

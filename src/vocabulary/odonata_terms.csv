@@ -1,15 +1,5 @@
 label,pattern,attr,replace
 flight_period,fp:,lower,flight period
-length_units,centimeters,lower,cm
-length_units,cm,lower,cm
-length_units,decimeters,lower,dm
-length_units,dm,lower,dm
-length_units,m,lower,m
-length_units,m.,lower,m
-length_units,meters,lower,m
-length_units,millimeters,lower,mm
-length_units,mm,lower,mm
-length_units,µm,lower,µm
 total_length_key,tl,lower,total length
 total_length_key,tl:,lower,total length
 hind_wing_length_key,hw,lower,hind wing length
