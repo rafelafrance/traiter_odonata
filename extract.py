@@ -5,7 +5,7 @@
 import argparse
 import textwrap
 
-from src.matchers.matcher import FRASER_MATCHERS, PAULSON_MATCHERS
+from src.matchers.rule_matcher import FRASER_MATCHERS, PAULSON_MATCHERS
 from src.matchers.pipeline import Pipeline
 from src.readers.fraser_reader import fraser_1933
 from src.readers.paulson_reader import paulson_2011
@@ -24,16 +24,24 @@ GUIDES = {
 
 def main(args):
     """Perform actions based on the arguments."""
-    guide = GUIDES[args.reader]
+    guide = GUIDES[args.guide]
     reader = guide['reader']
     matchers = guide['matchers_fraser']
 
     pipeline = Pipeline(matchers)
 
     paras = reader()
-    for doc in pipeline.nlp.pipe(paras):
-        if len(doc) > 0:
-            print(doc[0])
+    for i, doc in enumerate(pipeline.nlp.pipe(paras)):
+        print('=' * 80)
+        print(doc)
+        for sent in doc.sents:
+            print('-' * 80)
+            print(sent)
+            for ent in sent.ents:
+                print(ent)
+            print()
+        if i > 0:
+            break
 
 
 def parse_args():

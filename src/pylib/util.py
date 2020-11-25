@@ -22,6 +22,7 @@ TERMS += terms.shared_terms('time_terms.csv')
 TERMS += terms.shared_terms('color_terms.csv')
 TERMS += terms.read_terms(VOCAB_DIR / 'odonata_terms.csv')
 TERMS += terms.read_terms(VOCAB_DIR / 'odonata_species.csv')
+TERMS += terms.read_terms(VOCAB_DIR / 'common_terms.csv')
 TERMS += terms.itis_common_names(taxon='Odonata')
 TERMS += terms.abbrev_species(TERMS, label='odonata')
 REPLACE = {t['pattern']: r for t in TERMS if (r := t.get('replace'))}

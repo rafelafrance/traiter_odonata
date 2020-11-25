@@ -1,8 +1,8 @@
 """Extract body part annotations."""
 
-from src.traiter.traiter.pylib.util import squash
+from traiter.pylib.util import squash
 
-from ..pylib.util import COMMA, GROUP_STEP, REPLACE
+from ..pylib.util import COMMA, REPLACE, TRAIT_STEP
 
 
 def body_part(span):
@@ -22,17 +22,15 @@ def multiple_parts(span):
 JOINER = ['and', 'or'] + COMMA
 
 BODY_PART = {
-    GROUP_STEP: [
+    TRAIT_STEP: [
         {
             'label': 'body_part',
             'on_match': body_part,
             'patterns': [
                 [
+                    {'ENT_TYPE': {'IN': ['part_location', 'part']}, 'OP': '*'},
                     {'ENT_TYPE': 'part', 'OP': '+'},
-                ],
-                [
-                    {'ENT_TYPE': {'IN': ['location', 'part']}, 'OP': '*'},
-                    {'ENT_TYPE': 'part'},
+                    {'ENT_TYPE': {'IN': ['part_location', 'part']}, 'OP': '*'},
                 ],
             ],
         },

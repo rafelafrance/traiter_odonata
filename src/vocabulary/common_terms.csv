@@ -1,0 +1,5 @@
+label,pattern,attr,replace
+heading,Description,text,
+heading,Identification,text,
+heading,Natural History,text,
+heading,Flight Season,text,

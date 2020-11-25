@@ -4,8 +4,9 @@ from traiter.spacy_nlp.pipeline import SpacyPipeline
 from traiter.spacy_nlp.sentencizer import SpacySentencizer
 from traiter.spacy_nlp.to_entities import ToEntities
 
+from .rule_matcher import RuleMatcher
+from .term_matcher import TermMatcher
 from src.pylib.util import ABBREVS, HEADER_STEP, TRAIT_STEP
-from src.matchers.matcher import Matcher
 
 
 class Pipeline(SpacyPipeline):
@@ -18,10 +19,13 @@ class Pipeline(SpacyPipeline):
 
         self.nlp.disable_pipes(['ner'])
 
-        self.matcher = Matcher(self.nlp, matchers)
-        sentencizer = SpacySentencizer(ABBREVS)
+        self.term_matcher = TermMatcher(self.nlp)
+        self.matcher = RuleMatcher(self.nlp, matchers)
+
+        sentencizer = SpacySentencizer(ABBREVS, headings='heading')
         to_entities = ToEntities(token2entity=self.token2entity)
 
+        self.nlp.add_pipe(self.term_matcher, before='parser')
         self.nlp.add_pipe(sentencizer, before='parser')
         self.nlp.add_pipe(self.matcher, last=True)
         self.nlp.add_pipe(to_entities, last=True)

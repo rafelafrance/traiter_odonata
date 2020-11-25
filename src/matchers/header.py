@@ -1,7 +1,5 @@
 """Get scientific names."""
 
-import re
-
 from ..pylib.util import CLOSE, COMMA, HEADER_STEP, OPEN
 
 

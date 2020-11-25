@@ -10,7 +10,7 @@ from tests.setup import test_paulson
 
 
 class TestHeader(unittest.TestCase):
-    """Test the plant color trait parser."""
+    """Test the header parser."""
 
     def test_header_01(self):
         self.assertEqual(
