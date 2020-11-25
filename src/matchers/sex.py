@@ -11,9 +11,9 @@ def sex(span):
     return {'sex': REPLACE.get(span.lower_, span.lower_)}
 
 
-def not_sex(_):
+def sex_comparison(span):
     """Handle similar to notations for sex."""
-    return {'_forget': True}
+    return {'sex_comparison': REPLACE.get(span.lower_, span.lower_)}
 
 
 SEX = {
@@ -28,8 +28,8 @@ SEX = {
             ],
         },
         {
-            'label': 'not_sex',
-            'on_match': not_sex,
+            'label': 'sex_comparison',
+            'on_match': sex_comparison,
             'patterns': [
                 [
                     {'LOWER': {'IN': SIMILAR}},

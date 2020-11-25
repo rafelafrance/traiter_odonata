@@ -38,7 +38,7 @@ def main(args):
             print('-' * 80)
             print(sent)
             for ent in sent.ents:
-                print(ent)
+                print(f'{ent.text:<16} {ent._.data}')
             print()
         if i > 0:
             break

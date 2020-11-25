@@ -46,4 +46,4 @@ QUOTE = ' “ ” " \' '.split()
 LETTERS = list('abcdefghijklmnopqrstuvwxyz')
 
 PER_COUNTS = """ pair pairs """.split()
-PER_COUNT = set(PER_COUNTS)
+MISSING = """ without missing lacking """.split()
