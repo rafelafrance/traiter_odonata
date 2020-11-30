@@ -130,6 +130,7 @@ dmypy.json
 
 # editors
 .idea/
+.vscode/
 
 # data
 data/
