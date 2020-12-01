@@ -10,6 +10,7 @@ PDF_DIR = DOC_DIR / 'pdf'
 TXT_DIR = DOC_DIR / 'txt'
 VOCAB_DIR = Path.cwd() / 'src' / 'vocabulary'
 
+TERM_STEP = 'terms'
 GROUP_STEP = 'group'
 TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
@@ -25,6 +26,7 @@ TERMS += terms.read_terms(VOCAB_DIR / 'odonata_species.csv')
 TERMS += terms.read_terms(VOCAB_DIR / 'common_terms.csv')
 TERMS += terms.itis_common_names(taxon='Odonata')
 TERMS += terms.abbrev_species(TERMS, label='odonata')
+TERMS += terms.taxon_level_terms(TERMS, label='odonata', new_label='odonata_species')
 REPLACE = {t['pattern']: r for t in TERMS if (r := t.get('replace'))}
 
 ABBREVS = """

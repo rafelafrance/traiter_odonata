@@ -2,7 +2,7 @@
 
 from typing import Dict, List
 
-from src.matchers.rule_matcher import FRASER_MATCHERS, PAULSON_MATCHERS
+from src.matchers.matcher import FRASER_MATCHERS, PAULSON_MATCHERS
 from src.matchers.pipeline import Pipeline
 
 TEST_FRASER = Pipeline(FRASER_MATCHERS)  # Singleton for testing

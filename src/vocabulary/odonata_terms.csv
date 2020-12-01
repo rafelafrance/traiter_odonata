@@ -1,5 +1,6 @@
 label,pattern,attr,replace
-flight_period,fp:,lower,flight period
+flight_period_key,fp,lower,flight period
+flight_period_key,fp:,lower,flight period
 total_length_key,tl,lower,total length
 total_length_key,tl:,lower,total length
 hind_wing_length_key,hw,lower,hind wing length

@@ -5,7 +5,9 @@
 import argparse
 import textwrap
 
-from src.matchers.rule_matcher import FRASER_MATCHERS, PAULSON_MATCHERS
+from spacy import displacy
+
+from src.matchers.matcher import FRASER_MATCHERS, PAULSON_MATCHERS
 from src.matchers.pipeline import Pipeline
 from src.readers.fraser_reader import fraser_1933
 from src.readers.paulson_reader import paulson_2011
@@ -30,18 +32,16 @@ def main(args):
 
     pipeline = Pipeline(matchers)
 
+    sentences = []
+
     paras = reader()
     for i, doc in enumerate(pipeline.nlp.pipe(paras)):
-        print('=' * 80)
-        print(doc)
-        for sent in doc.sents:
-            print('-' * 80)
-            print(sent)
-            for ent in sent.ents:
-                print(f'{ent.text:<16} {ent._.data}')
-            print()
-        if i > 0:
-            break
+        if len(doc) > 1 and doc[1].ent_type_ == 'vernacular':
+            sentences += list(doc.sents)
+        if doc[0].text == 'Description':
+            sentences += list(doc.sents)
+
+    displacy.serve(sentences, style="ent")
 
 
 def parse_args():

@@ -1,29 +1,24 @@
 """Get common names."""
 
-from ..pylib.util import SLASH, TRAIT_STEP
+import re
+
+from ..pylib.util import GROUP_STEP, SLASH
+
+
+SLASH_RE = re.compile(fr'{"|".join(SLASH)}')
 
 
 def vernacular(span):
     """Enrich the match."""
-    return {'vernacular': span.lower_}
-
-
-def double_vernacular(span):
-    """Handle a double scientific name."""
-    common, partial = '', ''
-    for token in span:
-        if token.ent_type_ == 'common_name':
-            common = token.lower_.capitalize()
-        elif token.is_alpha:
-            partial = token.lower_
-
-    other = f'{partial} {" ".join(common.split()[1:])}'.capitalize()
-    data = {'vernacular': [other, common]}
-    return data
+    name = [t.lower_ for t in span if t.ent_type_ == 'common_name'][0]
+    first = SLASH_RE.split(span.text)
+    if len(first) > 1:
+        name = [name, f'{first[0]} {" ".join(name.split()[1:])}']
+    return {'vernacular': name}
 
 
 VERNACULAR = {
-    TRAIT_STEP: [
+    GROUP_STEP: [
         {
             'label': 'vernacular',
             'on_match': vernacular,
@@ -31,12 +26,6 @@ VERNACULAR = {
                 [
                     {'ENT_TYPE': 'common_name'},
                 ],
-            ],
-        },
-        {
-            'label': 'vernacular',
-            'on_match': double_vernacular,
-            'patterns': [
                 [
                     {'IS_ALPHA': True},
                     {'TEXT': {'IN': SLASH}},

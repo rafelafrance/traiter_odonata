@@ -1,35 +1,19 @@
 """Get scientific names."""
 
-from ..pylib.util import REPLACE, SLASH, TRAIT_STEP
+from ..pylib.util import GROUP_STEP, SLASH
 
 
 def sci_name(span):
     """Enrich the match."""
-    return {
-        'sci_name': REPLACE.get(span.lower_, span.lower_.capitalize()),
-        'group': span[0].ent_type_,
-    }
-
-
-def double_sci_name(span):
-    """Handle a double scientific name."""
-    data = {}
-    names, genus = [], ''
-    for token in span:
-        if token.ent_type_ == 'odonata':
-            name = REPLACE.get(token.lower_, token.lower_.capitalize())
-            names.append(name)
-            genus = name.split()[0]
-            data['group'] = token.ent_type_
-        elif token.is_alpha:
-            name = REPLACE.get(token.lower_, token.lower_) + ' ' + genus
-            names.append(name.capitalize())
-    data['sci_name'] = names
-    return data
+    name = [t.lower_ for t in span if t.ent_type_ == 'odonata'][0].capitalize()
+    species = [t.lower_ for t in span if t.ent_type_ == 'odonata_species']
+    if species:
+        name = [name, f'{name.split()[0]} {species[0]}']
+    return {'sci_name': name, 'group': 'odonata'}
 
 
 SCI_NAME = {
-    TRAIT_STEP: [
+    GROUP_STEP: [
         {
             'label': 'sci_name',
             'on_match': sci_name,
@@ -41,12 +25,12 @@ SCI_NAME = {
         },
         {
             'label': 'sci_name',
-            'on_match': double_sci_name,
+            'on_match': sci_name,
             'patterns': [
                 [
                     {'ENT_TYPE': 'odonata'},
                     {'TEXT': {'IN': SLASH}},
-                    {'IS_ALPHA': True},
+                    {'ENT_TYPE': 'odonata_species'},
                 ],
             ],
         },
