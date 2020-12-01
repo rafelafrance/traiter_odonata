@@ -53,3 +53,9 @@ class TestBodyPart(unittest.TestCase):
             [{'body_part': 'lack stigmas', 'missing': True,
               'trait': 'body_part', 'start': 0, 'end': 12}]
         )
+
+    def test_body_part_06(self):
+        self.assertEqual(
+            test_paulson(shorten("""S2–10""")),
+            [{'body_part': 's2–10', 'trait': 'body_part', 'start': 0, 'end': 5}]
+        )

@@ -1,10 +1,11 @@
 """Extract body part annotations."""
 
 from ..pylib.actions import text_action
-from ..pylib.util import BOTH, COMMA, DASH, GROUP_STEP, MISSING, PART_MOD
+from ..pylib.util import BOTH, COMMA, DASH, GROUP_STEP, INT, MISSING, PART_MOD
 
 PART = ['part', 'fly']
 ANY_PART = PART + ['part_location']
+NUMBERED = ['abdomen_seg', 'stripe']
 
 
 def body_part(span):
@@ -22,10 +23,25 @@ BODY_PART = {
             'on_match': body_part,
             'patterns': [
                 [
+                    {'LOWER': {'IN': PART_MOD}, 'OP': '?'},
+                    {'ENT_TYPE': {'IN': NUMBERED}},
+                ],
+                [
+                    {'ENT_TYPE': {'IN': NUMBERED}},
+                    {'TEXT': {'IN': DASH}},
+                    {'TEXT': {'REGEX': INT}},
+                ],
+                [
+                    {'ENT_TYPE': {'IN': NUMBERED}},
+                    {'TEXT': {'IN': DASH}},
+                    {'ENT_TYPE': {'IN': NUMBERED}},
+                ],
+                [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
                     {'POS': 'ADJ'},
                     {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
-                ],                [
+                ],
+                [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
                     {'LOWER': {'IN': PART_MOD}},
                     {'TEXT': {'IN': COMMA}, 'OP': '?'},
@@ -43,13 +59,6 @@ BODY_PART = {
                     {'LOWER': {'IN': BOTH}},
                     {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
                     {'POS': 'ADP'},
-                    {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
-                ],
-                [
-                    {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                    {'LOWER': {'IN': PART_MOD}},
-                    {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-                    {'TEXT': {'IN': COMMA}},
                     {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
                 ],
                 [

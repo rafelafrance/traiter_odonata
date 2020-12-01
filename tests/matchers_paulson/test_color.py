@@ -47,3 +47,17 @@ class TestColor(unittest.TestCase):
             [{'color': 'greenish gloss',
               'trait': 'color', 'start': 12, 'end': 26}]
         )
+
+    def test_color_06(self):
+        self.assertEqual(
+            test_paulson(shorten("""often bluish-green""")),
+            [{'color': 'bluish-green',
+              'trait': 'color', 'start': 6, 'end': 18}]
+        )
+
+    def test_color_07(self):
+        self.assertEqual(
+            test_paulson(shorten("""clear or faintly washed with yellowish tint""")),
+            [{'color': 'clear or faintly washed with yellowish tint',
+              'trait': 'color', 'start': 0, 'end': 43}]
+        )

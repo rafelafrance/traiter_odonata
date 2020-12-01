@@ -3,8 +3,8 @@
 from ..pylib.actions import text_action
 from ..pylib.util import DASH, GROUP_STEP, MISSING, PATTERN_MOD
 
-COLORS = ['color', 'color_modifier']
-JOINERS = DASH + ['with']
+ALL_COLORS = ['color', 'color_modifier']
+JOINERS = DASH + ['with', 'or', 'to', 'and']
 
 
 def color(span):
@@ -23,30 +23,35 @@ COLOR = {
             'patterns': [
                 [
                     {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
-                    {'ENT_TYPE': {'IN': COLORS}, 'OP': '*'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
                     {'ENT_TYPE': 'color', 'OP': '+'},
                 ],                [
                     {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
                     {'ENT_TYPE': 'color', 'OP': '+'},
-                    {'ENT_TYPE': {'IN': COLORS}, 'OP': '+'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
                 ],
                 [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
                     {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
-                    {'ENT_TYPE': {'IN': COLORS}, 'OP': '+'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                    {'ENT_TYPE': {'IN': COLORS}, 'OP': '*'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
                     {'ENT_TYPE': 'color', 'OP': '+'},
                 ],
                 [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
                     {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
-                    {'ENT_TYPE': {'IN': COLORS}, 'OP': '+'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+                    {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
                     {'ENT_TYPE': 'color', 'OP': '+'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                    {'ENT_TYPE': {'IN': COLORS}, 'OP': '+'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
                 ],
             ],
         },
