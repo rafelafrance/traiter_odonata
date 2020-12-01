@@ -22,9 +22,9 @@ class TestColor(unittest.TestCase):
         self.assertEqual(
             test_paulson(shorten("""Wings without dark tip;""")),
             [{'body_part': 'wing', 'trait': 'body_part', 'start': 0, 'end': 5},
-             {'color': 'without dark', 'missing': True,
-              'trait': 'color', 'start': 6, 'end': 18},
-             {'part_location': 'tip', 'trait': 'part_location', 'start': 19, 'end': 22}]
+             {'color_pat': 'without dark', 'missing': True,
+              'trait': 'color_pat', 'start': 6, 'end': 18},
+             {'body_part_loc': 'tip', 'trait': 'body_part_loc', 'start': 19, 'end': 22}]
         )
 
     def test_color_03(self):
@@ -32,4 +32,18 @@ class TestColor(unittest.TestCase):
             test_paulson(shorten("""Large metallic green damselfly""")),
             [{'color': 'metallic green', 'trait': 'color', 'start': 6, 'end': 20},
              {'body_part': 'damselfly', 'trait': 'body_part', 'start': 21, 'end': 30}]
+        )
+
+    def test_color_04(self):
+        self.assertEqual(
+            test_paulson(shorten("""may have fine pale lines""")),
+            [{'color_pat': 'fine pale lines',
+              'trait': 'color_pat', 'start': 9, 'end': 24}]
+        )
+
+    def test_color_05(self):
+        self.assertEqual(
+            test_paulson(shorten("""with slight greenish gloss""")),
+            [{'color': 'greenish gloss',
+              'trait': 'color', 'start': 12, 'end': 26}]
         )

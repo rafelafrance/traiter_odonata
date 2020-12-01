@@ -48,4 +48,7 @@ QUOTE = ' “ ” " \' '.split()
 LETTERS = list('abcdefghijklmnopqrstuvwxyz')
 
 PER_COUNTS = """ pair pairs """.split()
-MISSING = """ without missing lacking """.split()
+MISSING = """ without missing lack lacking except excepting """.split()
+BOTH = """ both either """.split()
+PATTERN_MOD = """ fine thick broad thin """.split()
+PART_MOD = """ fine thick broad thin narrow """.split()

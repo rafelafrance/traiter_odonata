@@ -7,7 +7,7 @@ SIMILAR = """like similar""".split()
 SEX = {
     GROUP_STEP: [
         {
-            'label': 'sex_comparison',
+            'label': 'sex_diff',
             'patterns': [
                 [
                     {'LOWER': {'IN': SIMILAR}},

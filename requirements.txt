@@ -1,4 +1,5 @@
 pandas~=1.1.4
-spacy~=2.3.3
+spacy~=2.3.4
 regex~=2020.11.13
+tqdm~=4.54.0
 cupy-cuda102~=7.8.0

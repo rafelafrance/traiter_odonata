@@ -16,16 +16,16 @@ class TestSex(unittest.TestCase):
         self.assertEqual(
             test_paulson(shorten("""Female: Colored like male but duller""")),
             [{'sex': 'female', 'trait': 'sex', 'start': 0, 'end': 6},
-             {'color': 'colored', 'trait': 'color', 'start': 8, 'end': 15},
-             {'trait': 'sex_comparison', 'start': 16, 'end': 29},
-             {'color': 'duller', 'trait': 'color', 'start': 30, 'end': 36}]
+             {'color_pat': 'colored', 'trait': 'color_pat', 'start': 8, 'end': 15},
+             {'trait': 'sex_diff', 'start': 16, 'end': 29},
+             {'color_pat': 'duller', 'trait': 'color_pat', 'start': 30, 'end': 36}]
         )
 
     def test_sex_02(self):
         self.assertEqual(
             test_paulson(shorten("""Female: Colored similar to male but duller""")),
             [{'sex': 'female', 'trait': 'sex', 'start': 0, 'end': 6},
-             {'color': 'colored', 'trait': 'color', 'start': 8, 'end': 15},
-             {'trait': 'sex_comparison', 'start': 16, 'end': 35},
-             {'color': 'duller', 'trait': 'color', 'start': 36, 'end': 42}]
+             {'color_pat': 'colored', 'trait': 'color_pat', 'start': 8, 'end': 15},
+             {'trait': 'sex_diff', 'start': 16, 'end': 35},
+             {'color_pat': 'duller', 'trait': 'color_pat', 'start': 36, 'end': 42}]
         )
