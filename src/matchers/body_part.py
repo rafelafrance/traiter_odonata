@@ -38,14 +38,14 @@ BODY_PART = {
                 ],
                 [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                    {'POS': 'ADJ'},
+                    {'LOWER': {'IN': PART_MOD}},
                     {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
                 ],
                 [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
                     {'LOWER': {'IN': PART_MOD}},
                     {'TEXT': {'IN': COMMA}, 'OP': '?'},
-                    {'POS': 'ADJ'},
+                    {'LOWER': {'IN': PART_MOD}},
                     {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
                 ],
                 [

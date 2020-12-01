@@ -59,3 +59,10 @@ class TestBodyPart(unittest.TestCase):
             test_paulson(shorten("""S2–10""")),
             [{'body_part': 's2–10', 'trait': 'body_part', 'start': 0, 'end': 5}]
         )
+
+    def test_body_part_07(self):
+        self.assertEqual(
+            test_paulson(shorten("""bluet unmistakable because of orange face""")),
+            [{'color': 'orange', 'trait': 'color', 'start': 30, 'end': 36},
+             {'body_part': 'face', 'trait': 'body_part', 'start': 37, 'end': 41}]
+        )
