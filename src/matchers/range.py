@@ -1,4 +1,4 @@
-"""Shared range patterns."""
+"""Range patterns."""
 
 import re
 

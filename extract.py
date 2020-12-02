@@ -2,37 +2,24 @@
 
 """Extract src traits from scientific literature (PDFs to text)."""
 
+import re
 import argparse
 import textwrap
 
 from spacy import displacy
-from tqdm import tqdm
 
-from src.matchers.matcher import FRASER_MATCHERS, PAULSON_MATCHERS
 from src.matchers.pipeline import Pipeline
-from src.readers.fraser_reader import fraser_1933
-from src.readers.paulson_reader import paulson_2011
 
-GUIDES = {
-    'fraser': {
-        'reader': fraser_1933,
-        'matchers': FRASER_MATCHERS,
-    },
-    'paulson': {
-        'reader': paulson_2011,
-        'matchers': PAULSON_MATCHERS,
-    },
-}
 
 OPTIONS = {
     'colors': {
         'VERNACULAR': '#a6cee388',
         'SCI_NAME': '#1f78b488',
-        'TOTAL_LENGTH_KEY': '#b2df8a88',
-        'HIND_WING_LENGTH_KEY': '#33a02c88',
+        'TOTAL_LEN': '#b2df8a88',
+        'HIND_WING_LEN': '#33a02c88',
         'COLOR_PAT': '#fb9a9988',
-        'RANGE': '#e31a1c88',
-        'HEADING': '#fdbf6f88',
+        'qq1': '#e31a1c88',
+        'RANGE': '#fdbf6f88',
         'COLOR': '#ff7f0088',
         'BODY_PART': '#cab2d688',
         'SEX': '#b1592888',
@@ -46,20 +33,19 @@ OPTIONS = {
 
 def main(args):
     """Perform actions based on the arguments."""
-    guide = GUIDES[args.guide]
-    reader = guide['reader']
-    matchers = guide['matchers']
+    pipeline = Pipeline()
 
-    pipeline = Pipeline(matchers)
+    filter_lines = re.compile(r'(\d+|Description)')
+    lines = args.input.readlines()
+    lines = [ln for ln in lines if filter_lines.match(ln)]
+    lines = [' '.join(ln.split()) for ln in lines]
 
     sentences = []
-
-    paras = reader()
-    for doc in tqdm(pipeline.nlp.pipe(paras)):
-        if len(doc) > 1 and doc[1].ent_type_ == 'vernacular':
-            sentences += list(doc.sents)
-        if doc[0].text == 'Description':
-            sentences += list(doc.sents)
+    for doc in pipeline.nlp.pipe(lines[:2]):
+        sentences += list(doc.sents)
+        for ent in doc.ents:
+            print(ent, ent._.data)
+        print()
 
     displacy.serve(sentences, style='ent', options=OPTIONS)
 
