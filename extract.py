@@ -16,11 +16,11 @@ from src.readers.paulson_reader import paulson_2011
 GUIDES = {
     'fraser': {
         'reader': fraser_1933,
-        'matchers_fraser': FRASER_MATCHERS,
+        'matchers': FRASER_MATCHERS,
     },
     'paulson': {
         'reader': paulson_2011,
-        'matchers_fraser': PAULSON_MATCHERS,
+        'matchers': PAULSON_MATCHERS,
     },
 }
 
@@ -48,7 +48,7 @@ def main(args):
     """Perform actions based on the arguments."""
     guide = GUIDES[args.guide]
     reader = guide['reader']
-    matchers = guide['matchers_fraser']
+    matchers = guide['matchers']
 
     pipeline = Pipeline(matchers)
 
@@ -71,10 +71,9 @@ def parse_args():
         description=textwrap.dedent(description),
         fromfile_prefix_chars='@')
 
-    guides = list(GUIDES.keys())
     arg_parser.add_argument(
-        '--guide', '-g', choices=guides, default=guides[0],
-        help="""Which guide to parse.""")
+        '--input', '-i', type=argparse.FileType(),
+        help="""Which guide in text form to parse""")
 
     args = arg_parser.parse_args()
     return args

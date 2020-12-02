@@ -13,12 +13,12 @@ class Pipeline(SpacyPipeline):
 
     token2entity = {TERM_STEP, GROUP_STEP}
 
-    def __init__(self, matchers):
+    def __init__(self):
         super().__init__()
 
         self.nlp.disable_pipes(['ner'])
 
-        self.matcher = Matcher(self.nlp, matchers)
+        self.matcher = Matcher(self.nlp)
 
         sentencizer = SpacySentencizer(ABBREVS, headings='heading')
         to_entities = ToEntities(token2entity=self.token2entity)

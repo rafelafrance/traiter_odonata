@@ -6,7 +6,7 @@ import unittest
 
 from traiter.pylib.util import shorten
 
-from tests.setup import test_paulson
+from tests.setup import test_traits
 
 
 class TestBodyPart(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestBodyPart(unittest.TestCase):
 
     def test_body_part_01(self):
         self.assertEqual(
-            test_paulson(shorten("""
+            test_traits(shorten("""
                 tip with fine dorsal line and lower sides pale.
                 """)),
             [{'body_part_loc': 'tip', 'trait': 'body_part_loc', 'start': 0, 'end': 3},
@@ -26,7 +26,7 @@ class TestBodyPart(unittest.TestCase):
 
     def test_body_part_02(self):
         self.assertEqual(
-            test_paulson(shorten("""underside extends onto lower sides.""")),
+            test_traits(shorten("""underside extends onto lower sides.""")),
             [{'body_part_loc': 'underside',
               'trait': 'body_part_loc', 'start': 0, 'end': 9},
              {'body_part_loc': 'lower sides',
@@ -35,34 +35,34 @@ class TestBodyPart(unittest.TestCase):
 
     def test_body_part_03(self):
         self.assertEqual(
-            test_paulson(shorten("""on either side of front""")),
+            test_traits(shorten("""on either side of front""")),
             [{'body_part_loc': 'either side of front',
               'trait': 'body_part_loc', 'start': 3, 'end': 23}]
         )
 
     def test_body_part_04(self):
         self.assertEqual(
-            test_paulson(shorten("""with narrow, unmarked wings""")),
+            test_traits(shorten("""with narrow, unmarked wings""")),
             [{'body_part': 'narrow, unmarked wings',
               'trait': 'body_part', 'start': 5, 'end': 27}]
         )
 
     def test_body_part_05(self):
         self.assertEqual(
-            test_paulson(shorten("""lack stigmas""")),
+            test_traits(shorten("""lack stigmas""")),
             [{'body_part': 'lack stigmas', 'missing': True,
               'trait': 'body_part', 'start': 0, 'end': 12}]
         )
 
     def test_body_part_06(self):
         self.assertEqual(
-            test_paulson(shorten("""S2–10""")),
+            test_traits(shorten("""S2–10""")),
             [{'body_part': 's2–10', 'trait': 'body_part', 'start': 0, 'end': 5}]
         )
 
     def test_body_part_07(self):
         self.assertEqual(
-            test_paulson(shorten("""bluet unmistakable because of orange face""")),
+            test_traits(shorten("""bluet unmistakable because of orange face""")),
             [{'color': 'orange', 'trait': 'color', 'start': 30, 'end': 36},
              {'body_part': 'face', 'trait': 'body_part', 'start': 37, 'end': 41}]
         )

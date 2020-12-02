@@ -12,16 +12,17 @@ from .vernacular import VERNACULAR
 from ..pylib.actions import text_action
 from ..pylib.util import GROUP_STEP, TERMS
 
-FRASER_MATCHERS = [MONTH_RANGE, RANGE, SCI_NAME, VERNACULAR]
 
-PAULSON_MATCHERS = [BODY_PART, COLOR, RANGE, SCI_NAME, SEX, VERNACULAR]
+MATCHERS = [
+    BODY_PART, COLOR, MONTH_RANGE, RANGE, SCI_NAME, SEX, VERNACULAR
+]
 
 
 class Matcher(SpacyMatcher):
     """Base matcher object."""
 
-    def __init__(self, nlp, matchers):
+    def __init__(self, nlp):
         super().__init__(nlp)
 
         self.add_terms(TERMS, on_match=text_action)
-        self.add_patterns(matchers, GROUP_STEP)
+        self.add_patterns(MATCHERS, GROUP_STEP)
