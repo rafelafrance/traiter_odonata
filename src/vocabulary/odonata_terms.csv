@@ -1,29 +1,6 @@
 label,pattern,attr,replace
-flight_period_key,fp,lower,flight period
-flight_period_key,fp:,lower,flight period
-total_length_key,tl,lower,total length
-total_length_key,tl:,lower,total length
-hind_wing_length_key,hw,lower,hind wing length
-hind_wing_length_key,hw:,lower,hind wing length
-habitat,habitat,lower,
-habitat,habitats,lower,
-habitat,stream,lower,
-habitat,streams,lower,
-habitat,river,lower,
-habitat,rivers,lower,
-habitat,pond,lower,
-habitat,ponds,lower,
-habitat,lake,lower,
-habitat,lakes,lower,
-habitat,marsh,lower,
-habitat,marshes,lower,
-habitat,puddle,lower,
-habitat,puddles,lower,
-habitat,wet grassy,lower,
-habitat,marshy,lower,
-fly,damselfly,lower,
-fly,dragonfly,lower,
 abdomen_seg,s1,lower,
+abdomen_seg,s10,lower,
 abdomen_seg,s2,lower,
 abdomen_seg,s3,lower,
 abdomen_seg,s4,lower,
@@ -32,23 +9,46 @@ abdomen_seg,s6,lower,
 abdomen_seg,s7,lower,
 abdomen_seg,s8,lower,
 abdomen_seg,s9,lower,
-abdomen_seg,s10,lower,
-stripe,t1,lower,
-stripe,t2,lower,
-stripe,t3,lower,
-stripe,t4,lower,
-stripe,t5,lower,
+flight_period_key,fp,lower,flight period
+flight_period_key,fp:,lower,flight period
+fly,damselfly,lower,
+fly,dragonfly,lower,
+habitat,habitat,lower,
+habitat,habitats,lower,
+habitat,lake,lower,
+habitat,lakes,lower,
+habitat,marsh,lower,
+habitat,marshes,lower,
+habitat,marshy,lower,
+habitat,pond,lower,
+habitat,ponds,lower,
+habitat,puddle,lower,
+habitat,puddles,lower,
+habitat,river,lower,
+habitat,rivers,lower,
+habitat,stream,lower,
+habitat,streams,lower,
+habitat,wet grassy,lower,
+hind_wing_length_key,hw,lower,hind wing length
+hind_wing_length_key,hw:,lower,hind wing length
+part,anal veins,lower,
+part,costa,lower,
+part,cubitus,lower,
+part,media,lower,
+part,node,lower,nodus
+part,nodus,lower,nodus
+part,occipital bar,lower,
+part,subcosta,lower,
 stripe,antehumeral stripe,lower,
 stripe,antehumeral stripes,lower,
 stripe,humeral stripe,lower,
 stripe,humeral stripes,lower,
 stripe,median stripe,lower,
 stripe,median stripes,lower,
-part,costa,lower,
-part,subcosta,lower,
-part,media,lower,
-part,cubitus,lower,
-part,anal veins,lower,
-part,node,lower,nodus
-part,nodus,lower,nodus
-part,occipital bar,lower,
+stripe,t1,lower,
+stripe,t2,lower,
+stripe,t3,lower,
+stripe,t4,lower,
+stripe,t5,lower,
+total_length_key,tl,lower,total length
+total_length_key,tl:,lower,total length
