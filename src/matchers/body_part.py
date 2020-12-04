@@ -4,7 +4,7 @@ from ..pylib.actions import text_action
 from ..pylib.util import BOTH, COMMA, DASH, GROUP_STEP, INT, MISSING, PART_MOD
 
 PART = ['part', 'fly']
-ANY_PART = PART + ['part_location']
+ANY_PART = PART + ['part_loc']
 NUMBERED = ['abdomen_seg', 'stripe']
 
 
@@ -87,7 +87,7 @@ BODY_PART = {
             'on_match': text_action,
             'patterns': [
                 [
-                    {'ENT_TYPE': 'part_location', 'OP': '+'},
+                    {'ENT_TYPE': 'part_loc', 'OP': '+'},
                 ],
                 [
                     {'IS_ALPHA': True},

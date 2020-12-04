@@ -16,11 +16,11 @@ TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
 LINK_STEP = 'link'
 
-TERMS = terms.shared_terms('animal_terms.csv')
-TERMS += terms.shared_terms('insect_body_terms.csv')
-TERMS += terms.shared_terms('metric_terms.csv')
-TERMS += terms.shared_terms('time_terms.csv')
-TERMS += terms.shared_terms('color_terms.csv')
+TERMS = terms.shared_terms('animals.csv')
+TERMS += terms.shared_terms('insect_anatomy.csv')
+TERMS += terms.shared_terms('metric.csv')
+TERMS += terms.shared_terms('time.csv')
+TERMS += terms.shared_terms('colors.csv')
 TERMS += terms.read_terms(VOCAB_DIR / 'odonata_terms.csv')
 TERMS += terms.read_terms(VOCAB_DIR / 'odonata_species.csv')
 TERMS += terms.read_terms(VOCAB_DIR / 'common_terms.csv')
