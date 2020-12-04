@@ -20,8 +20,8 @@ class TestBodyPart(unittest.TestCase):
             [{'body_part_loc': 'tip', 'trait': 'body_part_loc', 'start': 0, 'end': 3},
              {'body_part_loc': 'dorsal line and lower sides',
               'trait': 'body_part_loc', 'start': 14, 'end': 41},
-             {'color_pat': 'pale',
-              'trait': 'color_pat', 'start': 42, 'end': 46}]
+             {'color_mod': 'pale',
+              'trait': 'color_mod', 'start': 42, 'end': 46}]
         )
 
     def test_body_part_02(self):

@@ -1,9 +1,9 @@
 """Common color snippets."""
 
 from ..pylib.actions import text_action
-from ..pylib.util import DASH, GROUP_STEP, MISSING, PATTERN_MOD
+from ..pylib.util import DASH, GROUP_STEP, MISSING, COLOR_MOD
 
-ALL_COLORS = ['color', 'color_modifier']
+ALL_COLORS = ['color', 'color_mod']
 JOINERS = DASH + ['with', 'or', 'to', 'and']
 
 
@@ -22,17 +22,17 @@ COLOR = {
             'on_match': color,
             'patterns': [
                 [
-                    {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
+                    {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
                     {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
                     {'ENT_TYPE': 'color', 'OP': '+'},
                 ],                [
-                    {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
+                    {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
                     {'ENT_TYPE': 'color', 'OP': '+'},
                     {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
                 ],
                 [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                    {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
+                    {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
                     {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
                     {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
@@ -42,7 +42,7 @@ COLOR = {
                 ],
                 [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                    {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
+                    {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
                     {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
                     {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
@@ -56,29 +56,29 @@ COLOR = {
             ],
         },
         {
-            'label': 'color_pat',
+            'label': 'color_mod',
             'on_match': color,
             'patterns': [
                 [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                    {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
-                    {'ENT_TYPE': 'color_modifier', 'OP': '+'},
+                    {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
+                    {'ENT_TYPE': 'color_mod', 'OP': '+'},
                 ],
                 [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                    {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
-                    {'ENT_TYPE': 'color_modifier', 'OP': '+'},
+                    {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
+                    {'ENT_TYPE': 'color_mod', 'OP': '+'},
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                    {'ENT_TYPE': 'color_modifier', 'OP': '+'},
+                    {'ENT_TYPE': 'color_mod', 'OP': '+'},
                 ],
                 [
                     {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                    {'TEXT': {'IN': PATTERN_MOD}, 'OP': '?'},
-                    {'ENT_TYPE': 'color_modifier', 'OP': '+'},
+                    {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
+                    {'ENT_TYPE': 'color_mod', 'OP': '+'},
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                    {'ENT_TYPE': 'color_modifier', 'OP': '*'},
+                    {'ENT_TYPE': 'color_mod', 'OP': '*'},
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                    {'ENT_TYPE': 'color_modifier', 'OP': '+'},
+                    {'ENT_TYPE': 'color_mod', 'OP': '+'},
                 ],
             ],
         },

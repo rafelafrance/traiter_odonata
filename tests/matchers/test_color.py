@@ -22,8 +22,8 @@ class TestColor(unittest.TestCase):
         self.assertEqual(
             test_traits(shorten("""Wings without dark tip;""")),
             [{'body_part': 'wing', 'trait': 'body_part', 'start': 0, 'end': 5},
-             {'color_pat': 'without dark', 'missing': True,
-              'trait': 'color_pat', 'start': 6, 'end': 18},
+             {'color_mod': 'without dark', 'missing': True,
+              'trait': 'color_mod', 'start': 6, 'end': 18},
              {'body_part_loc': 'tip', 'trait': 'body_part_loc', 'start': 19, 'end': 22}]
         )
 
@@ -37,8 +37,8 @@ class TestColor(unittest.TestCase):
     def test_color_04(self):
         self.assertEqual(
             test_traits(shorten("""may have fine pale lines""")),
-            [{'color_pat': 'fine pale lines',
-              'trait': 'color_pat', 'start': 9, 'end': 24}]
+            [{'color_mod': 'fine pale lines',
+              'trait': 'color_mod', 'start': 9, 'end': 24}]
         )
 
     def test_color_05(self):
