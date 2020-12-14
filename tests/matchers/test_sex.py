@@ -16,7 +16,6 @@ class TestSex(unittest.TestCase):
         self.assertEqual(
             test_traits(shorten("""Female: Colored like male but duller""")),
             [{'sex': 'female', 'trait': 'sex', 'start': 0, 'end': 6},
-             {'color_mod': 'colored', 'trait': 'color_mod', 'start': 8, 'end': 15},
              {'trait': 'sex_diff', 'start': 16, 'end': 29},
              {'color_mod': 'duller', 'trait': 'color_mod', 'start': 30, 'end': 36}]
         )
@@ -25,7 +24,6 @@ class TestSex(unittest.TestCase):
         self.assertEqual(
             test_traits(shorten("""Female: Colored similar to male but duller""")),
             [{'sex': 'female', 'trait': 'sex', 'start': 0, 'end': 6},
-             {'color_mod': 'colored', 'trait': 'color_mod', 'start': 8, 'end': 15},
              {'trait': 'sex_diff', 'start': 16, 'end': 35},
              {'color_mod': 'duller', 'trait': 'color_mod', 'start': 36, 'end': 42}]
         )
