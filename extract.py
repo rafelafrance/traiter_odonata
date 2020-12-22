@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extract src traits from scientific literature (PDFs to text)."""
+"""Extract Odonata traits from scientific literature."""
 
 import re
 import argparse
@@ -38,9 +38,7 @@ def parse_args():
         description=textwrap.dedent(description), fromfile_prefix_chars='@')
 
     arg_parser.add_argument(
-        '--input',
-        '-i',
-        type=argparse.FileType(),
+        '--input', '-i', type=argparse.FileType(),
         help="""Which guide in text form to parse""")
 
     arg_parser.add_argument(
@@ -54,4 +52,3 @@ def parse_args():
 if __name__ == '__main__':
     ARGS = parse_args()
     main(ARGS)
-

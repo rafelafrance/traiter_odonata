@@ -18,7 +18,7 @@ LINK_STEP = 'link'
 
 TERMS = terms.shared_terms('animals.csv')
 TERMS += terms.shared_terms('insect_anatomy.csv')
-TERMS += terms.shared_terms('metric.csv')
+TERMS += terms.shared_terms('units.csv')
 TERMS += terms.shared_terms('time.csv')
 TERMS += terms.shared_terms('colors.csv')
 TERMS += terms.read_terms(VOCAB_DIR / 'odonata_terms.csv')
