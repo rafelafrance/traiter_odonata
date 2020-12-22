@@ -11,7 +11,7 @@ from src.writers.html_writer import html_writer
 
 
 def paulson_guide(args):
-    """Perform actions based on the arguments."""
+    """Parse Paulson's Odonate guide."""
     pipeline = Pipeline()
 
     filter_lines = re.compile(r'(\d+|Description)')

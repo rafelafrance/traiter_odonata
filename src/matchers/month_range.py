@@ -1,6 +1,6 @@
 """Month ranges."""
 
-from ..pylib.util import DASH, GROUP_STEP, REPLACE
+from ..pylib.util import DASH, GROUP_STEP, TERMS
 
 MODIFIER = """ early mid late """.split()
 TO = """ to into """.split()
@@ -14,7 +14,7 @@ def month_range(span):
         if token.lower_ in MODIFIER:
             modifier = token.lower_
         elif token.ent_type_ == 'month':
-            month = REPLACE[token.text.capitalize()]
+            month = TERMS.replace[token.text.capitalize()]
             month = f'{modifier} {month}'.strip() if modifier else month
             months.append(month)
             modifier = ''

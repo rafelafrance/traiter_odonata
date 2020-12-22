@@ -50,7 +50,11 @@ def format_text(row, colors):
             spans.append(text)
         else:
             name = trait['trait']
-            span = f'<span class="{colors[name]}">{text}</span>'
+            fields = {k: v for k, v in trait.items()
+                      if k not in ('start', 'end', 'trait', 'in_header')}
+            title = '' if name in fields else f'{name}: '
+            title += ', '.join(f"{k} = {v}" for k, v in fields.items())
+            span = f'<span class="{colors[name]}" title="{title}">{text}</span>'
             spans.append(span)
     return ''.join(spans)
 
@@ -77,10 +81,14 @@ def split_by_trait(row):
 
 def format_traits(row, colors):
     """Format the traits for HTML."""
-    traits = []
+    traits = defaultdict(list)
     for trait in row['traits']:
         name = trait['trait']
         label = f'<span class="{colors[name]}">{name}</span>'
-        data = ''
-        traits.append((label, data))
-    return traits
+        fields = {k: v for k, v in trait.items()
+                  if k not in ('start', 'end', 'trait', 'in_header')}
+        data = '' if name in fields else f'{name}: '
+        data += ', '.join(f"{k} = {v}" for k, v in fields.items())
+        traits[label].append(data)
+
+    return sorted([(k, '<br/>'.join(v)) for k, v in traits.items()])

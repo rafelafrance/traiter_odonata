@@ -1,12 +1,12 @@
 """Common actions for enriching matches."""
 
-from ..pylib.util import REPLACE
+from ..pylib.util import TERMS
 
 
 def text_action(span):
     """Enrich term matches."""
     label = span.label_.split('.')[0]
-    return {label: REPLACE.get(span.lower_, span.lower_)}
+    return {label: TERMS.replace.get(span.lower_, span.lower_)}
 
 
 def hoist_action(span, keys=None):
