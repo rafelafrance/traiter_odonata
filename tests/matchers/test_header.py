@@ -37,14 +37,12 @@ class TestHeader(unittest.TestCase):
             test_traits(shorten("""
                 3 Sparkling Jewelwing Calopteryx dimidiata TL 37–50, HW 23–31
                 """)),
-            [{'vernacular': 'sparkling jewelwing',
+            [{'vernacular': 'sparkling jewelwing', 'in_header': True,
               'trait': 'vernacular', 'start': 2, 'end': 21},
-             {'sci_name': 'Calopteryx dimidiata', 'group': 'odonata',
+             {'sci_name': 'Calopteryx dimidiata', 'group': 'odonata', 'in_header': True,
               'trait': 'sci_name', 'start': 22, 'end': 42},
-             {'total_length_key': 'total length',
-              'trait': 'total_length_key', 'start': 43, 'end': 45},
-             {'low': 37.0, 'high': 50.0, 'trait': 'range', 'start': 46, 'end': 51},
-             {'hind_wing_length_key': 'hind wing length',
-              'trait': 'hind_wing_length_key', 'start': 53, 'end': 55},
-             {'low': 23.0, 'high': 31.0, 'trait': 'range', 'start': 56, 'end': 61}]
+             {'low': 37.0, 'high': 50.0, 'in_header': True,
+              'trait': 'total_length', 'start': 43, 'end': 51},
+             {'low': 23.0, 'high': 31.0, 'in_header': True,
+              'trait': 'hind_wing_length', 'start': 53, 'end': 61}]
         )

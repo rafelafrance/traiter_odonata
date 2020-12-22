@@ -10,7 +10,7 @@ from src.matchers.pipeline import Pipeline
 from src.writers.html_writer import html_writer
 
 
-def main(args):
+def paulson_guide(args):
     """Perform actions based on the arguments."""
     pipeline = Pipeline()
 
@@ -20,7 +20,7 @@ def main(args):
     lines = [' '.join(ln.split()) for ln in lines]
 
     rows = []
-    for doc in pipeline.nlp.pipe(lines[:2]):
+    for doc in pipeline.nlp.pipe(lines[:4]):
         rows.append({
             'doc': doc,
             'traits': pipeline.trait_list(doc),
@@ -51,4 +51,4 @@ def parse_args():
 
 if __name__ == '__main__':
     ARGS = parse_args()
-    main(ARGS)
+    paulson_guide(ARGS)

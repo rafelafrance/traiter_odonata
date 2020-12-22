@@ -21,12 +21,6 @@ SCI_NAME = {
                 [
                     {'ENT_TYPE': 'odonata'},
                 ],
-            ],
-        },
-        {
-            'label': 'sci_name',
-            'on_match': sci_name,
-            'patterns': [
                 [
                     {'ENT_TYPE': 'odonata'},
                     {'TEXT': {'IN': SLASH}},
