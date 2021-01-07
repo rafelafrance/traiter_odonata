@@ -58,6 +58,7 @@ class TestBodyPart(unittest.TestCase):
     def test_body_part_07(self):
         self.assertEqual(
             test_traits('bluet unmistakable because of orange face'),
-            [{'color': 'orange', 'trait': 'color', 'start': 30, 'end': 36},
+            [{'color': 'orange', 'body_part': 'face',
+              'trait': 'color', 'start': 30, 'end': 36},
              {'body_part': 'face', 'trait': 'body_part', 'start': 37, 'end': 41}]
         )

@@ -7,17 +7,18 @@ from .color import COLOR
 from .header import HEADER
 from .hind_wing_length import HIND_WING_LENGTH
 from .month_range import MONTH_RANGE
+from .body_part_linker import BODY_PART_LINKER
 from .range import RANGE
 from .sci_name import SCI_NAME
 from .sex import SEX
 from .total_length import TOTAL_LENGTH
 from .vernacular import VERNACULAR
 from ..pylib.actions import text_action
-from ..pylib.consts import GROUP_STEP, HEADER_STEP, TERMS, TRAIT_STEP
+from ..pylib.consts import GROUP_STEP, HEADER_STEP, TERMS, TRAIT_STEP, LINK_STEP
 
 MATCHERS = [
-    BODY_PART, COLOR, HEADER, HIND_WING_LENGTH, MONTH_RANGE, RANGE, SCI_NAME, SEX,
-    TOTAL_LENGTH, VERNACULAR,
+    BODY_PART, BODY_PART_LINKER, COLOR, HEADER, HIND_WING_LENGTH, MONTH_RANGE, RANGE,
+    SCI_NAME, SEX, TOTAL_LENGTH, VERNACULAR,
 ]
 
 
@@ -31,3 +32,4 @@ class Matcher(SpacyMatcher):
         self.add_patterns(MATCHERS, GROUP_STEP)
         self.add_patterns(MATCHERS, TRAIT_STEP)
         self.add_patterns(MATCHERS, HEADER_STEP)
+        self.add_patterns(MATCHERS, LINK_STEP)
