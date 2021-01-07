@@ -1,7 +1,7 @@
 """Extract body part annotations."""
 
 from ..pylib.actions import text_action
-from ..pylib.util import BOTH, COMMA, DASH, GROUP_STEP, INT, MISSING, PART_MOD
+from ..pylib.consts import BOTH, COMMA, DASH, GROUP_STEP, INT, MISSING, PART_MOD
 
 PART = ['part', 'fly']
 ANY_PART = PART + ['part_loc']

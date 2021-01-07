@@ -4,8 +4,6 @@
 
 import unittest
 
-from traiter.pylib.util import shorten
-
 from tests.setup import test_traits
 
 
@@ -20,12 +18,12 @@ class TestHeader(unittest.TestCase):
               'group': 'odonata',
               'trait': 'sci_name', 'start': 0, 'end': 31},
              {'vernacular': ['western red damsel', 'Eastern red damsel'],
-              'trait': 'vernacular', 'start': 53, 'end': 79}]
+              'trait': 'vernacular', 'start': 33, 'end': 59}]
         )
 
     def test_header_02(self):
         self.assertEqual(
-            test_traits("""Gomphurus externus (Plains Clubtail)"""),
+            test_traits('Gomphurus externus (Plains Clubtail)'),
             [{'sci_name': 'Gomphurus externus', 'group': 'odonata',
               'trait': 'sci_name', 'start': 0, 'end': 18},
              {'vernacular': 'plains clubtail',
@@ -34,9 +32,9 @@ class TestHeader(unittest.TestCase):
 
     def test_header_03(self):
         self.assertEqual(
-            test_traits(shorten("""
+            test_traits("""
                 3 Sparkling Jewelwing Calopteryx dimidiata TL 37–50, HW 23–31
-                """)),
+                """),
             [{'vernacular': 'sparkling jewelwing', 'in_header': True,
               'trait': 'vernacular', 'start': 2, 'end': 21},
              {'sci_name': 'Calopteryx dimidiata', 'group': 'odonata', 'in_header': True,

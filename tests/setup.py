@@ -2,6 +2,7 @@
 
 from typing import Dict, List
 
+from traiter.pylib.util import shorten
 
 from src.matchers.pipeline import Pipeline
 
@@ -10,4 +11,5 @@ TEST_PIPELINE = Pipeline()  # Singleton for testing
 
 def test_traits(text: str) -> List[Dict]:
     """Find entities in the doc."""
+    text = shorten(text)
     return TEST_PIPELINE.test_traits(text)

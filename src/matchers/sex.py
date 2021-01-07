@@ -1,6 +1,6 @@
 """Sex terms."""
 
-from ..pylib.util import GROUP_STEP
+from ..pylib.consts import GROUP_STEP
 
 SIMILAR = """like similar""".split()
 

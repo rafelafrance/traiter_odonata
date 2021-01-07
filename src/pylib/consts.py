@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from traiter.pylib.terms import Terms
+from traiter.pylib.itis_terms import ItisTerms
 
 DATA_DIR = Path.cwd() / 'data'
 DOC_DIR = DATA_DIR
@@ -10,23 +10,22 @@ PDF_DIR = DOC_DIR / 'pdf'
 TXT_DIR = DOC_DIR / 'txt'
 VOCAB_DIR = Path.cwd() / 'src' / 'vocabulary'
 
-TERM_STEP = 'terms'
 GROUP_STEP = 'group'
 TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
 LINK_STEP = 'link'
 
-TERMS = Terms(
-    csv_file=[VOCAB_DIR / 'odonata_terms.csv',
-              VOCAB_DIR / 'odonata_species.csv',
-              VOCAB_DIR / 'common_terms.csv'],
-    shared='animals insect_anatomy units time colors',
-    pattern_dicts='replace',
-)
-TERMS.itis_common_names(taxon='Odonata')
-TERMS.abbrev_species(label='odonata')
-TERMS.taxon_level_terms(label='odonata', new_label='odonata_species')
+TERMS = ItisTerms.read_csv(VOCAB_DIR / 'odonata_terms.csv')
+TERMS += ItisTerms.read_csv(VOCAB_DIR / 'odonata_species.csv')
+TERMS += ItisTerms.read_csv(VOCAB_DIR / 'common_terms.csv')
+TERMS += ItisTerms.shared('animals insect_anatomy units time colors')
+TERMS += ItisTerms.itis_common_names(taxon='Odonata')
+TERMS += ItisTerms.abbrev_species(TERMS, label='odonata')
+TERMS += ItisTerms.taxon_level_terms(
+    TERMS, label='odonata', new_label='odonata_species')
 TERMS.drop('imperial_length')
+
+REPLACE = TERMS.pattern_dicts('replace')
 
 ABBREVS = """
     Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec

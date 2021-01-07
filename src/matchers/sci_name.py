@@ -1,6 +1,6 @@
 """Get scientific names."""
 
-from ..pylib.util import GROUP_STEP, SLASH
+from ..pylib.consts import GROUP_STEP, SLASH
 
 
 def sci_name(span):

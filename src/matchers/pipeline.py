@@ -3,9 +3,10 @@
 from traiter.pylib.pipeline import SpacyPipeline
 from traiter.pylib.sentencizer import SpacySentencizer
 from traiter.pylib.to_entities import ToEntities
+from traiter.pylib.util import TERM_STEP
 
-from src.pylib.util import ABBREVS, GROUP_STEP, TERM_STEP, TRAIT_STEP
 from .matcher import Matcher
+from ..pylib.consts import ABBREVS, GROUP_STEP, TRAIT_STEP
 
 
 class Pipeline(SpacyPipeline):

@@ -1,7 +1,7 @@
 """Common color snippets."""
 
 from ..pylib.actions import text_action
-from ..pylib.util import DASH, GROUP_STEP, MISSING, COLOR_MOD
+from ..pylib.consts import DASH, GROUP_STEP, MISSING, COLOR_MOD
 
 ALL_COLORS = ['color', 'color_mod']
 JOINERS = DASH + ['with', 'or', 'to', 'and']

@@ -2,7 +2,7 @@
 
 import re
 
-from ..pylib.util import GROUP_STEP, SLASH
+from ..pylib.consts import GROUP_STEP, SLASH
 
 
 SLASH_RE = re.compile(fr'{"|".join(SLASH)}')

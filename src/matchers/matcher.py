@@ -13,7 +13,7 @@ from .sex import SEX
 from .total_length import TOTAL_LENGTH
 from .vernacular import VERNACULAR
 from ..pylib.actions import text_action
-from ..pylib.util import GROUP_STEP, HEADER_STEP, TERMS, TRAIT_STEP
+from ..pylib.consts import GROUP_STEP, HEADER_STEP, TERMS, TRAIT_STEP
 
 MATCHERS = [
     BODY_PART, COLOR, HEADER, HIND_WING_LENGTH, MONTH_RANGE, RANGE, SCI_NAME, SEX,
