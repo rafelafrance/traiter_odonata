@@ -15,7 +15,9 @@ class TestSex(unittest.TestCase):
             test_traits('Female: Colored like male but duller'),
             [{'sex': 'female', 'trait': 'sex', 'start': 0, 'end': 6},
              {'sex_diff': 'like male but', 'trait': 'sex_diff', 'start': 16, 'end': 29},
-             {'color_mod': 'duller', 'trait': 'color_mod', 'start': 30, 'end': 36}]
+             {'color_mod': 'duller', 'sex_diff': 'like male but',
+              'trait': 'color_mod', 'start': 30, 'end': 36}]
+
         )
 
     def test_sex_02(self):
@@ -24,5 +26,6 @@ class TestSex(unittest.TestCase):
             [{'sex': 'female', 'trait': 'sex', 'start': 0, 'end': 6},
              {'sex_diff': 'similar to male but',
               'trait': 'sex_diff', 'start': 16, 'end': 35},
-             {'color_mod': 'duller', 'trait': 'color_mod', 'start': 36, 'end': 42}]
+             {'color_mod': 'duller', 'sex_diff': 'similar to male but',
+              'trait': 'color_mod', 'start': 36, 'end': 42}]
         )

@@ -25,17 +25,17 @@
     <tr>
       <td>
         <button class="toggle closed" title="Show or hide the extractions"
-            data-taxon-id="{{ row.taxon_id }}">
+            data-taxon-id="{{ row.id }}">
         </button>
       </td>
       <td colspan="2" class="text">{{ row.text | safe }}</td>
-    <tr class="term closed" data-taxon-id="{{ row.taxon_id }}">
+    <tr class="term closed" data-taxon-id="{{ row.id }}">
       <td></td>
       <td class="sub-header">Trait Label</td>
       <td class="sub-header">Trait Data</td>
     </tr>
       {% for label, trait in row.traits %}
-      <tr class="term closed" data-taxon-id="{{ row.taxon_id }}">
+      <tr class="term closed" data-taxon-id="{{ row.id }}">
         <td></td>
         <td>{{ label | safe }}</td>
         <td>{{ trait | safe }}</td>

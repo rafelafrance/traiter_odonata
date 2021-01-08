@@ -14,7 +14,8 @@ def html_writer(args, rows):
     """Output the data."""
     colors = trait_colors(rows)
 
-    for row in rows:
+    for i, row in enumerate(rows):
+        row['id'] = i
         row['text'] = format_text(row, colors)
         row['traits'] = format_traits(row, colors)
 
