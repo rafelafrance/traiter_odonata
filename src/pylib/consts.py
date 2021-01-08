@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from traiter.pylib.itis_terms import ItisTerms
+from traiter.itis_terms import ItisTerms
 
 DATA_DIR = Path.cwd() / 'data'
 DOC_DIR = DATA_DIR

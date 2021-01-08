@@ -17,7 +17,6 @@ class TestSex(unittest.TestCase):
              {'sex_diff': 'like male but', 'trait': 'sex_diff', 'start': 16, 'end': 29},
              {'color_mod': 'duller', 'sex_diff': 'like male but',
               'trait': 'color_mod', 'start': 30, 'end': 36}]
-
         )
 
     def test_sex_02(self):
