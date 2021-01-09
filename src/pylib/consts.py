@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from traiter.itis_terms import ItisTerms
+from traiter.terms.itis import Itis
 
 DATA_DIR = Path.cwd() / 'data'
 DOC_DIR = DATA_DIR
@@ -15,13 +15,13 @@ TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
 LINK_STEP = 'link'
 
-TERMS = ItisTerms.read_csv(VOCAB_DIR / 'odonata_terms.csv')
-TERMS += ItisTerms.read_csv(VOCAB_DIR / 'odonata_species.csv')
-TERMS += ItisTerms.read_csv(VOCAB_DIR / 'common_terms.csv')
-TERMS += ItisTerms.shared('animals insect_anatomy units time colors')
-TERMS += ItisTerms.itis_common_names(taxon='Odonata')
-TERMS += ItisTerms.abbrev_species(TERMS, label='odonata')
-TERMS += ItisTerms.taxon_level_terms(
+TERMS = Itis.read_csv(VOCAB_DIR / 'odonata_terms.csv')
+TERMS += Itis.read_csv(VOCAB_DIR / 'odonata_species.csv')
+TERMS += Itis.read_csv(VOCAB_DIR / 'common_terms.csv')
+TERMS += Itis.shared('animals insect_anatomy units time colors')
+TERMS += Itis.itis_common_names(taxon='Odonata')
+TERMS += Itis.abbrev_species(TERMS, label='odonata')
+TERMS += Itis.taxon_level_terms(
     TERMS, label='odonata', new_label='odonata_species')
 TERMS.drop('imperial_length')
 

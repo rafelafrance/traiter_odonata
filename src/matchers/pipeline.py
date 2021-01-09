@@ -4,9 +4,9 @@ from functools import partial
 
 from traiter.actions import text_action
 from traiter.pipeline import SpacyPipeline
-from traiter.rule_matcher import RuleMatcher
+from traiter.matchers.rule import Rule
 from traiter.sentencizer import Sentencizer
-from traiter.term_matcher import TermMatcher
+from traiter.matchers.term import Term
 from traiter.to_entities import ToEntities
 from traiter.util import TERM_STEP
 
@@ -41,14 +41,11 @@ class Pipeline(SpacyPipeline):
         token2entity = {TERM_STEP, GROUP_STEP, TRAIT_STEP}
         entities2keep = {TERM_STEP, GROUP_STEP, TRAIT_STEP}
 
-        TermMatcher.add_pipes(
-            self.nlp,
-            TERMS,
-            before='parser',
-            action=partial(text_action, replace=REPLACE))
-        RuleMatcher.add_pipe(self.nlp, MATCHERS, GROUP_STEP, before='parser')
-        RuleMatcher.add_pipe(self.nlp, MATCHERS, TRAIT_STEP, before='parser')
-        RuleMatcher.add_pipe(self.nlp, MATCHERS, HEADER_STEP, before='parser')
-        RuleMatcher.add_pipe(self.nlp, MATCHERS, LINK_STEP, before='parser')
+        Term.add_pipes(self.nlp, TERMS, before='parser',
+                       action=partial(text_action, replace=REPLACE))
+        Rule.add_pipe(self.nlp, MATCHERS, GROUP_STEP, before='parser')
+        Rule.add_pipe(self.nlp, MATCHERS, TRAIT_STEP, before='parser')
+        Rule.add_pipe(self.nlp, MATCHERS, HEADER_STEP, before='parser')
+        Rule.add_pipe(self.nlp, MATCHERS, LINK_STEP, before='parser')
         ToEntities.add_pipe(self.nlp, entities2keep, token2entity, before='parser')
         Sentencizer.add_pipe(self.nlp, ABBREVS, headings='heading', before='parser')
