@@ -1,7 +1,11 @@
 """Extract body part annotations."""
 
-from ..pylib.actions import text_action
-from ..pylib.consts import BOTH, COMMA, DASH, GROUP_STEP, INT, MISSING, PART_MOD
+from functools import partial
+
+from traiter.actions import text_action
+
+from ..pylib.consts import BOTH, COMMA, DASH, GROUP_STEP, INT, MISSING, PART_MOD, \
+    REPLACE
 
 PART = ['part', 'fly']
 ANY_PART = PART + ['part_loc']
@@ -10,7 +14,7 @@ NUMBERED = ['abdomen_seg', 'stripe']
 
 def body_part(span):
     """Enrich the match."""
-    data = text_action(span)
+    data = text_action(span, REPLACE)
     if [t for t in span if t.lower_ in MISSING]:
         data['missing'] = True
     return data
@@ -84,7 +88,7 @@ BODY_PART = {
         },
         {
             'label': 'body_part_loc',
-            'on_match': text_action,
+            'on_match': partial(text_action, replace=REPLACE),
             'patterns': [
                 [
                     {'ENT_TYPE': 'part_loc', 'OP': '+'},

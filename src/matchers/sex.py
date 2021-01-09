@@ -1,7 +1,10 @@
 """Sex terms."""
 
-from ..pylib.actions import text_action
-from ..pylib.consts import GROUP_STEP
+from functools import partial
+
+from traiter.actions import text_action
+
+from ..pylib.consts import GROUP_STEP, REPLACE
 
 SIMILAR = """like similar""".split()
 
@@ -9,7 +12,7 @@ SEX = {
     GROUP_STEP: [
         {
             'label': 'sex_diff',
-            'on_match': text_action,
+            'on_match': partial(text_action, replace=REPLACE),
             'patterns': [
                 [
                     {'LOWER': {'IN': SIMILAR}},

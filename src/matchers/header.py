@@ -2,9 +2,9 @@
 
 from functools import partial
 
-from ..pylib.actions import flag_action
-from ..pylib.consts import HEADER_STEP, INT
+from traiter.actions import flag_action
 
+from ..pylib.consts import HEADER_STEP, INT
 
 HEADER = {
     HEADER_STEP: [

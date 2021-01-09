@@ -1,7 +1,8 @@
 """Common color snippets."""
 
-from ..pylib.actions import text_action
-from ..pylib.consts import DASH, GROUP_STEP, MISSING, COLOR_MOD
+from traiter.actions import text_action
+
+from ..pylib.consts import COLOR_MOD, DASH, GROUP_STEP, MISSING, REPLACE
 
 ALL_COLORS = ['color', 'color_mod']
 JOINERS = DASH + ['with', 'or', 'to', 'and']
@@ -9,7 +10,7 @@ JOINERS = DASH + ['with', 'or', 'to', 'and']
 
 def color(span):
     """Enrich the match."""
-    data = text_action(span)
+    data = text_action(span, REPLACE)
     if [t for t in span if t.lower_ in MISSING]:
         data['missing'] = True
     return data
@@ -25,7 +26,8 @@ COLOR = {
                     {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
                     {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
                     {'ENT_TYPE': 'color', 'OP': '+'},
-                ],                [
+                ],
+                [
                     {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
                     {'ENT_TYPE': 'color', 'OP': '+'},
                     {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},

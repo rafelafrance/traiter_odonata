@@ -2,7 +2,6 @@
 
 from ..pylib.consts import LINK_STEP
 
-
 BODY_PARTS = """ body_part body_part_loc sex_diff """.split()
 COLORS = """ color color_mod """.split()
 FILLER_POS = """ CCONJ VERB AUX """.split()
@@ -14,8 +13,7 @@ def linker(span):
     for token in span:
         if token.ent_type_ and token.ent_type_ not in BODY_PARTS:
             token._.data = {**token._.data, **part._.data}
-
-    return {'_forget': True}
+    return
 
 
 BODY_PART_LINKER = {

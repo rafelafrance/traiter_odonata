@@ -2,7 +2,8 @@
 
 from functools import partial
 
-from ..pylib.actions import hoist_action
+from traiter.actions import hoist_action
+
 from ..pylib.consts import TRAIT_STEP
 
 HIND_WING_LENGTH = {
