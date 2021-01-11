@@ -22,7 +22,7 @@ class TestColor(unittest.TestCase):
             [{'body_part': 'wing', 'trait': 'body_part', 'start': 0, 'end': 5},
              {'color_mod': 'without dark', 'missing': True, 'body_part': 'wing',
               'trait': 'color_mod', 'start': 6, 'end': 18},
-             {'body_part_loc': 'tip', 'trait': 'body_part_loc', 'start': 19, 'end': 22}]
+             {'body_part': 'tip', 'trait': 'body_part', 'start': 19, 'end': 22}]
         )
 
     def test_color_03(self):
@@ -59,4 +59,30 @@ class TestColor(unittest.TestCase):
             test_traits('clear or faintly washed with yellowish tint'),
             [{'color': 'clear or faintly washed with yellowish tint',
               'trait': 'color', 'start': 0, 'end': 43}]
+        )
+
+    def test_color_08(self):
+        self.assertEqual(
+            test_traits('showing yellow squares on S7 '),
+            [{'color': 'yellow squares', 'body_part': 's7',
+              'trait': 'color', 'start': 8, 'end': 22},
+             {'body_part': 's7', 'end': 28, 'start': 26, 'trait': 'body_part'}]
+        )
+
+    def test_color_09(self):
+        self.assertEqual(
+            test_traits('showing yellow squares on S7 '),
+            [{'color': 'yellow squares', 'body_part': 's7',
+              'trait': 'color', 'start': 8, 'end': 22},
+             {'body_part': 's7', 'end': 28, 'start': 26, 'trait': 'body_part'}]
+        )
+
+    def test_color_10(self):
+        self.assertEqual(
+            test_traits('Colored much like male but not pruinose,'),
+            [{'sex_diff': 'like male but',
+              'trait': 'sex_diff', 'start': 13, 'end': 26},
+             {'color_mod': 'not pruinose', 'missing': True,
+              'sex_diff': 'like male but',
+              'trait': 'color_mod', 'start': 27, 'end': 39}]
         )

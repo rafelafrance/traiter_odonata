@@ -28,3 +28,26 @@ class TestSex(unittest.TestCase):
              {'color_mod': 'duller', 'sex_diff': 'similar to male but',
               'trait': 'color_mod', 'start': 36, 'end': 42}]
         )
+
+    def test_sex_03(self):
+        self.assertEqual(
+            test_traits('more contrasty in female than in male.'),
+            [{'sex': 'female', 'trait': 'sex', 'start': 18, 'end': 24},
+             {'sex_diff': 'than in male',
+              'trait': 'sex_diff', 'start': 25, 'end': 37}]
+        )
+
+    def test_sex_04(self):
+        self.assertEqual(
+            test_traits('Duller than male,'),
+            [{'color_mod': 'duller', 'sex_diff': 'than male',
+              'trait': 'color_mod', 'start': 0, 'end': 6},
+             {'sex_diff': 'than male', 'trait': 'sex_diff', 'start': 7, 'end': 16}]
+        )
+
+    def test_sex_05(self):
+        self.assertEqual(
+            test_traits('like those of male'),
+            [{'sex_diff': 'like those of male',
+              'trait': 'sex_diff', 'start': 0, 'end': 18}]
+        )

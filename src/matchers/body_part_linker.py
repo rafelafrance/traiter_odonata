@@ -1,10 +1,11 @@
 """Link traits to body parts."""
 
-from ..pylib.consts import LINK_STEP
+from ..pylib.consts import PART_STEP
 
 BODY_PARTS = """ body_part body_part_loc sex_diff """.split()
 COLORS = """ color color_mod """.split()
 FILLER_POS = """ CCONJ VERB AUX """.split()
+LINKER = """ often sometimes normally usually """.split()
 
 
 def linker(span):
@@ -17,7 +18,7 @@ def linker(span):
 
 
 BODY_PART_LINKER = {
-    LINK_STEP: [
+    PART_STEP: [
         {
             'label': 'body_part_linker',
             'on_match': linker,
@@ -42,6 +43,21 @@ BODY_PART_LINKER = {
                     {'POS': {'IN': FILLER_POS}, 'OP': '?'},
                     {'POS': {'IN': FILLER_POS}, 'OP': '?'},
                     {'POS': {'IN': FILLER_POS}, 'OP': '?'},
+                    {'ENT_TYPE': {'IN': COLORS}, 'OP': '+'},
+                ],
+                [
+                    {'ENT_TYPE': {'IN': COLORS}, 'OP': '+'},
+                    {'POS': {'IN': ['ADP']}},
+                    {'ENT_TYPE': {'IN': BODY_PARTS}},
+                ],
+                [
+                    {'POS': {'IN': ['ADP']}},
+                    {'ENT_TYPE': {'IN': COLORS}, 'OP': '+'},
+                    {'ENT_TYPE': {'IN': BODY_PARTS}},
+                ],
+                [
+                    {'ENT_TYPE': {'IN': BODY_PARTS}},
+                    {'LOWER': {'IN': LINKER}},
                     {'ENT_TYPE': {'IN': COLORS}, 'OP': '+'},
                 ],
             ],

@@ -13,7 +13,8 @@ VOCAB_DIR = Path.cwd() / 'src' / 'vocabulary'
 GROUP_STEP = 'group'
 TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
-LINK_STEP = 'link'
+PART_STEP = 'part'
+SEX_STEP = 'sex'
 
 TERMS = Itis.read_csv(VOCAB_DIR / 'odonata_terms.csv')
 TERMS += Itis.read_csv(VOCAB_DIR / 'odonata_species.csv')
@@ -46,7 +47,7 @@ QUOTE = ' “ ” " \' '.split()
 LETTERS = list('abcdefghijklmnopqrstuvwxyz')
 
 PER_COUNTS = """ pair pairs """.split()
-MISSING = """ without missing lack lacking except excepting """.split()
+MISSING = """ without missing lack lacking except excepting not """.split()
 BOTH = """ both either """.split()
 COLOR_MOD = """ fine thick broad thin mostly entire entirely narrow """.split()
 PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.split()

@@ -48,7 +48,8 @@ def format_text(row, colors):
     spans = []
     for text, trait in frags:
         if not trait:
-            spans.append(text)
+            span = f'<span class="uncovered">{text}</span>'
+            spans.append(span)
         else:
             name = trait['trait']
             fields = {k: v for k, v in trait.items()

@@ -3,10 +3,10 @@
 from functools import partial
 
 from traiter.actions import text_action
-from traiter.pipeline import SpacyPipeline
 from traiter.matchers.rule import Rule
-from traiter.sentencizer import Sentencizer
 from traiter.matchers.term import Term
+from traiter.pipeline import SpacyPipeline
+from traiter.sentencizer import Sentencizer
 from traiter.to_entities import ToEntities
 from traiter.util import TERM_STEP
 
@@ -19,10 +19,11 @@ from .month_range import MONTH_RANGE
 from .range import RANGE
 from .sci_name import SCI_NAME
 from .sex import SEX
+from .sex_linker import sex_linker
 from .total_length import TOTAL_LENGTH
 from .vernacular import VERNACULAR
-from ..pylib.consts import ABBREVS, GROUP_STEP, HEADER_STEP, LINK_STEP, REPLACE, \
-    TERMS, TRAIT_STEP
+from ..pylib.consts import ABBREVS, GROUP_STEP, HEADER_STEP, PART_STEP, REPLACE, \
+    SEX_STEP, TERMS, TRAIT_STEP
 
 MATCHERS = [
     BODY_PART, BODY_PART_LINKER, COLOR, HEADER, HIND_WING_LENGTH, MONTH_RANGE, RANGE,
@@ -43,9 +44,10 @@ class Pipeline(SpacyPipeline):
 
         Term.add_pipes(self.nlp, TERMS, before='parser',
                        action=partial(text_action, replace=REPLACE))
+        Sentencizer.add_pipe(self.nlp, ABBREVS, headings='heading', before='parser')
         Rule.add_pipe(self.nlp, MATCHERS, GROUP_STEP, before='parser')
         Rule.add_pipe(self.nlp, MATCHERS, TRAIT_STEP, before='parser')
         Rule.add_pipe(self.nlp, MATCHERS, HEADER_STEP, before='parser')
-        Rule.add_pipe(self.nlp, MATCHERS, LINK_STEP, before='parser')
+        Rule.add_pipe(self.nlp, MATCHERS, PART_STEP, before='parser')
         ToEntities.add_pipe(self.nlp, entities2keep, token2entity, before='parser')
-        Sentencizer.add_pipe(self.nlp, ABBREVS, headings='heading', before='parser')
+        self.nlp.add_pipe(sex_linker, name=SEX_STEP)

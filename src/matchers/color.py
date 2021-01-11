@@ -55,6 +55,21 @@ COLOR = {
                     {'TEXT': {'IN': JOINERS}, 'OP': '?'},
                     {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
                 ],
+                [
+                    {'ENT_TYPE': 'color'},
+                    {'TEXT': {'IN': DASH}},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+                ],
+                [
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+                    {'TEXT': {'IN': DASH}},
+                    {'ENT_TYPE': 'color'},
+                ],
+                [
+                    {'LOWER': {'IN': MISSING}},
+                    {'ENT_TYPE': 'color'},
+                    {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+                ],
             ],
         },
         {
