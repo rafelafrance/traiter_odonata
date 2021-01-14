@@ -4,7 +4,7 @@ import re
 
 from traiter.util import to_positive_float
 
-from ..pylib.consts import DASH, GROUP_STEP, NUMBER
+from ..pylib.consts import DASH, NUMBER
 
 
 def range_(span):
@@ -13,18 +13,16 @@ def range_(span):
     return {f: to_positive_float(v) for f, v in zip(['low', 'high'], values)}
 
 
-RANGE = {
-    GROUP_STEP: [
-        {
-            'label': 'range',
-            'on_match': range_,
-            'patterns': [
-                [
-                    {'TEXT': {'REGEX': NUMBER}},
-                    {'TEXT': {'IN': DASH}},
-                    {'TEXT': {'REGEX': NUMBER}},
-                ],
+RANGE = [
+    {
+        'label': 'range',
+        'action': range_,
+        'patterns': [
+            [
+                {'TEXT': {'REGEX': NUMBER}},
+                {'TEXT': {'IN': DASH}},
+                {'TEXT': {'REGEX': NUMBER}},
             ],
-        },
-    ],
-}
+        ],
+    },
+]

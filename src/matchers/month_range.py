@@ -1,6 +1,6 @@
 """Month ranges."""
 
-from ..pylib.consts import DASH, GROUP_STEP, REPLACE
+from ..pylib.consts import DASH, REPLACE
 
 MODIFIER = """ early mid late """.split()
 TO = """ to into """.split()
@@ -23,27 +23,25 @@ def month_range(span):
     return data
 
 
-MONTH_RANGE = {
-    GROUP_STEP: [
-        {
-            'label': 'month_range',
-            'on_match': month_range,
-            'patterns': [
-                [
-                    {'LOWER': {'IN': MODIFIER}, 'OP': '?'},
-                    {'LOWER': {'IN': DASH}, 'OP': '?'},
-                    {'ENT_TYPE': 'month'},
-                ],
-                [
-                    {'LOWER': {'IN': MODIFIER}, 'OP': '?'},
-                    {'LOWER': {'IN': DASH}, 'OP': '?'},
-                    {'ENT_TYPE': 'month'},
-                    {'LOWER': {'IN': TO}},
-                    {'LOWER': {'IN': MODIFIER}, 'OP': '?'},
-                    {'LOWER': {'IN': DASH}, 'OP': '?'},
-                    {'ENT_TYPE': 'month'},
-                ],
+MONTH_RANGE = [
+    {
+        'label': 'month_range',
+        'action': month_range,
+        'patterns': [
+            [
+                {'LOWER': {'IN': MODIFIER}, 'OP': '?'},
+                {'LOWER': {'IN': DASH}, 'OP': '?'},
+                {'ENT_TYPE': 'month'},
             ],
-        },
-    ],
-}
+            [
+                {'LOWER': {'IN': MODIFIER}, 'OP': '?'},
+                {'LOWER': {'IN': DASH}, 'OP': '?'},
+                {'ENT_TYPE': 'month'},
+                {'LOWER': {'IN': TO}},
+                {'LOWER': {'IN': MODIFIER}, 'OP': '?'},
+                {'LOWER': {'IN': DASH}, 'OP': '?'},
+                {'ENT_TYPE': 'month'},
+            ],
+        ],
+    },
+]

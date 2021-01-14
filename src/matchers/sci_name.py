@@ -1,6 +1,6 @@
 """Get scientific names."""
 
-from ..pylib.consts import GROUP_STEP, SLASH
+from ..pylib.consts import SLASH
 
 
 def sci_name(span):
@@ -12,21 +12,19 @@ def sci_name(span):
     return {'sci_name': name, 'group': 'odonata'}
 
 
-SCI_NAME = {
-    GROUP_STEP: [
-        {
-            'label': 'sci_name',
-            'on_match': sci_name,
-            'patterns': [
-                [
-                    {'ENT_TYPE': 'odonata'},
-                ],
-                [
-                    {'ENT_TYPE': 'odonata'},
-                    {'TEXT': {'IN': SLASH}},
-                    {'ENT_TYPE': 'odonata_species'},
-                ],
+SCI_NAME = [
+    {
+        'label': 'sci_name',
+        'action': sci_name,
+        'patterns': [
+            [
+                {'ENT_TYPE': 'odonata'},
             ],
-        },
-    ],
-}
+            [
+                {'ENT_TYPE': 'odonata'},
+                {'TEXT': {'IN': SLASH}},
+                {'ENT_TYPE': 'odonata_species'},
+            ],
+        ],
+    },
+]

@@ -22,7 +22,7 @@ class TestColor(unittest.TestCase):
             [{'body_part': 'wing', 'trait': 'body_part', 'start': 0, 'end': 5},
              {'color_mod': 'without dark', 'missing': True, 'body_part': 'wing',
               'trait': 'color_mod', 'start': 6, 'end': 18},
-             {'body_part': 'tip', 'trait': 'body_part', 'start': 19, 'end': 22}]
+             {'body_part': 'tip', 'trait': 'body_part_loc', 'start': 19, 'end': 22}]
         )
 
     def test_color_03(self):

@@ -21,7 +21,7 @@ def paulson_guide(args):
 
     rows = []
     for doc in pipeline.nlp.pipe(lines):
-        rows.append({'doc': doc, 'traits': pipeline.trait_list(doc)})
+        rows.append({'doc': doc, 'traits': list(doc.ents)})
 
     if args.html_file:
         copied = deepcopy(rows)

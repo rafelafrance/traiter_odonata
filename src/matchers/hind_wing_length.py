@@ -4,19 +4,15 @@ from functools import partial
 
 from traiter.actions import hoist_action
 
-from ..pylib.consts import TRAIT_STEP
-
-HIND_WING_LENGTH = {
-    TRAIT_STEP: [
-        {
-            'label': 'hind_wing_length',
-            'on_match': partial(hoist_action, keys={'low', 'high'}),
-            'patterns': [
-                [
-                    {'ENT_TYPE': 'hind_wing_length_key'},
-                    {'ENT_TYPE': 'range'},
-                ],
+HIND_WING_LENGTH = [
+    {
+        'label': 'hind_wing_length',
+        'action': partial(hoist_action, keys={'low', 'high'}),
+        'patterns': [
+            [
+                {'ENT_TYPE': 'hind_wing_length_key'},
+                {'ENT_TYPE': 'range'},
             ],
-        },
-    ],
-}
+        ],
+    },
+]

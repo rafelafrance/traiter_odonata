@@ -2,8 +2,7 @@
 
 import re
 
-from ..pylib.consts import GROUP_STEP, SLASH
-
+from ..pylib.consts import SLASH
 
 SLASH_RE = re.compile(fr'{"|".join(SLASH)}')
 
@@ -17,21 +16,19 @@ def vernacular(span):
     return {'vernacular': name}
 
 
-VERNACULAR = {
-    GROUP_STEP: [
-        {
-            'label': 'vernacular',
-            'on_match': vernacular,
-            'patterns': [
-                [
-                    {'ENT_TYPE': 'common_name'},
-                ],
-                [
-                    {'IS_ALPHA': True},
-                    {'TEXT': {'IN': SLASH}},
-                    {'ENT_TYPE': 'common_name'},
-                ],
+VERNACULAR = [
+    {
+        'label': 'vernacular',
+        'action': vernacular,
+        'patterns': [
+            [
+                {'ENT_TYPE': 'common_name'},
             ],
-        },
-    ],
-}
+            [
+                {'IS_ALPHA': True},
+                {'TEXT': {'IN': SLASH}},
+                {'ENT_TYPE': 'common_name'},
+            ],
+        ],
+    },
+]

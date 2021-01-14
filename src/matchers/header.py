@@ -1,26 +1,14 @@
-"""Get scientific names."""
+"""Get document headers."""
 
-from functools import partial
 
-from traiter.actions import flag_action
-
-from ..pylib.consts import HEADER_STEP, INT
-
-HEADER = {
-    HEADER_STEP: [
-        {
-            'label': 'header',
-            'on_match': partial(flag_action, flag='in_header'),
-            'patterns': [
-                [
-                    {'TEXT': {'REGEX': INT}},
-                    {'ENT_TYPE': 'vernacular'},
-                    {'ENT_TYPE': 'sci_name'},
-                    {'ENT_TYPE': 'total_length'},
-                    {'IS_PUNCT': True, 'OP': '?'},
-                    {'ENT_TYPE': 'hind_wing_length'},
-                ],
-            ],
-        },
-    ],
-}
+HEADER = [
+    {
+        'label': 'header',
+        'patterns': [
+            [{'TEXT': 'Description'}],
+            [{'TEXT': 'Flight'}, {'TEXT': 'Season'}],
+            [{'TEXT': 'Identification'}],
+            [{'TEXT': 'Natural'}, {'TEXT': 'History'}],
+        ],
+    },
+]
