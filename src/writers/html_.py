@@ -93,4 +93,4 @@ def format_traits(row, colors):
         data += ', '.join(f"{k} = {v}" for k, v in fields.items())
         traits[label].append(data)
 
-    return sorted([(k, '<br/>'.join(v)) for k, v in traits.items()])
+    return sorted((k, '<br/>'.join(v)) for k, v in traits.items())

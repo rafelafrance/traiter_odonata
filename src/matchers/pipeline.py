@@ -6,6 +6,7 @@ from traiter.actions import Actions, text_action
 from traiter.patterns import Patterns
 from traiter.pipeline import SpacyPipeline
 from traiter.pipes.action_pipe import ActionPipe
+from traiter.pipes.dependency_pipe import DependencyPipe
 from traiter.pipes.entity_ruler_pipe import EntityRulerPipe
 from traiter.pipes.retokenize_ruler_pipe import RetokenizeRulerPipe
 from traiter.pipes.sentencizer_pipe import SentencizerPipe
@@ -18,14 +19,15 @@ from .hind_wing_length import HIND_WING_LENGTH
 from .range import RANGE
 from .sci_name import SCI_NAME
 from .sex import SEX
+from .sex_linker import sex_linker
 from .total_length import TOTAL_LENGTH
 from .vernacular import VERNACULAR
-from ..pylib.consts import ABBREVS, REPLACE, TERMS
+from ..pylib.consts import ABBREVS, PART_STEP, REPLACE, SEX_STEP, TERMS
 
-ENTITY = [BODY_PART, BODY_PART_LINKER, COLOR, HIND_WING_LENGTH,
-          SCI_NAME, SEX, TOTAL_LENGTH, VERNACULAR]
+ENTITY = [BODY_PART, COLOR, HIND_WING_LENGTH, SCI_NAME, SEX, TOTAL_LENGTH, VERNACULAR]
 RETOKENIZE = [DOC_HEADING, RANGE]
 MATCHERS = RETOKENIZE + ENTITY
+LINKERS = [BODY_PART_LINKER]
 
 
 class Pipeline(SpacyPipeline):
@@ -44,7 +46,11 @@ class Pipeline(SpacyPipeline):
         actions = Actions.from_terms(TERMS, default=default)
         actions += Actions.from_matchers(*MATCHERS)
 
+        depends = DependencyPipe.dependency_patterns(LINKERS)
+
         RetokenizeRulerPipe.add_pipe(self.nlp, retokenize, name='step1')
         EntityRulerPipe.add_pipe(self.nlp, entities, name='step2')
         ActionPipe.add_pipe(self.nlp, actions)
         SentencizerPipe.add_pipe(self.nlp, ABBREVS, headings='heading')
+        # DependencyPipe.add_pipe(self.nlp, depends, name=PART_STEP)
+        self.nlp.add_pipe(sex_linker, name=SEX_STEP)

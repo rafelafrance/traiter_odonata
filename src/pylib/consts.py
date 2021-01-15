@@ -13,7 +13,7 @@ VOCAB_DIR = Path.cwd() / 'src' / 'vocabulary'
 GROUP_STEP = 'group'
 TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
-PART_STEP = 'part'
+PART_STEP = 'part_linker'
 SEX_STEP = 'sex'
 
 TERMS = Itis.read_csv(VOCAB_DIR / 'odonata_terms.csv')
