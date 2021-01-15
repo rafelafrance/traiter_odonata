@@ -1,9 +1,8 @@
 """Get document headers."""
 
-
-HEADER = [
+DOC_HEADING = [
     {
-        'label': 'header',
+        'label': 'heading',
         'patterns': [
             [{'TEXT': 'Description'}],
             [{'TEXT': 'Flight'}, {'TEXT': 'Season'}],

@@ -1,13 +1,11 @@
 """Get total the total length."""
 
-from functools import partial
-
-from traiter.actions import hoist_action
+from .range import range_
 
 TOTAL_LENGTH = [
     {
         'label': 'total_length',
-        'action': partial(hoist_action, keys={'low', 'high'}),
+        'action': range_,
         'patterns': [
             [
                 {'ENT_TYPE': 'total_length_key'},

@@ -18,7 +18,7 @@ SEX_STEP = 'sex'
 
 TERMS = Itis.read_csv(VOCAB_DIR / 'odonata_terms.csv')
 TERMS += Itis.read_csv(VOCAB_DIR / 'odonata_species.csv')
-TERMS += Itis.shared('animals insect_anatomy units time colors')
+TERMS += Itis.shared('animals insect_anatomy units colors')
 TERMS += Itis.itis_common_names(taxon='Odonata')
 TERMS += Itis.abbrev_species(TERMS, label='odonata')
 TERMS += Itis.taxon_level_terms(
@@ -39,15 +39,10 @@ CROSS = ' x × '.split()
 DASH = ' – - –– -- '.split()
 DOT = ' . '.split()
 INT = r'^\d+$'
-NUMBER = r'^\d+(\.\d*)?$'
 OPEN = ' ( [ '.split()
 PLUS = ' + '.split()
 SLASH = ' / '.split()
 QUOTE = ' “ ” " \' '.split()
 LETTERS = list('abcdefghijklmnopqrstuvwxyz')
 
-PER_COUNTS = """ pair pairs """.split()
 MISSING = """ without missing lack lacking except excepting not """.split()
-BOTH = """ both either """.split()
-COLOR_MOD = """ fine thick broad thin mostly entire entirely narrow """.split()
-PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.split()

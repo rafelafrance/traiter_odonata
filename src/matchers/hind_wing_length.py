@@ -1,13 +1,11 @@
 """Get total the hind wing length."""
 
-from functools import partial
-
-from traiter.actions import hoist_action
+from .range import range_
 
 HIND_WING_LENGTH = [
     {
         'label': 'hind_wing_length',
-        'action': partial(hoist_action, keys={'low', 'high'}),
+        'action': range_,
         'patterns': [
             [
                 {'ENT_TYPE': 'hind_wing_length_key'},

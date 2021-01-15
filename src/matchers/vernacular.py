@@ -7,13 +7,13 @@ from ..pylib.consts import SLASH
 SLASH_RE = re.compile(fr'{"|".join(SLASH)}')
 
 
-def vernacular(span):
+def vernacular(ent):
     """Enrich the match."""
-    name = [t.lower_ for t in span if t.ent_type_ == 'common_name'][0]
-    first = SLASH_RE.split(span.text)
+    name = [t.lower_ for t in ent if t._.prev_label == 'common_name'][0]
+    first = SLASH_RE.split(ent.text)
     if len(first) > 1:
         name = [name, f'{first[0]} {" ".join(name.split()[1:])}']
-    return {'vernacular': name}
+    ent._.data = {'vernacular': name}
 
 
 VERNACULAR = [

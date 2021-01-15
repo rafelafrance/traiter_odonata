@@ -1,19 +1,28 @@
 """Common color snippets."""
 
-from traiter.actions import text_action
-
-from ..pylib.consts import COLOR_MOD, DASH, MISSING, REPLACE
+from ..pylib.consts import DASH, MISSING, REPLACE
 
 ALL_COLORS = ['color', 'color_mod']
 JOINERS = DASH + ['with', 'or', 'to', 'and']
+COLOR_MOD = """ fine thick broad thin mostly entire entirely narrow """.split()
 
 
-def color(span):
+def color(ent):
     """Enrich the match."""
-    data = text_action(span, REPLACE)
-    if [t for t in span if t.lower_ in MISSING]:
+    data = {}
+
+    if any(t for t in ent if t.lower_ in MISSING):
         data['missing'] = True
-    return data
+
+    label = 'color'
+
+    if not any(t for t in ent if t._.prev_label == 'color'):
+        label = 'color_mod'
+        ent._.new_label = label
+
+    data[label] = REPLACE.get(ent.lower_, ent.lower_)
+
+    ent._.data = data
 
 
 COLOR = [
@@ -22,37 +31,10 @@ COLOR = [
         'action': color,
         'patterns': [
             [
-                {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'ENT_TYPE': 'color', 'OP': '+'},
-            ],
-            [
-                {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
-                {'ENT_TYPE': 'color', 'OP': '+'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
-            ],
-            [
                 {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'ENT_TYPE': 'color', 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
                 {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
                 {'ENT_TYPE': 'color', 'OP': '+'},
                 {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
             ],
             [
                 {'ENT_TYPE': 'color'},
@@ -68,6 +50,29 @@ COLOR = [
                 {'LOWER': {'IN': MISSING}},
                 {'ENT_TYPE': 'color'},
                 {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+            ],
+            [
+                {'LOWER': {'IN': MISSING}, 'OP': '?'},
+                {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
+                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
+                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+                {'ENT_TYPE': 'color', 'OP': '+'},
+            ],
+            [
+                {'LOWER': {'IN': MISSING}, 'OP': '?'},
+                {'TEXT': {'IN': COLOR_MOD}, 'OP': '?'},
+                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
+                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+                {'ENT_TYPE': 'color', 'OP': '+'},
+                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
             ],
         ],
     },

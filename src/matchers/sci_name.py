@@ -3,13 +3,13 @@
 from ..pylib.consts import SLASH
 
 
-def sci_name(span):
+def sci_name(ent):
     """Enrich the match."""
-    name = [t.lower_ for t in span if t.ent_type_ == 'odonata'][0].capitalize()
-    species = [t.lower_ for t in span if t.ent_type_ == 'odonata_species']
+    name = [t.lower_ for t in ent if t._.prev_label == 'odonata'][0].capitalize()
+    species = [t.lower_ for t in ent if t._.prev_label == 'odonata_species']
     if species:
         name = [name, f'{name.split()[0]} {species[0]}']
-    return {'sci_name': name, 'group': 'odonata'}
+    ent._.data = {'sci_name': name, 'group': 'odonata'}
 
 
 SCI_NAME = [
