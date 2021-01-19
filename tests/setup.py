@@ -6,10 +6,10 @@ from typing import Dict, List
 from traiter.util import shorten
 
 from src.pylib.pipeline import pipeline
-# from src.pylib.consts import SEX_STEP
+from src.pylib.consts import SEX_STEP
 
 NLP = pipeline()  # Singleton for testing
-# NLP.remove_pipe(SEX_STEP)
+NLP.remove_pipe(SEX_STEP)
 
 
 def test_traits(text: str) -> List[Dict]:

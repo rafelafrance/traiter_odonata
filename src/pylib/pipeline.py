@@ -1,13 +1,14 @@
 """Build the NLP pipeline."""
 
 import spacy
-import traiter.pipes.cache_label
+import traiter.pipes.cache
 import traiter.pipes.debug
 import traiter.pipes.dependency
 import traiter.pipes.sentence
 from traiter.patterns import add_ruler_patterns
 from traiter.pipes.entity_data import EntityData
 
+import src.patterns.sex_linker
 from src.patterns.body_part import BODY_PART, SEGMENTS
 from src.patterns.body_part_linker import BODY_PART_LINKER
 from src.patterns.color import COLOR
@@ -18,7 +19,7 @@ from src.patterns.sci_name import SCI_NAME
 from src.patterns.sex import SEX, SEX_DIFF_LINKER
 from src.patterns.total_length import TOTAL_LENGTH
 from src.patterns.vernacular import VERNACULAR
-from src.pylib.consts import ABBREVS, TERMS
+from src.pylib.consts import ABBREVS, SEX_STEP, TERMS
 
 
 ENTITY = [BODY_PART, COLOR, HIND_WING_LENGTH, SCI_NAME, SEX, TOTAL_LENGTH, VERNACULAR]
@@ -70,7 +71,7 @@ def pipeline():
     # nlp.add_pipe('debug_tokens', name='debug4')
     # nlp.add_pipe('debug_entities', name='debug5')
 
-    # self.nlp.add_pipe(sex_linker, name=SEX_STEP)
+    nlp.add_pipe(SEX_STEP)
 
     # print(nlp.pipe_names)
     return nlp

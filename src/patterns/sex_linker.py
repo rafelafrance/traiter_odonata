@@ -1,25 +1,27 @@
 """Link traits to the sex of the odonate."""
 
-from ..pylib.consts import REPLACE
+from spacy.language import Language
 
+from ..pylib.consts import REPLACE, SEX_STEP
 
 SKIPS = """ vernacular sci_name heading """.split()
 
 
+@Language.component(SEX_STEP)
 def sex_linker(doc):
     """Link traits to sex."""
 
     sex = 'both sexes'
-    for token in doc:
-        label = token.ent_type_
+    for ent in doc.ents:
+        label = ent.label_
 
         if label in SKIPS:
             continue
 
         if label == 'sex':
-            sex = token._.data['sex']
+            sex = ent._.data['sex']
             sex = REPLACE.get(sex, sex)
-        elif label:
-            token._.data['sex'] = sex
+        else:
+            ent._.data['sex'] = ent._.data.get('sex', sex)
 
     return doc

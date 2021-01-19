@@ -14,7 +14,7 @@ GROUP_STEP = 'group'
 TRAIT_STEP = 'traits'
 HEADER_STEP = 'header'
 PART_STEP = 'part_linker'
-SEX_STEP = 'sex'
+SEX_STEP = 'sex_linker'
 
 TERMS = Itis.shared('animals insect_anatomy units colors')
 TERMS += Itis.read_csv(VOCAB_DIR / 'odonata_terms.csv')
