@@ -6,6 +6,7 @@ PART = ['part', 'fly']
 ANY_PART = PART + ['part_loc']
 NUMBERED = ['abdomen_seg', 'stripe']
 AS_PART = PART + ['abdomen_seg']
+
 PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.split()
 BOTH = """ both either """.split()
 
@@ -18,12 +19,12 @@ def body_part(ent):
         data['missing'] = True
 
     label = 'body_part'
-
-    if not any(t for t in ent if t._.prev_label in AS_PART):
+    if not any(t for t in ent if t._.label_cache in AS_PART):
         label = 'body_part_loc'
         ent._.new_label = label
 
-    data[label] = REPLACE.get(ent.lower_, ent.lower_)
+    lower = ' '.join(t.lower_ for t in ent)
+    data[label] = REPLACE.get(lower, lower)
 
     ent._.data = data
 

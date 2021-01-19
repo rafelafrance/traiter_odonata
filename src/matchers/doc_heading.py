@@ -2,7 +2,7 @@
 
 DOC_HEADING = [
     {
-        'label': 'heading',
+        'label': 'doc_heading',
         'patterns': [
             [{'TEXT': 'Description'}],
             [{'TEXT': 'Flight'}, {'TEXT': 'Season'}],

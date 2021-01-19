@@ -8,6 +8,8 @@ from ..pylib.consts import DASH
 
 NUMBER = r'\d+\.?\d*'
 NUMBER_PAT = f'^{NUMBER}$'
+DASH_RE = '|'.join(DASH)
+RANGE_PAT = f'^{NUMBER}({DASH_RE}){NUMBER}$'
 
 
 def range_(ent):
@@ -21,10 +23,13 @@ RANGE = [
     {
         'label': 'range',
         'patterns': [
+            # [
+            #     {'TEXT': {'REGEX': NUMBER_PAT}},
+            #     {'TEXT': {'IN': DASH}},
+            #     {'TEXT': {'REGEX': NUMBER_PAT}},
+            # ],
             [
-                {'TEXT': {'REGEX': NUMBER_PAT}},
-                {'TEXT': {'IN': DASH}},
-                {'TEXT': {'REGEX': NUMBER_PAT}},
+                {'TEXT': {'REGEX': RANGE_PAT}},
             ],
         ],
     },

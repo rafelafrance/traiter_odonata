@@ -1,23 +1,34 @@
 """Link traits to body parts."""
 
-from ..pylib.consts import PART_STEP
+import spacy
 
 
-def body_part_linker(doc):
+@spacy.registry.misc('body_part_linker.v1')
+def body_part_linker(_, doc, idx, matches):
     """Use an entity matcher for entity linking."""
-    for sent in doc.sents:
-        print(sent)
+    print(doc)
+    print(idx)
+    print(matches)
 
 
 BODY_PART_LINKER = {
-    PART_STEP: [
-        {
-            'RIGHT_ID': 'body_part_root',
-            'RIGHT_ATTRS': {'ENT_TYPE': 'body_part'},
-        },
+    'label': 'body_part_linker',
+    'on_match': body_part_linker,
+    'patterns': [
+        [
+            {
+                'RIGHT_ID': 'body_part',
+                'RIGHT_ATTRS': {'ENT_TYPE': 'body_part'},
+            },
+            {
+                'LEFT_ID': 'body_part',
+                'REL_OP': '>',
+                'RIGHT_ID': 'trait',
+                'RIGHT_ATTRS': {'ENT_TYPE': 'color'},
+            },
+        ],
     ],
 }
-
 
 # BODY_PARTS = """ body_part body_part_loc sex_diff """.split()
 # COLORS = """ color color_mod """.split()

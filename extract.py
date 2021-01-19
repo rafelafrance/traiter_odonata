@@ -6,21 +6,19 @@ import argparse
 import textwrap
 from copy import deepcopy
 
-from src.matchers.pipeline import Pipeline
+from src.pylib.pipeline import NLP
 from src.writers.html_ import html_writer
 
 
 def paulson_guide(args):
     """Parse Paulson's Odonate guide."""
-    pipeline = Pipeline()
-
     filter_lines = re.compile(r'(\d+|Description)')
     lines = args.input.readlines()
     lines = [ln for ln in lines if filter_lines.match(ln)]
     lines = [' '.join(ln.split()) for ln in lines]
 
     rows = []
-    for doc in pipeline.nlp.pipe(lines):
+    for doc in NLP.pipe(lines):
         rows.append({'doc': doc, 'traits': list(doc.ents)})
 
     if args.html_file:

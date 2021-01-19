@@ -9,7 +9,7 @@ SLASH_RE = re.compile(fr'{"|".join(SLASH)}')
 
 def vernacular(ent):
     """Enrich the match."""
-    name = [t.lower_ for t in ent if t._.prev_label == 'common_name'][0]
+    name = [t.lower_ for t in ent if t._.label_cache == 'common_name'][0]
     first = SLASH_RE.split(ent.text)
     if len(first) > 1:
         name = [name, f'{first[0]} {" ".join(name.split()[1:])}']

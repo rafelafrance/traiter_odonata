@@ -4,7 +4,7 @@
 
 import unittest
 
-from tests.setup import TEST_PIPELINE
+from tests.setup import NLP
 
 
 class TestSegmenter(unittest.TestCase):
@@ -12,18 +12,24 @@ class TestSegmenter(unittest.TestCase):
 
     def test_sentencizer_01(self):
         text = 'It was common “along a tiny stream.” Argia apicalis.'
-        doc = TEST_PIPELINE.nlp(text)
+        doc = NLP(text)
         sents = list(doc.sents)
         self.assertEqual(len(sents), 2)
 
     def test_sentencizer_02(self):
         text = 'It was common along a tiny stream. Argia apicalis.'
-        doc = TEST_PIPELINE.nlp(text)
+        doc = NLP(text)
         sents = list(doc.sents)
         self.assertEqual(len(sents), 2)
 
     def test_sentencizer_03(self):
         text = 'Description Large metallic green damselfly'
-        doc = TEST_PIPELINE.nlp(text)
+        doc = NLP(text)
         sents = list(doc.sents)
         self.assertEqual(len(sents), 2)
+
+    def test_sentencizer_04(self):
+        text = 'Fly is 12cm. long and 14 cm. wide.'
+        doc = NLP(text)
+        sents = list(doc.sents)
+        self.assertEqual(len(sents), 1)
