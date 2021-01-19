@@ -4,9 +4,9 @@ import spacy
 from traiter.patterns import add_ruler_patterns
 from traiter.pipes.entity_data import EntityData
 import traiter.pipes.cache_label
-import traiter.pipes.debug_pipe
-import traiter.pipes.dependency_pipe
-import traiter.pipes.sentence_pipe
+import traiter.pipes.debug
+import traiter.pipes.dependency
+import traiter.pipes.sentence
 
 from src.matchers.body_part import BODY_PART
 from src.matchers.body_part_linker import BODY_PART_LINKER

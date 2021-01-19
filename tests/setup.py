@@ -16,5 +16,5 @@ def test_traits(text: str) -> List[Dict]:
     """Find entities in the doc."""
     text = shorten(text)
     doc = NLP(text)
-    displacy.serve(doc)
+    # displacy.serve(doc)
     return doc
