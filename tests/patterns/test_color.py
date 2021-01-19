@@ -73,7 +73,6 @@ class TestColor(unittest.TestCase):
             test_traits('Colored much like male but not pruinose,'),
             [{'sex_diff': 'like male but',
               'trait': 'sex_diff', 'start': 13, 'end': 26},
-             {'color_mod': 'not pruinose', 'missing': True,
-              'sex_diff': 'like male but',
+             {'color_mod': 'not pruinose', 'missing': True, 'sex_diff': 'like male but',
               'trait': 'color_mod', 'start': 27, 'end': 39}]
         )

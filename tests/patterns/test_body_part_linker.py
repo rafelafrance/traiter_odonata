@@ -53,7 +53,7 @@ class TestBodyPartLinker(unittest.TestCase):
               'trait': 'color', 'start': 12, 'end': 30}]
         )
 
-    def test_body_part_linker_07(self):
+    def test_body_part_linker_06(self):
         self.assertEqual(
             test_traits('dorsal carina usually blue'),
             [{'body_part': 'dorsal carina',

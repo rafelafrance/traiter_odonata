@@ -11,7 +11,7 @@ SLASH_RE = re.compile(fr'{"|".join(SLASH)}')
 VERNACULAR = [
     {
         'label': 'vernacular',
-        'action': 'vernacular.v1',
+        'on_match': 'vernacular.v1',
         'patterns': [
             [
                 {'ENT_TYPE': 'common_name'},
@@ -26,7 +26,7 @@ VERNACULAR = [
 ]
 
 
-@spacy.registry.misc(VERNACULAR[0]['action'])
+@spacy.registry.misc(VERNACULAR[0]['on_match'])
 def vernacular(ent):
     """Enrich the match."""
     name = [t.lower_ for t in ent if t._.label_cache == 'common_name'][0]

@@ -2,20 +2,30 @@
 
 import spacy
 
-from ..pylib.consts import COMMA, DASH, INT, MISSING, REPLACE
+from ..pylib.consts import COMMA, DASH, DASH_RE, INT, MISSING, REPLACE
 
 PART = ['part', 'fly']
 ANY_PART = PART + ['part_loc']
-NUMBERED = ['abdomen_seg', 'stripe']
-AS_PART = PART + ['abdomen_seg']
+NUMBERED = ['abdomen_seg', 'stripe', 'segments']
+AS_PART = PART + ['abdomen_seg', 'segments']
 
 PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.split()
 BOTH = """ both either """.split()
 
+SEGMENTS = [
+    {
+        'label': 'segments',
+        'patterns': [
+            [{'LOWER': {'REGEX': fr'^s\d+({DASH_RE})\d+$'}}]
+        ],
+    }
+]
+
+
 BODY_PART = [
     {
         'label': 'body_part',
-        'action': 'body_part.v1',
+        'on_match': 'body_part.v1',
         'patterns': [
             [
                 {'LOWER': {'IN': MISSING}, 'OP': '?'},
@@ -106,7 +116,7 @@ BODY_PART = [
 ]
 
 
-@spacy.registry.misc(BODY_PART[0]['action'])
+@spacy.registry.misc(BODY_PART[0]['on_match'])
 def body_part(ent):
     """Enrich the match."""
     data = {}
@@ -119,7 +129,7 @@ def body_part(ent):
         label = 'body_part_loc'
         ent._.new_label = label
 
-    lower = ' '.join(t.lower_ for t in ent)
+    lower = ent.text.lower()
     data[label] = REPLACE.get(lower, lower)
 
     ent._.data = data

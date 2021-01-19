@@ -7,7 +7,7 @@ from ..pylib.consts import SLASH
 SCI_NAME = [
     {
         'label': 'sci_name',
-        'action': 'sci_name.v1',
+        'on_match': 'sci_name.v1',
         'patterns': [
             [
                 {'ENT_TYPE': 'odonata'},
@@ -22,7 +22,7 @@ SCI_NAME = [
 ]
 
 
-@spacy.registry.misc(SCI_NAME[0]['action'])
+@spacy.registry.misc(SCI_NAME[0]['on_match'])
 def sci_name(ent):
     """Enrich the match."""
     name = [t.lower_ for t in ent if t._.label_cache == 'odonata'][0].capitalize()

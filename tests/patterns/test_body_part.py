@@ -13,10 +13,14 @@ class TestBodyPart(unittest.TestCase):
     def test_body_part_01(self):
         self.assertEqual(
             test_traits('tip with fine dorsal line and lower sides pale.'),
-            [{'color_mod': 'tip', 'trait': 'color_mod', 'start': 0, 'end': 3},
+            [{'color_mod': 'tip',
+              'trait': 'color_mod', 'start': 0, 'end': 3,
+              'body_part': 'dorsal line and lower sides'},
              {'body_part': 'dorsal line and lower sides',
               'trait': 'body_part', 'start': 14, 'end': 41},
-             {'color_mod': 'pale', 'trait': 'color_mod', 'start': 42, 'end': 46}]
+             {'color_mod': 'pale',
+              'trait': 'color_mod', 'start': 42, 'end': 46,
+              'body_part': 'dorsal line and lower sides'}]
         )
 
     def test_body_part_02(self):
@@ -68,5 +72,6 @@ class TestBodyPart(unittest.TestCase):
             test_traits('underside of thorax and abdomen tip'),
             [{'body_part': 'underside of thorax and abdomen',
               'trait': 'body_part', 'start': 0, 'end': 31},
-             {'color_mod': 'tip', 'trait': 'color_mod', 'start': 32, 'end': 35}]
+             {'color_mod': 'tip', 'trait': 'color_mod', 'start': 32, 'end': 35,
+              'body_part': 'underside of thorax and abdomen'}]
         )

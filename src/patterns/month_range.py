@@ -26,7 +26,7 @@
 # MONTH_RANGE = [
 #     {
 #         'label': 'month_range',
-#         'action': month_range,
+#         'on_match': month_range,
 #         'patterns': [
 #             [
 #                 {'LOWER': {'IN': MODIFIER}, 'OP': '?'},

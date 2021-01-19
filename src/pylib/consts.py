@@ -37,6 +37,7 @@ CLOSE = ' ) ] '.split()
 COMMA = ' , '.split()
 CROSS = ' x × '.split()
 DASH = ' – - –– -- '.split()
+DASH_RE = '|'.join(DASH)
 DOT = ' . '.split()
 INT = r'^\d+$'
 OPEN = ' ( [ '.split()

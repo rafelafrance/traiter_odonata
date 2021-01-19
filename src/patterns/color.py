@@ -12,7 +12,7 @@ COLOR_ADJ = """ fine thick broad thin mostly entire entirely narrow """.split()
 COLOR = [
     {
         'label': 'color',
-        'action': 'color.v1',
+        'on_match': 'color.v1',
         'patterns': [
             [
                 {'LOWER': {'IN': MISSING}, 'OP': '?'},
@@ -81,7 +81,7 @@ COLOR = [
 ]
 
 
-@spacy.registry.misc(COLOR[0]['action'])
+@spacy.registry.misc(COLOR[0]['on_match'])
 def color(ent):
     """Enrich the match."""
     data = {}
@@ -94,7 +94,7 @@ def color(ent):
         label = 'color_mod'
         ent._.new_label = label
 
-    lower = ' '.join(t.lower_ for t in ent)
+    lower = ent.text.lower()
     data[label] = REPLACE.get(lower, lower)
 
     ent._.data = data
