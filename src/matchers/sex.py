@@ -1,8 +1,7 @@
 """Sex terms."""
 
-from functools import partial
-
-from traiter.actions import text_action
+import spacy
+from traiter.pipes.entity_data import text_action
 
 from ..pylib.consts import REPLACE
 
@@ -11,7 +10,7 @@ SIMILAR = """ like similar as """.split()
 SEX = [
     {
         'label': 'sex_diff',
-        'action': partial(text_action, replace=REPLACE),
+        'action': 'sex_diff.v1',
         'patterns': [
             [
                 {'LOWER': {'IN': SIMILAR}},
@@ -28,3 +27,9 @@ SEX = [
         ],
     },
 ]
+
+
+@spacy.registry.misc(SEX[0]['action'])
+def sex_diff(ent):
+    """Enrich the match."""
+    text_action(ent, REPLACE)

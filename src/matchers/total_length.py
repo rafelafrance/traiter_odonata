@@ -1,11 +1,11 @@
 """Get total the total length."""
 
-from .range import range_
+from .range import RANGE_ACTION
 
 TOTAL_LENGTH = [
     {
         'label': 'total_length',
-        'action': range_,
+        'action': RANGE_ACTION,
         'patterns': [
             [
                 {'ENT_TYPE': 'total_length_key'},

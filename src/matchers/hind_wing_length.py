@@ -1,11 +1,11 @@
 """Get total the hind wing length."""
 
-from .range import range_
+from .range import RANGE_ACTION
 
 HIND_WING_LENGTH = [
     {
         'label': 'hind_wing_length',
-        'action': range_,
+        'action': RANGE_ACTION,
         'patterns': [
             [
                 {'ENT_TYPE': 'hind_wing_length_key'},

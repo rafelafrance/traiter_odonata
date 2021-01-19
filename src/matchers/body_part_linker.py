@@ -2,18 +2,9 @@
 
 import spacy
 
-
-@spacy.registry.misc('body_part_linker.v1')
-def body_part_linker(_, doc, idx, matches):
-    """Use an entity matcher for entity linking."""
-    print(doc)
-    print(idx)
-    print(matches)
-
-
 BODY_PART_LINKER = {
     'label': 'body_part_linker',
-    'on_match': body_part_linker,
+    'on_match': 'body_part_linker.v1',
     'patterns': [
         [
             {
@@ -30,19 +21,18 @@ BODY_PART_LINKER = {
     ],
 }
 
+
+@spacy.registry.misc(BODY_PART_LINKER['on_match'])
+def body_part_linker(_, doc, idx, matches):
+    """Use an entity matcher for entity linking."""
+    print(doc)
+    print(idx)
+    print(matches)
+
 # BODY_PARTS = """ body_part body_part_loc sex_diff """.split()
 # COLORS = """ color color_mod """.split()
 # FILLER_POS = """ CCONJ VERB AUX """.split()
 # LINKER = """ often sometimes normally usually """.split()
-
-
-# def linker(span):
-#     """Link body parts to traits."""
-#     part = [t for t in span if t.ent_type_ in BODY_PARTS][0]
-#     for token in span:
-#         if token.ent_type_ and token.ent_type_ not in BODY_PARTS:
-#             token._.data = {**token._.data, **part._.data}
-#     return
 
 
 # BODY_PART_LINKER = [
@@ -90,3 +80,12 @@ BODY_PART_LINKER = {
 #         ],
 #     },
 # ]
+
+
+# def linker(span):
+#     """Link body parts to traits."""
+#     part = [t for t in span if t.ent_type_ in BODY_PARTS][0]
+#     for token in span:
+#         if token.ent_type_ and token.ent_type_ not in BODY_PARTS:
+#             token._.data = {**token._.data, **part._.data}
+#     return

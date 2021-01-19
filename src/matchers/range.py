@@ -2,6 +2,7 @@
 
 import re
 
+import spacy
 from traiter.util import to_positive_float
 
 from ..pylib.consts import DASH
@@ -12,6 +13,10 @@ DASH_RE = '|'.join(DASH)
 RANGE_PAT = f'^{NUMBER}({DASH_RE}){NUMBER}$'
 
 
+RANGE_ACTION = 'range.v1'
+
+
+@spacy.registry.misc(RANGE_ACTION)
 def range_(ent):
     """Build the range parts for other matchers."""
     values = re.findall(NUMBER, ent.text)

@@ -1,13 +1,11 @@
 """Build the NLP pipeline."""
 
 import spacy
-from spacy.matcher import DependencyMatcher
-from traiter.actions import Actions
 from traiter.patterns import add_ruler_patterns
-from traiter.pipes.entity_data import set_actions
+from traiter.pipes.entity_data import EntityData
+import traiter.pipes.cache_label
 import traiter.pipes.debug_pipe
 import traiter.pipes.dependency_pipe
-import traiter.pipes.cache_label
 import traiter.pipes.sentence_pipe
 
 from src.matchers.body_part import BODY_PART
@@ -38,7 +36,7 @@ def pipeline():
     config = {'phrase_matcher_attr': 'LOWER'}
     term_ruler = nlp.add_pipe(
         'entity_ruler', name='term_ruler', config=config, after='parser')
-    term_ruler.add_patterns(TERMS.as_phrase_patterns())
+    term_ruler.add_patterns(TERMS.for_entity_ruler())
     add_ruler_patterns(term_ruler, *RETOKENIZE)
 
     nlp.add_pipe('merge_entities', name='term_merger', after='term_ruler')
@@ -57,8 +55,8 @@ def pipeline():
     nlp.add_pipe('debug_entities', name='debug3')
 
     # Update the token and span ._.data
-    set_actions(Actions.from_matchers(*MATCHERS).actions)
-    nlp.add_pipe('entity_data')
+    config = {'actions': EntityData.from_matchers(*MATCHERS)}
+    nlp.add_pipe('entity_data', config=config)
 
     config = {
         'label': BODY_PART_LINKER['label'],
