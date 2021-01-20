@@ -5,11 +5,9 @@ from typing import Dict, List
 # from spacy import displacy
 from traiter.util import shorten
 
-from src.pylib.pipeline import pipeline
-from src.pylib.consts import SEX_STEP
+from src.pylib.pipeline import trait_pipeline
 
-NLP = pipeline()  # Singleton for testing
-NLP.remove_pipe(SEX_STEP)
+NLP = trait_pipeline()  # Singleton for testing
 
 
 def test_traits(text: str) -> List[Dict]:

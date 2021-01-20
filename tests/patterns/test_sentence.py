@@ -4,7 +4,9 @@
 
 import unittest
 
-from tests.setup import NLP
+from src.pylib.pipeline import sentence_pipeline
+
+NLP = sentence_pipeline()
 
 
 class TestSegmenter(unittest.TestCase):
