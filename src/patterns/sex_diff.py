@@ -37,7 +37,7 @@ SEX_DIFF_LINKER = [
         'label': 'sex_diff_linker',
         'on_match': 'sex_diff_linker.v1',
         'patterns': [
-            # Sex diff is the parent of the trait
+            # Sex diff is next to the trait
             [
                 {
                     'RIGHT_ID': 'sex_diff',
@@ -45,12 +45,11 @@ SEX_DIFF_LINKER = [
                 },
                 {
                     'LEFT_ID': 'sex_diff',
-                    'REL_OP': '>',
-                    'RIGHT_ID': 'trait',
+                    'REL_OP': '.',
+                    'RIGHT_ID': 'trait1',
                     'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
                 },
             ],
-            # Sex diff is next to the trait
             [
                 {
                     'RIGHT_ID': 'sex_diff',
@@ -66,7 +65,20 @@ SEX_DIFF_LINKER = [
                     'LEFT_ID': 'trait1',
                     'REL_OP': '>',
                     'RIGHT_ID': 'trait2',
-                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}, 'OP': '?'},
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
+                },
+            ],
+            # Sex diff is the parent of the trait
+            [
+                {
+                    'RIGHT_ID': 'sex_diff',
+                    'RIGHT_ATTRS': {'ENT_TYPE': 'sex_diff'},
+                },
+                {
+                    'LEFT_ID': 'sex_diff',
+                    'REL_OP': '>',
+                    'RIGHT_ID': 'trait',
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
                 },
             ],
             # Sex diff is the child of the trait
@@ -100,14 +112,50 @@ SEX_DIFF_LINKER = [
                     'RIGHT_ID': 'trait1',
                     'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
                 },
+            ],
+            [
+                {
+                    'RIGHT_ID': 'sex_diff',
+                    'RIGHT_ATTRS': {'ENT_TYPE': 'sex_diff'},
+                },
+                {
+                    'LEFT_ID': 'sex_diff',
+                    'REL_OP': '<',
+                    'RIGHT_ID': 'linker',
+                    'RIGHT_ATTRS': {'DEP': {'IN': LINKERS}},
+                },
+                {
+                    'LEFT_ID': 'linker',
+                    'REL_OP': '<',
+                    'RIGHT_ID': 'trait1',
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
+                },
                 {
                     'LEFT_ID': 'trait1',
                     'REL_OP': '<',
                     'RIGHT_ID': 'trait2',
-                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}, 'OP': '?'},
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
                 },
             ],
             # Sex diff is the grandparent of the trait
+            [
+                {
+                    'RIGHT_ID': 'sex_diff',
+                    'RIGHT_ATTRS': {'ENT_TYPE': 'sex_diff'},
+                },
+                {
+                    'LEFT_ID': 'sex_diff',
+                    'REL_OP': '>',
+                    'RIGHT_ID': 'prep_link',
+                    'RIGHT_ATTRS': {'DEP': {'IN': LINKERS}},
+                },
+                {
+                    'LEFT_ID': 'prep_link',
+                    'REL_OP': '>',
+                    'RIGHT_ID': 'trait1',
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
+                },
+            ],
             [
                 {
                     'RIGHT_ID': 'sex_diff',
@@ -129,7 +177,7 @@ SEX_DIFF_LINKER = [
                     'LEFT_ID': 'trait1',
                     'REL_OP': '>',
                     'RIGHT_ID': 'trait2',
-                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}, 'OP': '?'},
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
                 },
             ],
         ]

@@ -69,7 +69,7 @@ class TestBodyPart(unittest.TestCase):
 
     def test_body_part_08(self):
         self.assertEqual(
-            test_traits('underside of thorax and abdomen tip'),
+            test_traits('underside of thorax and abdomen tip.'),
             [{'body_part': 'underside of thorax and abdomen',
               'trait': 'body_part', 'start': 0, 'end': 31},
              {'color_mod': 'tip', 'trait': 'color_mod', 'start': 32, 'end': 35,

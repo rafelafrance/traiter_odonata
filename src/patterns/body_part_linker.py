@@ -5,13 +5,44 @@ from collections import defaultdict
 import spacy
 
 TRAITS = ['color', 'color_mod']
-LINKER = ['']
+LINKERS = ['prep', 'conj', 'cc']
 
 BODY_PART_LINKER = [
     {
         'label': 'body_part_linker',
         'on_match': 'body_part_linker.v1',
         'patterns': [
+            # Body part is next to the trait
+            [
+                {
+                    'RIGHT_ID': 'body_part',
+                    'RIGHT_ATTRS': {'ENT_TYPE': 'body_part'},
+                },
+                {
+                    'LEFT_ID': 'body_part',
+                    'REL_OP': '.',
+                    'RIGHT_ID': 'trait1',
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
+                },
+            ],
+            [
+                {
+                    'RIGHT_ID': 'body_part',
+                    'RIGHT_ATTRS': {'ENT_TYPE': 'body_part'},
+                },
+                {
+                    'LEFT_ID': 'body_part',
+                    'REL_OP': '.',
+                    'RIGHT_ID': 'trait1',
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
+                },
+                {
+                    'LEFT_ID': 'trait1',
+                    'REL_OP': '>',
+                    'RIGHT_ID': 'trait2',
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
+                },
+            ],
             # Body part is the parent of the trait
             [
                 {
@@ -48,7 +79,25 @@ BODY_PART_LINKER = [
                     'LEFT_ID': 'body_part',
                     'REL_OP': '<',
                     'RIGHT_ID': 'linker',
-                    'RIGHT_ATTRS': {'DEP': 'prep'},
+                    'RIGHT_ATTRS': {'DEP': {'IN': LINKERS}},
+                },
+                {
+                    'LEFT_ID': 'linker',
+                    'REL_OP': '<',
+                    'RIGHT_ID': 'trait1',
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
+                },
+            ],
+            [
+                {
+                    'RIGHT_ID': 'body_part',
+                    'RIGHT_ATTRS': {'ENT_TYPE': 'body_part'},
+                },
+                {
+                    'LEFT_ID': 'body_part',
+                    'REL_OP': '<',
+                    'RIGHT_ID': 'linker',
+                    'RIGHT_ATTRS': {'DEP': {'IN': LINKERS}},
                 },
                 {
                     'LEFT_ID': 'linker',
@@ -60,7 +109,7 @@ BODY_PART_LINKER = [
                     'LEFT_ID': 'trait1',
                     'REL_OP': '<',
                     'RIGHT_ID': 'trait2',
-                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}, 'OP': '?'},
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
                 },
             ],
             # Body part is the grandparent of the trait
@@ -73,7 +122,25 @@ BODY_PART_LINKER = [
                     'LEFT_ID': 'body_part',
                     'REL_OP': '>',
                     'RIGHT_ID': 'linker',
-                    'RIGHT_ATTRS': {'DEP': 'prep'},
+                    'RIGHT_ATTRS': {'DEP': {'IN': LINKERS}},
+                },
+                {
+                    'LEFT_ID': 'linker',
+                    'REL_OP': '>',
+                    'RIGHT_ID': 'trait1',
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
+                },
+            ],
+            [
+                {
+                    'RIGHT_ID': 'body_part',
+                    'RIGHT_ATTRS': {'ENT_TYPE': 'body_part'},
+                },
+                {
+                    'LEFT_ID': 'body_part',
+                    'REL_OP': '>',
+                    'RIGHT_ID': 'linker',
+                    'RIGHT_ATTRS': {'DEP': {'IN': LINKERS}},
                 },
                 {
                     'LEFT_ID': 'linker',
@@ -85,7 +152,32 @@ BODY_PART_LINKER = [
                     'LEFT_ID': 'trait1',
                     'REL_OP': '>',
                     'RIGHT_ID': 'trait2',
-                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}, 'OP': '?'},
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
+                },
+            ],
+            #
+            [
+                {
+                    'RIGHT_ID': 'body_part',
+                    'RIGHT_ATTRS': {'ENT_TYPE': 'body_part'},
+                },
+                {
+                    'LEFT_ID': 'body_part',
+                    'REL_OP': '<',
+                    'RIGHT_ID': 'linker',
+                    'RIGHT_ATTRS': {'DEP': {'IN': LINKERS}},
+                },
+                {
+                    'LEFT_ID': 'linker',
+                    'REL_OP': '<',
+                    'RIGHT_ID': 'verb',
+                    'RIGHT_ATTRS': {'POS': {'IN': ['VERB']}},
+                },
+                {
+                    'LEFT_ID': 'verb',
+                    'REL_OP': '>',
+                    'RIGHT_ID': 'trait1',
+                    'RIGHT_ATTRS': {'ENT_TYPE': {'IN': TRAITS}},
                 },
             ],
         ],
