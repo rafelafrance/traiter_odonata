@@ -2,12 +2,11 @@
 
 # from spacy.language import Language
 
-from ..pylib.consts import REPLACE  # , SEX_STEP
+from ..pylib.consts import REPLACE
 
 SKIPS = """ vernacular sci_name heading """.split()
 
 
-# @Language.component(SEX_STEP)
 def sex_linker(doc):
     """Link traits to sex."""
 

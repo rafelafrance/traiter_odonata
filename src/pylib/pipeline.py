@@ -16,7 +16,7 @@ from src.patterns.sex import SEX
 from src.patterns.sex_diff import SEX_DIFF, SEX_DIFF_LINKER
 from src.patterns.total_length import TOTAL_LENGTH
 from src.patterns.vernacular import VERNACULAR
-from src.pylib.consts import ABBREVS, TERMS
+from src.pylib.consts import TERMS
 
 MATCHERS1 = [DOC_HEADING, RANGE, SEGMENTS]
 
@@ -68,8 +68,6 @@ def trait_pipeline():
     # nlp.add_pipe('debug_tokens', name='debug4')
     # nlp.add_pipe('debug_entities', name='debug5')
 
-    # nlp.add_pipe(SEX_STEP)
-
     # print(nlp.pipe_names)
     return nlp
 
@@ -84,7 +82,12 @@ def sentence_pipeline():
 
     nlp.add_pipe('merge_entities')
 
-    config = {'abbrevs': ABBREVS, 'headings': ['doc_heading']}
+    abbrevs = """
+        Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+        mm cm m
+        """.split()
+
+    config = {'abbrevs': abbrevs, 'headings': ['doc_heading']}
     nlp.add_pipe('sentence', config=config)
 
     # print(nlp.pipe_names)

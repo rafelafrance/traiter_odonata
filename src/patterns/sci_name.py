@@ -2,7 +2,7 @@
 
 import spacy
 
-from ..pylib.consts import SLASH
+from traiter.consts import SLASH
 
 SCI_NAME = [
     {

@@ -3,9 +3,8 @@
 import re
 
 import spacy
+from traiter.consts import DASH_RE
 from traiter.util import to_positive_float
-
-from ..pylib.consts import DASH_RE
 
 NUMBER = r'\d+\.?\d*'
 NUMBER_PAT = f'^{NUMBER}$'

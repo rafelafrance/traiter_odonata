@@ -4,7 +4,7 @@ import re
 
 import spacy
 
-from ..pylib.consts import SLASH
+from traiter.consts import SLASH
 
 SLASH_RE = re.compile(fr'{"|".join(SLASH)}')
 

@@ -1,20 +1,10 @@
-"""Utilities and constants."""
+"""Constants used in multiple modules."""
 
 from pathlib import Path
 
 from traiter.terms.itis import Itis
 
-DATA_DIR = Path.cwd() / 'data'
-DOC_DIR = DATA_DIR
-PDF_DIR = DOC_DIR / 'pdf'
-TXT_DIR = DOC_DIR / 'txt'
 VOCAB_DIR = Path.cwd() / 'src' / 'vocabulary'
-
-GROUP_STEP = 'group'
-TRAIT_STEP = 'traits'
-HEADER_STEP = 'header'
-PART_STEP = 'part_linker'
-SEX_STEP = 'sex_linker'
 
 TERMS = Itis.shared('animals insect_anatomy units colors')
 TERMS += Itis.read_csv(VOCAB_DIR / 'odonata_terms.csv')
@@ -26,24 +16,5 @@ TERMS += Itis.taxon_level_terms(
 TERMS.drop('imperial_length')
 
 REPLACE = TERMS.pattern_dict('replace')
-POS = TERMS.pattern_dict('pos')
-
-ABBREVS = """
-    Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
-    mm cm m
-    """.split()
-
-CLOSE = ' ) ] '.split()
-COMMA = ' , '.split()
-CROSS = ' x × '.split()
-DASH = ' – - –– -- '.split()
-DASH_RE = '|'.join(DASH)
-DOT = ' . '.split()
-INT = r'^\d+$'
-OPEN = ' ( [ '.split()
-PLUS = ' + '.split()
-SLASH = ' / '.split()
-QUOTE = ' “ ” " \' '.split()
-LETTERS = list('abcdefghijklmnopqrstuvwxyz')
 
 MISSING = """ without missing lack lacking except excepting not """.split()

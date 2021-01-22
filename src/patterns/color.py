@@ -1,8 +1,9 @@
 """Common color snippets."""
 
 import spacy
+from traiter.consts import DASH
 
-from ..pylib.consts import DASH, MISSING, REPLACE
+from ..pylib.consts import MISSING, REPLACE
 
 ALL_COLORS = ['color', 'color_mod']
 
