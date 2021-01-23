@@ -30,65 +30,71 @@ ALL_MATCHERS = MATCHERS1 + MATCHERS2
 def trait_pipeline():
     """Setup the pipeline for extracting traits."""
     nlp = spacy.load('en_core_web_sm', exclude=['ner', 'lemmatizer'])
-
-    # Identify traits in the document
-    config = {'phrase_matcher_attr': 'LOWER'}
-    term_ruler = nlp.add_pipe(
-        'entity_ruler', name='term_ruler', config=config, before='parser')
-    term_ruler.add_patterns(TERMS.for_entity_ruler())
-    add_ruler_patterns(term_ruler, *MATCHERS1)
-
+    add_term_ruler_pipe(nlp)
     nlp.add_pipe('merge_entities', name='term_merger')
-
-    # Save the current label so that it can be used after another entity_ruler
     nlp.add_pipe('cache_label', after='term_merger')
-
-    # nlp.add_pipe('debug_tokens', name='debug1')
-
-    # Group tokens into larger traits
-    config = {'overwrite_ents': True}
-    match_ruler = nlp.add_pipe('entity_ruler', name='match_ruler', config=config)
-    add_ruler_patterns(match_ruler, *MATCHERS2)
-
-    # Update the token and span ._.data
-    config = {'actions': EntityData.from_matchers(*ALL_MATCHERS)}
-    nlp.add_pipe('entity_data', config=config)
-
-    # nlp.add_pipe('merge_entities', name='entity_merger')
-
-    # nlp.add_pipe('debug_tokens', name='debug2')
-    # nlp.add_pipe('debug_entities', name='debug3')
-
-    config = {'patterns': BODY_PART_LINKER}
-    nlp.add_pipe('dependency', name='body_part_linker', config=config)
-
-    config = {'patterns': SEX_DIFF_LINKER}
-    nlp.add_pipe('dependency', name='sex_diff_linker', config=config)
-
-    # nlp.add_pipe('debug_tokens', name='debug4')
-    # nlp.add_pipe('debug_entities', name='debug5')
-
-    # print(nlp.pipe_names)
+    add_match_ruler_pipe(nlp)
+    add_entity_data_pipe(nlp)
+    add_body_part_linker_pipe(nlp)
+    add_sex_diff_linker_pipe(nlp)
     return nlp
 
 
 def sentence_pipeline():
     """Setup the pipeline for extracting sentences."""
     nlp = spacy.blank('en')
+    add_sentence_term_pipe(nlp)
+    nlp.add_pipe('merge_entities')
+    add_sentence_pipe(nlp)
+    return nlp
 
+
+def add_term_ruler_pipe(nlp):
+    """Add a pipe to identify phrases and patterns as base-level traits."""
+    config = {'phrase_matcher_attr': 'LOWER'}
+    term_ruler = nlp.add_pipe(
+        'entity_ruler', name='term_ruler', config=config, before='parser')
+    term_ruler.add_patterns(TERMS.for_entity_ruler())
+    add_ruler_patterns(term_ruler, *MATCHERS1)
+
+
+def add_match_ruler_pipe(nlp):
+    """Add a pipe to group tokens into larger traits."""
+    config = {'overwrite_ents': True}
+    match_ruler = nlp.add_pipe('entity_ruler', name='match_ruler', config=config)
+    add_ruler_patterns(match_ruler, *MATCHERS2)
+
+
+def add_entity_data_pipe(nlp):
+    """Add a pipe that adds data to entities."""
+    config = {'actions': EntityData.from_matchers(*ALL_MATCHERS)}
+    nlp.add_pipe('entity_data', config=config)
+
+
+def add_body_part_linker_pipe(nlp):
+    """Add a pipe for linking body parts with other traits."""
+    config = {'patterns': BODY_PART_LINKER}
+    nlp.add_pipe('dependency', name='body_part_linker', config=config)
+
+
+def add_sex_diff_linker_pipe(nlp):
+    """Add a pipe for linking "sex differences" with other traits."""
+    config = {'patterns': SEX_DIFF_LINKER}
+    nlp.add_pipe('dependency', name='sex_diff_linker', config=config)
+
+
+def add_sentence_term_pipe(nlp):
+    """Add a pipe that adds terms used to split text into sentences."""
     config = {'phrase_matcher_attr': 'LOWER'}
     term_ruler = nlp.add_pipe('entity_ruler', config=config)
     add_ruler_patterns(term_ruler, DOC_HEADING)
 
-    nlp.add_pipe('merge_entities')
 
+def add_sentence_pipe(nlp):
+    """Add a sentence splitter pipe."""
     abbrevs = """
         Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
         mm cm m
         """.split()
-
     config = {'abbrevs': abbrevs, 'headings': ['doc_heading']}
     nlp.add_pipe('sentence', config=config)
-
-    # print(nlp.pipe_names)
-    return nlp
