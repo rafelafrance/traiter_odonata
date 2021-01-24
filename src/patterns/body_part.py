@@ -1,7 +1,7 @@
 """Extract body part annotations."""
 
 import spacy
-from traiter.consts import COMMA, DASH, DASH_RE, INT_RE
+from traiter.consts import COMMA, DASH, DASH_RE, INT_TOKEN_RE
 
 from ..pylib.consts import MISSING, REPLACE
 
@@ -17,7 +17,7 @@ SEGMENTS = [
     {
         'label': 'segments',
         'patterns': [
-            [{'LOWER': {'REGEX': fr'^s\d+({DASH_RE})\d+$'}}]
+            [{'LOWER': {'REGEX': fr'^s\d+{DASH_RE}\d+$'}}]
         ],
     }
 ]
@@ -38,7 +38,7 @@ BODY_PART = [
             [
                 {'ENT_TYPE': {'IN': NUMBERED}},
                 {'TEXT': {'IN': DASH}},
-                {'TEXT': {'REGEX': INT_RE}},
+                {'TEXT': {'REGEX': INT_TOKEN_RE}},
             ],
             [
                 {'ENT_TYPE': {'IN': NUMBERED}},

@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-virtualenv --clear -p python3.8 venv
+deactivate
+
+rm -rf venv
+virtualenv -p python3.8 venv
 
 ./venv/bin/activate
 

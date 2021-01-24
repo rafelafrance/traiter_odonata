@@ -1,9 +1,10 @@
 """Sex terms."""
 
 import spacy
+from traiter.linker_utils import linker
 from traiter.pipes.entity_data import text_action
 
-from .linker_patterns import linker, linker_patterns
+from .linker_patterns import linker_patterns
 from ..pylib.consts import REPLACE
 
 SIMILAR = """ like similar as than """.split()

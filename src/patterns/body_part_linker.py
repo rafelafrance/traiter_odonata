@@ -1,8 +1,9 @@
 """Link traits to body parts."""
 
 import spacy
+from traiter.linker_utils import linker
 
-from .linker_patterns import linker, linker_patterns
+from .linker_patterns import linker_patterns
 
 TRAITS = ['color', 'color_mod']
 LINKERS = ['prep', 'conj', 'cc']

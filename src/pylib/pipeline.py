@@ -1,7 +1,7 @@
 """Build the NLP trait_pipeline."""
 
 import spacy
-from traiter.patterns import add_ruler_patterns
+from traiter.pattern_utils import add_ruler_patterns
 from traiter.pipes import cache, debug, dependency, sentence
 from traiter.pipes.entity_data import EntityData
 
@@ -26,6 +26,8 @@ MATCHERS2 = [
 
 ALL_MATCHERS = MATCHERS1 + MATCHERS2
 
+LINKERS = [BODY_PART_LINKER, SEX_DIFF_LINKER]
+
 
 def trait_pipeline():
     """Setup the pipeline for extracting traits."""
@@ -35,8 +37,7 @@ def trait_pipeline():
     nlp.add_pipe('cache_label', after='term_merger')
     add_match_ruler_pipe(nlp)
     add_entity_data_pipe(nlp)
-    add_body_part_linker_pipe(nlp)
-    add_sex_diff_linker_pipe(nlp)
+    add_linker_pipe(nlp)
     return nlp
 
 
@@ -71,16 +72,10 @@ def add_entity_data_pipe(nlp):
     nlp.add_pipe('entity_data', config=config)
 
 
-def add_body_part_linker_pipe(nlp):
+def add_linker_pipe(nlp):
     """Add a pipe for linking body parts with other traits."""
-    config = {'patterns': BODY_PART_LINKER}
+    config = {'patterns': LINKERS}
     nlp.add_pipe('dependency', name='body_part_linker', config=config)
-
-
-def add_sex_diff_linker_pipe(nlp):
-    """Add a pipe for linking "sex differences" with other traits."""
-    config = {'patterns': SEX_DIFF_LINKER}
-    nlp.add_pipe('dependency', name='sex_diff_linker', config=config)
 
 
 def add_sentence_term_pipe(nlp):

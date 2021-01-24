@@ -1,24 +1,7 @@
 """Handle common linker patterns."""
 
-from collections import defaultdict
-
 TRAITS = ['color', 'color_mod']
 LINKERS = ['prep', 'conj', 'cc']
-
-
-def linker(_, doc, idx, matches, key):
-    """Link traits to the root trait trait."""
-    match_ents = defaultdict(list)
-    for ent in doc.ents:
-        for k, i in enumerate(matches[idx][1]):
-            if ent.start <= i < ent.end:
-                match_ents[ent].append(k)
-                break
-    match_ents = dict(sorted(match_ents.items(), key=lambda x: min(x[1])))
-    root, *others = match_ents.keys()
-    root = root._.data[key]
-    for ent in others:
-        ent._.data[key] = root
 
 
 def linker_patterns(root, traits=None, linkers=None):
