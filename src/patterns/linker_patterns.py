@@ -22,7 +22,7 @@ def linker_patterns(root, traits=None, linkers=None):
                 'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
             },
         ],
-        # root . trait > trait
+        # root . trait >> trait
         [
             {
                 'RIGHT_ID': f'{root}',
@@ -36,12 +36,12 @@ def linker_patterns(root, traits=None, linkers=None):
             },
             {
                 'LEFT_ID': 'trait1',
-                'REL_OP': '>',
+                'REL_OP': '>>',
                 'RIGHT_ID': 'trait2',
                 'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
             },
         ],
-        # root > trait
+        # root >> trait
         [
             {
                 'RIGHT_ID': f'{root}',
@@ -54,7 +54,7 @@ def linker_patterns(root, traits=None, linkers=None):
                 'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
             },
         ],
-        # root < trait
+        # root << trait
         [
             {
                 'RIGHT_ID': f'{root}',
@@ -62,12 +62,12 @@ def linker_patterns(root, traits=None, linkers=None):
             },
             {
                 'LEFT_ID': f'{root}',
-                'REL_OP': '<',
+                'REL_OP': '<<',
                 'RIGHT_ID': 'trait',
                 'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
             },
         ],
-        # root < linker < trait
+        # root < linker << trait
         [
             {
                 'RIGHT_ID': f'{root}',
@@ -86,32 +86,7 @@ def linker_patterns(root, traits=None, linkers=None):
                 'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
             },
         ],
-        # root < linker < trait < trait
-        [
-            {
-                'RIGHT_ID': f'{root}',
-                'RIGHT_ATTRS': {'ENT_TYPE': f'{root}'},
-            },
-            {
-                'LEFT_ID': f'{root}',
-                'REL_OP': '<',
-                'RIGHT_ID': 'linker',
-                'RIGHT_ATTRS': {'DEP': {'IN': linkers}},
-            },
-            {
-                'LEFT_ID': 'linker',
-                'REL_OP': '<',
-                'RIGHT_ID': 'trait1',
-                'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
-            },
-            {
-                'LEFT_ID': 'trait1',
-                'REL_OP': '<',
-                'RIGHT_ID': 'trait2',
-                'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
-            },
-        ],
-        # root > linker > trait
+        # root > linker >> trait
         [
             {
                 'RIGHT_ID': f'{root}',
@@ -130,32 +105,7 @@ def linker_patterns(root, traits=None, linkers=None):
                 'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
             },
         ],
-        # root > linker > trait > trait
-        [
-            {
-                'RIGHT_ID': f'{root}',
-                'RIGHT_ATTRS': {'ENT_TYPE': f'{root}'},
-            },
-            {
-                'LEFT_ID': f'{root}',
-                'REL_OP': '>',
-                'RIGHT_ID': 'linker',
-                'RIGHT_ATTRS': {'DEP': {'IN': linkers}},
-            },
-            {
-                'LEFT_ID': 'linker',
-                'REL_OP': '>',
-                'RIGHT_ID': 'trait1',
-                'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
-            },
-            {
-                'LEFT_ID': 'trait1',
-                'REL_OP': '>',
-                'RIGHT_ID': 'trait2',
-                'RIGHT_ATTRS': {'ENT_TYPE': {'IN': traits}},
-            },
-        ],
-        # root < linker < verb < trait
+        # root < linker < verb > trait
         [
             {
                 'RIGHT_ID': f'{root}',
