@@ -18,13 +18,11 @@ from src.patterns.total_length import TOTAL_LENGTH
 from src.patterns.vernacular import VERNACULAR
 from src.pylib.consts import TERMS
 
-MATCHERS1 = [DOC_HEADING, RANGE, SEGMENTS]
+TERM_MATCHERS = [DOC_HEADING, RANGE, SEGMENTS]
 
-MATCHERS2 = [
+ENTITY_MATCHERS = [
     BODY_PART, COLOR, HIND_WING_LENGTH, SCI_NAME, SEX, SEX_DIFF,
     TOTAL_LENGTH, VERNACULAR]
-
-ALL_MATCHERS = MATCHERS1 + MATCHERS2
 
 LINKERS = [BODY_PART_LINKER, SEX_DIFF_LINKER]
 
@@ -56,19 +54,19 @@ def add_term_ruler_pipe(nlp):
     term_ruler = nlp.add_pipe(
         'entity_ruler', name='term_ruler', config=config, before='parser')
     term_ruler.add_patterns(TERMS.for_entity_ruler())
-    add_ruler_patterns(term_ruler, *MATCHERS1)
+    add_ruler_patterns(term_ruler, *TERM_MATCHERS)
 
 
 def add_match_ruler_pipe(nlp):
     """Add a pipe to group tokens into larger traits."""
     config = {'overwrite_ents': True}
     match_ruler = nlp.add_pipe('entity_ruler', name='match_ruler', config=config)
-    add_ruler_patterns(match_ruler, *MATCHERS2)
+    add_ruler_patterns(match_ruler, *ENTITY_MATCHERS)
 
 
 def add_entity_data_pipe(nlp):
     """Add a pipe that adds data to entities."""
-    config = {'actions': EntityData.from_matchers(*ALL_MATCHERS)}
+    config = {'actions': EntityData.from_matchers(*ENTITY_MATCHERS)}
     nlp.add_pipe('entity_data', config=config)
 
 
