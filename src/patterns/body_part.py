@@ -1,9 +1,9 @@
 """Extract body part annotations."""
 
 import spacy
-from traiter.consts import COMMA, DASH, DASH_RE, INT_TOKEN_RE
+from traiter.const import COMMA, DASH, DASH_RE, INT_TOKEN_RE
 
-from ..pylib.consts import MISSING, REPLACE
+from ..pylib.const import MISSING, REPLACE
 
 PART = ['part', 'fly']
 ANY_PART = PART + ['part_loc']
@@ -125,7 +125,7 @@ def body_part(ent):
         data['missing'] = True
 
     label = 'body_part'
-    if not any(t for t in ent if t._.label_cache in AS_PART):
+    if not any(t for t in ent if t._.cached_label in AS_PART):
         label = 'body_part_loc'
         ent._.new_label = label
 

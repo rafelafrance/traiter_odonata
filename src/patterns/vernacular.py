@@ -4,7 +4,7 @@ import re
 
 import spacy
 
-from traiter.consts import SLASH
+from traiter.const import SLASH
 
 SLASH_RE = re.compile(fr'{"|".join(SLASH)}')
 
@@ -29,7 +29,7 @@ VERNACULAR = [
 @spacy.registry.misc(VERNACULAR[0]['on_match'])
 def vernacular(ent):
     """Enrich the match."""
-    name = [t.lower_ for t in ent if t._.label_cache == 'common_name'][0]
+    name = [t.lower_ for t in ent if t._.cached_label == 'common_name'][0]
     first = SLASH_RE.split(ent.text)
     if len(first) > 1:
         name = [name, f'{first[0]} {" ".join(name.split()[1:])}']

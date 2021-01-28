@@ -1,11 +1,11 @@
 """Sex terms."""
 
 import spacy
-from traiter.linker_utils import linker
+from traiter.pipes.dependency import SIMPLE_POST_LINKER
 from traiter.pipes.entity_data import text_action
 
 from .linker_patterns import linker_patterns
-from ..pylib.consts import REPLACE
+from ..pylib.const import REPLACE
 
 SIMILAR = """ like similar as than """.split()
 TRAITS = """color color_mod body_part body_part_loc""".split()
@@ -34,8 +34,11 @@ SEX_DIFF = [
 SEX_DIFF_LINKER = [
     {
         'label': 'sex_diff_linker',
-        'on_match': 'sex_diff_linker.v1',
-        'patterns': linker_patterns('sex_diff', traits=TRAITS)
+        'patterns': linker_patterns('sex_diff', traits=TRAITS),
+        'after_match': {
+            'func': SIMPLE_POST_LINKER,
+            'kwargs': {'root': 'sex_diff', 'exclude': ''}
+        },
     },
 ]
 
@@ -44,9 +47,3 @@ SEX_DIFF_LINKER = [
 def sex_diff(ent):
     """Enrich the match."""
     text_action(ent, REPLACE)
-
-
-@spacy.registry.misc(SEX_DIFF_LINKER[0]['on_match'])
-def sex_diff_linker(_, doc, idx, matches):
-    """Link traits to the sex diff trait."""
-    linker(_, doc, idx, matches, 'sex_diff')

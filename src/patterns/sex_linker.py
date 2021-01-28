@@ -2,7 +2,7 @@
 
 # from spacy.language import Language
 
-from ..pylib.consts import REPLACE
+from ..pylib.const import REPLACE
 
 SKIPS = """ vernacular sci_name heading """.split()
 

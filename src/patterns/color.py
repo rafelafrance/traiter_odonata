@@ -1,9 +1,9 @@
 """Common color snippets."""
 
 import spacy
-from traiter.consts import DASH
+from traiter.const import DASH
 
-from ..pylib.consts import MISSING, REPLACE
+from ..pylib.const import MISSING, REPLACE
 
 ALL_COLORS = ['color', 'color_mod']
 
@@ -91,7 +91,7 @@ def color(ent):
         data['missing'] = True
 
     label = 'color'
-    if not any(t for t in ent if t._.label_cache == 'color'):
+    if not any(t for t in ent if t._.cached_label == 'color'):
         label = 'color_mod'
         ent._.new_label = label
 

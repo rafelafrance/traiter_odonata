@@ -19,6 +19,7 @@ def test_traits(text: str) -> List[Dict]:
     # from pprint import pp
     # pp(traits)
 
-    # displacy.serve(doc)
+    # options = {'collapse_punct': False}
+    # displacy.serve(doc, options=options)
 
     return traits

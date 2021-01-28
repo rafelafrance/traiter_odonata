@@ -2,7 +2,7 @@
 
 import spacy
 
-from traiter.consts import SLASH
+from traiter.const import SLASH
 
 SCI_NAME = [
     {
@@ -25,8 +25,8 @@ SCI_NAME = [
 @spacy.registry.misc(SCI_NAME[0]['on_match'])
 def sci_name(ent):
     """Enrich the match."""
-    name = [t.lower_ for t in ent if t._.label_cache == 'odonata'][0].capitalize()
-    species = [t.lower_ for t in ent if t._.label_cache == 'odonata_species']
+    name = [t.lower_ for t in ent if t._.cached_label == 'odonata'][0].capitalize()
+    species = [t.lower_ for t in ent if t._.cached_label == 'odonata_species']
     if species:
         name = [name, f'{name.split()[0]} {species[0]}']
     ent._.data = {'sci_name': name, 'group': 'odonata'}

@@ -1,8 +1,9 @@
 """Build the NLP trait_pipeline."""
 
 import spacy
-from traiter.pattern_utils import add_ruler_patterns
-from traiter.pipes import cache, debug, dependency, sentence
+from traiter.pattern_util import add_ruler_patterns
+from traiter.pipes import cache, debug, sentence
+from traiter.pipes.dependency import Dependency
 from traiter.pipes.entity_data import EntityData
 
 from src.patterns.body_part import BODY_PART, SEGMENTS
@@ -16,7 +17,7 @@ from src.patterns.sex import SEX
 from src.patterns.sex_diff import SEX_DIFF, SEX_DIFF_LINKER
 from src.patterns.total_length import TOTAL_LENGTH
 from src.patterns.vernacular import VERNACULAR
-from src.pylib.consts import TERMS
+from src.pylib.const import TERMS
 
 TERM_MATCHERS = [DOC_HEADING, RANGE, SEGMENTS]
 
@@ -72,7 +73,10 @@ def add_entity_data_pipe(nlp):
 
 def add_linker_pipe(nlp):
     """Add a pipe for linking body parts with other traits."""
-    config = {'patterns': LINKERS}
+    config = {
+        'patterns': LINKERS,
+        'after_match': Dependency.post_match_args(*LINKERS),
+    }
     nlp.add_pipe('dependency', name='body_part_linker', config=config)
 
 
