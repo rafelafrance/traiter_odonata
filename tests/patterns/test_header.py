@@ -4,7 +4,7 @@
 
 import unittest
 
-from tests.setup import test_traits
+from tests.setup import test
 
 
 class TestHeader(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestHeader(unittest.TestCase):
 
     def test_header_01(self):
         self.assertEqual(
-            test_traits("""Amphiagrion saucium/abbreviatum
+            test("""Amphiagrion saucium/abbreviatum
                     (Eastern/Western Red Damsel)"""),
             [{'sci_name': ['Amphiagrion saucium', 'Amphiagrion abbreviatum'],
               'group': 'odonata',
@@ -23,7 +23,7 @@ class TestHeader(unittest.TestCase):
 
     def test_header_02(self):
         self.assertEqual(
-            test_traits('Gomphurus externus (Plains Clubtail)'),
+            test('Gomphurus externus (Plains Clubtail)'),
             [{'sci_name': 'Gomphurus externus', 'group': 'odonata',
               'trait': 'sci_name', 'start': 0, 'end': 18},
              {'vernacular': 'plains clubtail',
@@ -32,7 +32,7 @@ class TestHeader(unittest.TestCase):
 
     def test_header_03(self):
         self.assertEqual(
-            test_traits("""
+            test("""
                 3 Sparkling Jewelwing Calopteryx dimidiata TL 37–50, HW 23–31
                 """),
             [{'vernacular': 'sparkling jewelwing',

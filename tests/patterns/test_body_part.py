@@ -1,10 +1,8 @@
 """Test the body part matcher."""
 
-# pylint: disable=missing-function-docstring
-
 import unittest
 
-from tests.setup import test_traits
+from tests.setup import test
 
 
 class TestBodyPart(unittest.TestCase):
@@ -12,7 +10,7 @@ class TestBodyPart(unittest.TestCase):
 
     def test_body_part_01(self):
         self.assertEqual(
-            test_traits('tip with fine dorsal line and lower sides pale.'),
+            test('tip with fine dorsal line and lower sides pale.'),
             [{'color_mod': 'tip',
               'trait': 'color_mod', 'start': 0, 'end': 3,
               'body_part': 'dorsal line and lower sides'},
@@ -25,7 +23,7 @@ class TestBodyPart(unittest.TestCase):
 
     def test_body_part_02(self):
         self.assertEqual(
-            test_traits('underside extends onto lower sides.'),
+            test('underside extends onto lower sides.'),
             [{'body_part_loc': 'underside',
               'trait': 'body_part_loc', 'start': 0, 'end': 9},
              {'body_part': 'lower sides',
@@ -34,34 +32,34 @@ class TestBodyPart(unittest.TestCase):
 
     def test_body_part_03(self):
         self.assertEqual(
-            test_traits('on either side of front'),
+            test('on either side of front'),
             [{'body_part_loc': 'either side of front',
               'trait': 'body_part_loc', 'start': 3, 'end': 23}]
         )
 
     def test_body_part_04(self):
         self.assertEqual(
-            test_traits('with narrow, unmarked wings'),
+            test('with narrow, unmarked wings'),
             [{'body_part': 'narrow, unmarked wings',
               'trait': 'body_part', 'start': 5, 'end': 27}]
         )
 
     def test_body_part_05(self):
         self.assertEqual(
-            test_traits('lack stigmas'),
+            test('lack stigmas'),
             [{'body_part': 'lack stigmas', 'missing': True,
               'trait': 'body_part', 'start': 0, 'end': 12}]
         )
 
     def test_body_part_06(self):
         self.assertEqual(
-            test_traits('S2–10'),
+            test('S2–10'),
             [{'body_part': 's2–10', 'trait': 'body_part', 'start': 0, 'end': 5}]
         )
 
     def test_body_part_07(self):
         self.assertEqual(
-            test_traits('bluet unmistakable because of orange face'),
+            test('bluet unmistakable because of orange face'),
             [{'color': 'orange', 'body_part': 'face',
               'trait': 'color', 'start': 30, 'end': 36},
              {'body_part': 'face', 'trait': 'body_part', 'start': 37, 'end': 41}]
@@ -69,7 +67,7 @@ class TestBodyPart(unittest.TestCase):
 
     def test_body_part_08(self):
         self.assertEqual(
-            test_traits('underside of thorax and abdomen tip.'),
+            test('underside of thorax and abdomen tip.'),
             [{'body_part': 'underside of thorax and abdomen',
               'trait': 'body_part', 'start': 0, 'end': 31},
              {'color_mod': 'tip', 'trait': 'color_mod', 'start': 32, 'end': 35,

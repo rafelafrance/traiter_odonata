@@ -1,7 +1,5 @@
 """Link traits to the sex of the odonate."""
 
-# from spacy.language import Language
-
 from ..pylib.const import REPLACE
 
 SKIPS = """ vernacular sci_name heading """.split()

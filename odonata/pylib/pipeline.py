@@ -1,25 +1,26 @@
 """Build the NLP trait_pipeline."""
 
 import spacy
+from traiter.entity_data_util import from_matchers
 from traiter.pattern_util import add_ruler_patterns
-from traiter.pipes import cache, debug, sentence
-from traiter.pipes.dependency import Dependency
-from traiter.pipes.entity_data import EntityData
+from traiter.pipes.cache import CACHE_LABEL
+# from traiter.pipes.debug import DEBUG_ENTITIES, DEBUG_TOKENS
+from traiter.pipes.dependency import DEPENDENCY, Dependency
+from traiter.pipes.new_entity_data import NEW_ENTITY_DATA
+from traiter.pipes.sentence import SENTENCE
 
-from src.patterns.body_part import BODY_PART, SEGMENTS
-from src.patterns.body_part_linker import BODY_PART_LINKER
-from src.patterns.color import COLOR
-from src.patterns.doc_heading import DOC_HEADING
-from src.patterns.hind_wing_length import HIND_WING_LENGTH
-from src.patterns.range import RANGE
-from src.patterns.sci_name import SCI_NAME
-from src.patterns.sex import SEX
-from src.patterns.sex_diff import SEX_DIFF, SEX_DIFF_LINKER
-from src.patterns.total_length import TOTAL_LENGTH
-from src.patterns.vernacular import VERNACULAR
-from src.pylib.const import TERMS
-
-TERM_MATCHERS = [DOC_HEADING, RANGE, SEGMENTS]
+from odonata.patterns.body_part import BODY_PART, SEGMENTS
+from odonata.patterns.body_part_linker import BODY_PART_LINKER
+from odonata.patterns.color import COLOR
+from odonata.patterns.doc_heading import DOC_HEADING
+from odonata.patterns.hind_wing_length import HIND_WING_LENGTH
+from odonata.patterns.range import RANGE
+from odonata.patterns.sci_name import SCI_NAME
+from odonata.patterns.sex import SEX
+from odonata.patterns.sex_diff import SEX_DIFF, SEX_DIFF_LINKER
+from odonata.patterns.total_length import TOTAL_LENGTH
+from odonata.patterns.vernacular import VERNACULAR
+from odonata.pylib.const import TERMS
 
 ENTITY_MATCHERS = [
     BODY_PART, COLOR, HIND_WING_LENGTH, SCI_NAME, SEX, SEX_DIFF,
@@ -33,7 +34,7 @@ def trait_pipeline():
     nlp = spacy.load('en_core_web_sm', exclude=['ner', 'lemmatizer'])
     add_term_ruler_pipe(nlp)
     nlp.add_pipe('merge_entities', name='term_merger')
-    nlp.add_pipe('cache_label', after='term_merger')
+    nlp.add_pipe(CACHE_LABEL, after='term_merger')
     add_match_ruler_pipe(nlp)
     add_entity_data_pipe(nlp)
     add_linker_pipe(nlp)
@@ -51,11 +52,12 @@ def sentence_pipeline():
 
 def add_term_ruler_pipe(nlp):
     """Add a pipe to identify phrases and patterns as base-level traits."""
+    term_matchers = [DOC_HEADING, RANGE, SEGMENTS]
     config = {'phrase_matcher_attr': 'LOWER'}
     term_ruler = nlp.add_pipe(
         'entity_ruler', name='term_ruler', config=config, before='parser')
     term_ruler.add_patterns(TERMS.for_entity_ruler())
-    add_ruler_patterns(term_ruler, *TERM_MATCHERS)
+    add_ruler_patterns(term_ruler, *term_matchers)
 
 
 def add_match_ruler_pipe(nlp):
@@ -67,17 +69,17 @@ def add_match_ruler_pipe(nlp):
 
 def add_entity_data_pipe(nlp):
     """Add a pipe that adds data to entities."""
-    config = {'actions': EntityData.from_matchers(*ENTITY_MATCHERS)}
-    nlp.add_pipe('entity_data', config=config)
+    config = {'actions': from_matchers(*ENTITY_MATCHERS)}
+    nlp.add_pipe(NEW_ENTITY_DATA, config=config)
 
 
 def add_linker_pipe(nlp):
     """Add a pipe for linking body parts with other traits."""
     config = {
         'patterns': LINKERS,
-        'after_match': Dependency.post_match_args(*LINKERS),
+        'after_match': Dependency.after_match_args(*LINKERS),
     }
-    nlp.add_pipe('dependency', name='body_part_linker', config=config)
+    nlp.add_pipe(DEPENDENCY, name='linkers', config=config)
 
 
 def add_sentence_term_pipe(nlp):
@@ -94,4 +96,4 @@ def add_sentence_pipe(nlp):
         mm cm m
         """.split()
     config = {'abbrevs': abbrevs, 'headings': ['doc_heading']}
-    nlp.add_pipe('sentence', config=config)
+    nlp.add_pipe(SENTENCE, config=config)

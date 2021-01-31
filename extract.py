@@ -8,9 +8,9 @@ import textwrap
 from spacy.tokens import Doc
 from tqdm import tqdm
 
-from src.patterns.sex_linker import sex_linker
-from src.pylib.pipeline import sentence_pipeline, trait_pipeline
-from src.writers.html_ import html_writer
+from odonata.patterns.sex_linker import sex_linker
+from odonata.pylib.pipeline import sentence_pipeline, trait_pipeline
+from odonata.writers.html_ import html_writer
 
 
 def paulson_guide(args):

@@ -4,7 +4,7 @@
 
 import unittest
 
-from src.pylib.pipeline import sentence_pipeline
+from odonata.pylib.pipeline import sentence_pipeline
 
 NLP = sentence_pipeline()
 

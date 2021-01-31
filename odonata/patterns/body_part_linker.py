@@ -1,6 +1,6 @@
 """Link traits to body parts."""
 
-from traiter.pipes.dependency import SIMPLE_POST_LINKER
+from traiter.pipes.dependency import NEAREST_LINKER
 
 from .linker_patterns import linker_patterns
 
@@ -12,7 +12,7 @@ BODY_PART_LINKER = [
         'label': 'body_part_linker',
         'patterns': linker_patterns('body_part'),
         'after_match': {
-            'func': SIMPLE_POST_LINKER,
+            'func': NEAREST_LINKER,
             'kwargs': {'root': 'body_part', 'exclude': ''}
         },
     },

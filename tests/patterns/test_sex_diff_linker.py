@@ -4,7 +4,7 @@
 
 import unittest
 
-from tests.setup import test_traits
+from tests.setup import test
 
 
 class TestSexDiffLinker(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestSexDiffLinker(unittest.TestCase):
 
     def test_sex_diff_linker_01(self):
         self.assertEqual(
-            test_traits('Female: Colored and shaped as male but face lighter reddish.'),
+            test('Female: Colored and shaped as male but face lighter reddish.'),
             [{'sex': 'female', 'trait': 'sex', 'start': 0, 'end': 6},
              {'sex_diff': 'as male but', 'trait': 'sex_diff', 'start': 27, 'end': 38},
              {'body_part': 'face', 'sex_diff': 'as male but',

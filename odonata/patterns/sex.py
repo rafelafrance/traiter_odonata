@@ -1,7 +1,7 @@
 """Sex terms."""
 
 import spacy
-from traiter.pipes.entity_data import text_action
+from traiter.entity_data_util import text_action
 
 from ..pylib.const import REPLACE
 

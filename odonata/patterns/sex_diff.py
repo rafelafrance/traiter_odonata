@@ -1,8 +1,8 @@
 """Sex terms."""
 
 import spacy
-from traiter.pipes.dependency import SIMPLE_POST_LINKER
-from traiter.pipes.entity_data import text_action
+from traiter.entity_data_util import text_action
+from traiter.pipes.dependency import NEAREST_LINKER
 
 from .linker_patterns import linker_patterns
 from ..pylib.const import REPLACE
@@ -36,7 +36,7 @@ SEX_DIFF_LINKER = [
         'label': 'sex_diff_linker',
         'patterns': linker_patterns('sex_diff', traits=TRAITS),
         'after_match': {
-            'func': SIMPLE_POST_LINKER,
+            'func': NEAREST_LINKER,
             'kwargs': {'root': 'sex_diff', 'exclude': ''}
         },
     },

@@ -4,7 +4,7 @@ from pathlib import Path
 
 from traiter.terms.itis import Itis
 
-VOCAB_DIR = Path.cwd() / 'src' / 'vocabulary'
+VOCAB_DIR = Path.cwd() / 'odonata' / 'vocabulary'
 
 TERMS = Itis.shared('animals insect_anatomy units colors')
 TERMS += Itis.read_csv(VOCAB_DIR / 'odonata_terms.csv')
