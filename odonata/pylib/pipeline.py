@@ -4,7 +4,7 @@ import spacy
 from traiter.entity_data_util import from_matchers
 from traiter.pattern_util import add_ruler_patterns
 from traiter.pipes.cache import CACHE_LABEL
-# from traiter.pipes.debug import DEBUG_ENTITIES, DEBUG_TOKENS
+from traiter.pipes.debug import DEBUG_ENTITIES, DEBUG_TOKENS
 from traiter.pipes.dependency import DEPENDENCY, Dependency
 from traiter.pipes.new_entity_data import NEW_ENTITY_DATA
 from traiter.pipes.sentence import SENTENCE
@@ -21,6 +21,8 @@ from odonata.patterns.sex_diff import SEX_DIFF, SEX_DIFF_LINKER
 from odonata.patterns.total_length import TOTAL_LENGTH
 from odonata.patterns.vernacular import VERNACULAR
 from odonata.pylib.const import TERMS
+
+DEBUG_COUNT = 0  # Used to rename debug pipes
 
 ENTITY_MATCHERS = [
     BODY_PART, COLOR, HIND_WING_LENGTH, SCI_NAME, SEX, SEX_DIFF,
@@ -97,3 +99,14 @@ def add_sentence_pipe(nlp):
         """.split()
     config = {'abbrevs': abbrevs, 'headings': ['doc_heading']}
     nlp.add_pipe(SENTENCE, config=config)
+
+
+def add_debug_pipes(nlp, message='', tokens=True, entities=False):
+    """Add pipes for debugging."""
+    global DEBUG_COUNT
+    DEBUG_COUNT += 1
+    config = {'message': message}
+    if tokens:
+        nlp.add_pipe(DEBUG_TOKENS, name=f'tokens{DEBUG_COUNT}', config=config)
+    if entities:
+        nlp.add_pipe(DEBUG_ENTITIES, name=f'entities{DEBUG_COUNT}', config=config)
