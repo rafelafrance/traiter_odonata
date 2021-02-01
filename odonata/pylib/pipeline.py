@@ -1,12 +1,12 @@
 """Build the NLP trait_pipeline."""
 
 import spacy
-from traiter.entity_data_util import from_matchers
 from traiter.pattern_util import add_ruler_patterns
+from traiter.pipe_util import from_matchers
+from traiter.pipes.add_entity_data import ADD_ENTITY_DATA
 from traiter.pipes.cache import CACHE_LABEL
 from traiter.pipes.debug import DEBUG_ENTITIES, DEBUG_TOKENS
-from traiter.pipes.dependency import DEPENDENCY, Dependency
-from traiter.pipes.new_entity_data import NEW_ENTITY_DATA
+from traiter.pipes.dependency import DEPENDENCY
 from traiter.pipes.sentence import SENTENCE
 
 from odonata.patterns.body_part import BODY_PART, SEGMENTS
@@ -39,7 +39,7 @@ def trait_pipeline():
     nlp.add_pipe(CACHE_LABEL, after='term_merger')
     add_match_ruler_pipe(nlp)
     add_entity_data_pipe(nlp)
-    add_linker_pipe(nlp)
+    nlp.add_pipe(DEPENDENCY, name='linkers', config={'patterns': LINKERS})
     return nlp
 
 
@@ -72,16 +72,7 @@ def add_match_ruler_pipe(nlp):
 def add_entity_data_pipe(nlp):
     """Add a pipe that adds data to entities."""
     config = {'actions': from_matchers(*ENTITY_MATCHERS)}
-    nlp.add_pipe(NEW_ENTITY_DATA, config=config)
-
-
-def add_linker_pipe(nlp):
-    """Add a pipe for linking body parts with other traits."""
-    config = {
-        'patterns': LINKERS,
-        'after_match': Dependency.after_match_args(*LINKERS),
-    }
-    nlp.add_pipe(DEPENDENCY, name='linkers', config=config)
+    nlp.add_pipe(ADD_ENTITY_DATA, config=config)
 
 
 def add_sentence_term_pipe(nlp):

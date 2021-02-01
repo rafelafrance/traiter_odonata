@@ -1,7 +1,7 @@
 """Sex terms."""
 
 import spacy
-from traiter.entity_data_util import text_action
+from traiter.pipe_util import text_action
 from traiter.pipes.dependency import NEAREST_LINKER
 
 from .linker_patterns import linker_patterns
