@@ -3,19 +3,20 @@
 import re
 
 import spacy
-
 from traiter.const import SLASH
+from traiter.matcher_compiler import MatcherCompiler
 
-from odonata.pylib.token import COMPILE_MATCHES
+from odonata.pylib.const import COMMON_PATTERNS
 
 SLASH_RE = re.compile(fr'{"|".join(SLASH)}')
+
+COMPILE = MatcherCompiler(COMMON_PATTERNS)
 
 VERNACULAR = [
     {
         'label': 'vernacular',
         'on_match': 'vernacular.v1',
-        'patterns': COMPILE_MATCHES(
-            None,
+        'patterns': COMPILE(
             'common_name',
             'a-z+ / common_name',
         ),

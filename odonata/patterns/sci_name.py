@@ -1,15 +1,17 @@
 """Get scientific names."""
 
 import spacy
+from traiter.matcher_compiler import MatcherCompiler
 
-from odonata.pylib.token import COMPILE_MATCHES
+from odonata.pylib.const import COMMON_PATTERNS
+
+COMPILE = MatcherCompiler(COMMON_PATTERNS)
 
 SCI_NAME = [
     {
         'label': 'sci_name',
         'on_match': 'sci_name.v1',
-        'patterns': COMPILE_MATCHES(
-            None,
+        'patterns': COMPILE(
             'odonata',
             'odonata / odonata_species',
         )

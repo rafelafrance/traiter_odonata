@@ -2,9 +2,9 @@
 
 import spacy
 from traiter.const import DASH_RE
+from traiter.matcher_compiler import MatcherCompiler
 
-from odonata.pylib.const import MISSING, REPLACE
-from odonata.pylib.token import COMPILE_MATCHES
+from odonata.pylib.const import COMMON_PATTERNS, MISSING, REPLACE
 
 PART = ['part', 'fly']
 ANY_PART_ = PART + ['part_loc']
@@ -13,7 +13,7 @@ AS_PART_ = PART + ['abdomen_seg', 'segments']
 PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.split()
 BOTH = """ both either """.split()
 
-MAP = {
+COMPILE = MatcherCompiler(COMMON_PATTERNS | {
     'adp': {'POS': 'ADP'},
     'any_part+': {'ENT_TYPE': {'IN': ANY_PART_}, 'OP': '+'},
     'any_part*': {'ENT_TYPE': {'IN': ANY_PART_}, 'OP': '*'},
@@ -25,12 +25,12 @@ MAP = {
     'part_mod': {'LOWER': {'IN': PART_MOD}},
     'part_mod?': {'LOWER': {'IN': PART_MOD}, 'OP': '?'},
     'segments': {'LOWER': {'REGEX': fr'^s\d+{DASH_RE}\d+$'}},
-}
+})
 
 SEGMENTS = [
     {
         'label': 'segments',
-        'patterns': COMPILE_MATCHES(MAP, 'segments')
+        'patterns': COMPILE('segments')
     }
 ]
 
@@ -38,8 +38,7 @@ BODY_PART = [
     {
         'label': 'body_part',
         'on_match': 'body_part.v1',
-        'patterns': COMPILE_MATCHES(
-            MAP,
+        'patterns': COMPILE(
             'both? any_part+ cconj any_part+ cconj any_part+',
             'both? any_part+ cconj any_part+ cconj any_part*',
             'both? any_part+ cconj any_part+',

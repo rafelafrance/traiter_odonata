@@ -1,18 +1,17 @@
 """Link traits to body parts."""
 
+from traiter.dependency_compiler import DependencyCompiler
 from traiter.pipes.dependency import NEAREST_ANCHOR
-
-from odonata.pylib.token import COMPILE_DEPS
 
 TRAITS = """ color color_mod """.split()
 LINKERS = """ prep conj cc """.split()
 
-MAP = {
+COMPILE = DependencyCompiler({
     'body_part': {'ENT_TYPE': 'body_part'},
     'trait': {'ENT_TYPE': {'IN': TRAITS}},
     'linker': {'DEP': {'IN': LINKERS}},
     'verb': {'POS': {'IN': ['VERB']}},
-}
+})
 
 BODY_PART_LINKER = [
     {
@@ -21,8 +20,7 @@ BODY_PART_LINKER = [
             'func': NEAREST_ANCHOR,
             'kwargs': {'anchor': 'body_part', 'exclude': ''}
         },
-        'patterns': COMPILE_DEPS(
-            MAP,
+        'patterns': COMPILE(
             'body_part .  trait',
             'body_part .  trait >> trait',
             'body_part >> trait',

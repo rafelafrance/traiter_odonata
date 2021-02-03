@@ -2,15 +2,15 @@
 
 import spacy
 from traiter.const import DASH
+from traiter.matcher_compiler import MatcherCompiler
 
-from odonata.pylib.const import MISSING, REPLACE
-from odonata.pylib.token import COMPILE_MATCHES
+from odonata.pylib.const import COMMON_PATTERNS, MISSING, REPLACE
 
 ALL_COLORS = ['color', 'color_mod']
 JOINERS = DASH + ['with', 'or', 'to', 'and']
 COLOR_ADJ = """ fine thick broad thin mostly entire entirely narrow """.split()
 
-MAP = {
+COMPILE = MatcherCompiler(COMMON_PATTERNS | {
     'any_color': {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
     'any_color?': {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
     'join?': {'TEXT': {'IN': JOINERS}, 'OP': '?'},
@@ -18,14 +18,13 @@ MAP = {
     'color_mod': {'ENT_TYPE': 'color_mod', 'OP': '+'},
     'color_mod?': {'ENT_TYPE': 'color_mod', 'OP': '*'},
     'color': {'ENT_TYPE': 'color', 'OP': '+'},
-}
+})
 
 COLOR = [
     {
         'label': 'color',
         'on_match': 'color.v1',
-        'patterns': COMPILE_MATCHES(
-            MAP,
+        'patterns': COMPILE(
             'missing? color - any_color?',
             'missing? any_color? - color',
 
