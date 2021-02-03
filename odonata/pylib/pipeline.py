@@ -16,7 +16,8 @@ from odonata.patterns.hind_wing_length import HIND_WING_LENGTH
 from odonata.patterns.range import RANGE
 from odonata.patterns.sci_name import SCI_NAME
 from odonata.patterns.sex import SEX
-from odonata.patterns.sex_diff import SEX_DIFF, SEX_DIFF_LINKER
+from odonata.patterns.sex_diff import SEX_DIFF
+from odonata.patterns.sex_diff_linker import SEX_DIFF_LINKER
 from odonata.patterns.total_length import TOTAL_LENGTH
 from odonata.patterns.vernacular import VERNACULAR
 from odonata.pylib.const import TERMS

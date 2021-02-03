@@ -2,9 +2,7 @@
 
 import spacy
 from traiter.pipe_util import text_action
-from traiter.pipes.dependency import NEAREST_LINKER
 
-from odonata.patterns.linker_patterns import linker_patterns
 from odonata.pylib.const import REPLACE
 from odonata.pylib.token import COMPILE
 
@@ -29,17 +27,6 @@ SEX_DIFF = [
             'similar adp? sex cconj?',
             'sconj det? adp sex',
         ),
-    },
-]
-
-SEX_DIFF_LINKER = [
-    {
-        'label': 'sex_diff_linker',
-        'patterns': linker_patterns('sex_diff', traits=TRAITS),
-        'on_match': {
-            'func': NEAREST_LINKER,
-            'kwargs': {'root': 'sex_diff', 'exclude': ''}
-        },
     },
 ]
 
