@@ -2,13 +2,13 @@
 
 import spacy
 
-from odonata.pylib.token import COMPILE
+from odonata.pylib.token import COMPILE_MATCHES
 
 SCI_NAME = [
     {
         'label': 'sci_name',
         'on_match': 'sci_name.v1',
-        'patterns': COMPILE.to_patterns(
+        'patterns': COMPILE_MATCHES(
             None,
             'odonata',
             'odonata / odonata_species',

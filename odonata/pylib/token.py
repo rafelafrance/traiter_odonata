@@ -1,7 +1,8 @@
 """Common token patterns."""
 
 from traiter.const import CLOSE, COMMA, DASH, OPEN, SLASH
-from traiter.pattern_compiler import PatternCompiler
+from traiter.dependency_compiler import DependencyCompiler
+from traiter.matcher_compiler import MatcherCompiler
 
 from odonata.pylib.const import CONJ, MISSING
 
@@ -21,4 +22,5 @@ COMMON_PATTERNS = {
     '/': {'TEXT': {'IN': SLASH}},
 }
 
-COMPILE = PatternCompiler(COMMON_PATTERNS)
+COMPILE_MATCHES = MatcherCompiler(COMMON_PATTERNS)
+COMPILE_DEPS = DependencyCompiler()

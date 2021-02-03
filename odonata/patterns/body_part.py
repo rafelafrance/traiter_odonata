@@ -4,7 +4,7 @@ import spacy
 from traiter.const import DASH_RE
 
 from odonata.pylib.const import MISSING, REPLACE
-from odonata.pylib.token import COMPILE
+from odonata.pylib.token import COMPILE_MATCHES
 
 PART = ['part', 'fly']
 ANY_PART_ = PART + ['part_loc']
@@ -30,7 +30,7 @@ MAP = {
 SEGMENTS = [
     {
         'label': 'segments',
-        'patterns': COMPILE.to_patterns(MAP, 'segments')
+        'patterns': COMPILE_MATCHES(MAP, 'segments')
     }
 ]
 
@@ -38,7 +38,7 @@ BODY_PART = [
     {
         'label': 'body_part',
         'on_match': 'body_part.v1',
-        'patterns': COMPILE.to_patterns(
+        'patterns': COMPILE_MATCHES(
             MAP,
             'both? any_part+ cconj any_part+ cconj any_part+',
             'both? any_part+ cconj any_part+ cconj any_part*',

@@ -2,7 +2,7 @@
 
 from traiter.pipes.dependency import NEAREST_ANCHOR
 
-from odonata.pylib.token import COMPILE
+from odonata.pylib.token import COMPILE_DEPS
 
 TRAITS = """ color color_mod """.split()
 LINKERS = """ prep conj cc """.split()
@@ -21,7 +21,7 @@ BODY_PART_LINKER = [
             'func': NEAREST_ANCHOR,
             'kwargs': {'anchor': 'body_part', 'exclude': ''}
         },
-        'patterns': COMPILE.to_dependencies(
+        'patterns': COMPILE_DEPS(
             MAP,
             'body_part .  trait',
             'body_part .  trait >> trait',
@@ -31,6 +31,5 @@ BODY_PART_LINKER = [
             'body_part >  linker >> trait',
             'body_part <  linker <  verb > trait',
         ),
-
     },
 ]

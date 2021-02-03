@@ -2,7 +2,7 @@
 
 from traiter.pipes.dependency import NEAREST_ANCHOR
 
-from odonata.pylib.token import COMPILE
+from odonata.pylib.token import COMPILE_DEPS
 
 TRAITS = """ color color_mod body_part body_part_loc """.split()
 LINKERS = """ prep conj cc """.split()
@@ -14,7 +14,6 @@ MAP = {
     'verb': {'POS': {'IN': ['VERB']}},
 }
 
-
 SEX_DIFF_LINKER = [
     {
         'label': 'sex_diff_linker',
@@ -22,7 +21,7 @@ SEX_DIFF_LINKER = [
             'func': NEAREST_ANCHOR,
             'kwargs': {'anchor': 'sex_diff', 'exclude': ''}
         },
-        'patterns': COMPILE.to_dependencies(
+        'patterns': COMPILE_DEPS(
             MAP,
             'sex_diff . trait',
             'sex_diff . trait >> trait',

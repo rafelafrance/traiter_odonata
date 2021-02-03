@@ -6,7 +6,7 @@ import spacy
 
 from traiter.const import SLASH
 
-from odonata.pylib.token import COMPILE
+from odonata.pylib.token import COMPILE_MATCHES
 
 SLASH_RE = re.compile(fr'{"|".join(SLASH)}')
 
@@ -14,7 +14,7 @@ VERNACULAR = [
     {
         'label': 'vernacular',
         'on_match': 'vernacular.v1',
-        'patterns': COMPILE.to_patterns(
+        'patterns': COMPILE_MATCHES(
             None,
             'common_name',
             'a-z+ / common_name',

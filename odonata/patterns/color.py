@@ -4,7 +4,7 @@ import spacy
 from traiter.const import DASH
 
 from odonata.pylib.const import MISSING, REPLACE
-from odonata.pylib.token import COMPILE
+from odonata.pylib.token import COMPILE_MATCHES
 
 ALL_COLORS = ['color', 'color_mod']
 JOINERS = DASH + ['with', 'or', 'to', 'and']
@@ -24,7 +24,7 @@ COLOR = [
     {
         'label': 'color',
         'on_match': 'color.v1',
-        'patterns': COMPILE.to_patterns(
+        'patterns': COMPILE_MATCHES(
             MAP,
             'missing? color - any_color?',
             'missing? any_color? - color',
