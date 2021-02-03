@@ -3,17 +3,13 @@
 import spacy
 from traiter.pipe_util import text_action
 
-from ..pylib.const import REPLACE
+from odonata.pylib.const import REPLACE
 
 SEX = [
     {
         'label': 'sex',
         'on_match': 'sex.v1',
-        'patterns': [
-            [
-                {'ENT_TYPE': 'sex'},
-            ],
-        ],
+        'patterns': [[{'ENT_TYPE': 'sex'}]],
     },
 ]
 

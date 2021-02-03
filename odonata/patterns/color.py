@@ -3,81 +3,43 @@
 import spacy
 from traiter.const import DASH
 
-from ..pylib.const import MISSING, REPLACE
+from odonata.pylib.const import MISSING, REPLACE
+from odonata.pylib.token import COMPILE
 
 ALL_COLORS = ['color', 'color_mod']
-
 JOINERS = DASH + ['with', 'or', 'to', 'and']
 COLOR_ADJ = """ fine thick broad thin mostly entire entirely narrow """.split()
+
+MAP = {
+    'any_color': {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
+    'any_color?': {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+    'join?': {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+    'color_adj?': {'TEXT': {'IN': COLOR_ADJ}, 'OP': '?'},
+    'color_mod': {'ENT_TYPE': 'color_mod', 'OP': '+'},
+    'color_mod?': {'ENT_TYPE': 'color_mod', 'OP': '*'},
+    'color': {'ENT_TYPE': 'color', 'OP': '+'},
+}
 
 COLOR = [
     {
         'label': 'color',
         'on_match': 'color.v1',
-        'patterns': [
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'ENT_TYPE': 'color'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'ENT_TYPE': 'color'},
-                {'TEXT': {'IN': DASH}},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'TEXT': {'IN': DASH}},
-                {'ENT_TYPE': 'color'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'TEXT': {'IN': COLOR_ADJ}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'ENT_TYPE': 'color', 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'TEXT': {'IN': COLOR_ADJ}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'ENT_TYPE': 'color', 'OP': '+'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'TEXT': {'IN': COLOR_ADJ}, 'OP': '?'},
-                {'ENT_TYPE': 'color_mod', 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'TEXT': {'IN': COLOR_ADJ}, 'OP': '?'},
-                {'ENT_TYPE': 'color_mod', 'OP': '+'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': 'color_mod', 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'TEXT': {'IN': COLOR_ADJ}, 'OP': '?'},
-                {'ENT_TYPE': 'color_mod', 'OP': '+'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': 'color_mod', 'OP': '*'},
-                {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-                {'ENT_TYPE': 'color_mod', 'OP': '+'},
-            ],
-        ],
+        'patterns': COMPILE.to_patterns(
+            MAP,
+            'missing? color - any_color?',
+            'missing? any_color? - color',
+
+            'missing? any_color? color any_color?',
+
+            ('missing? color_adj? any_color join? any_color? join? any_color? '
+             'color any_color? join? any_color'),
+
+            'missing? color_adj? any_color join? any_color? join? any_color? color',
+
+            'missing? color_adj? color_mod',
+            'missing? color_adj? color_mod join? color_mod',
+            'missing? color_adj? color_mod join? color_mod join? color_mod',
+        ),
     },
 ]
 

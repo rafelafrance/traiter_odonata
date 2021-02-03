@@ -1,6 +1,6 @@
 # """Month ranges."""
 #
-# from ..pylib.const import DASH, REPLACE
+# from odonata.pylib.const import DASH, REPLACE
 #
 # MODIFIER = """ early mid late """.split()
 # TO = """ to into """.split()

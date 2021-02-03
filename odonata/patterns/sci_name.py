@@ -2,22 +2,17 @@
 
 import spacy
 
-from traiter.const import SLASH
+from odonata.pylib.token import COMPILE
 
 SCI_NAME = [
     {
         'label': 'sci_name',
         'on_match': 'sci_name.v1',
-        'patterns': [
-            [
-                {'ENT_TYPE': 'odonata'},
-            ],
-            [
-                {'ENT_TYPE': 'odonata'},
-                {'TEXT': {'IN': SLASH}},
-                {'ENT_TYPE': 'odonata_species'},
-            ],
-        ],
+        'patterns': COMPILE.to_patterns(
+            None,
+            'odonata',
+            'odonata / odonata_species',
+        )
     },
 ]
 

@@ -23,4 +23,5 @@ TERMS.drop('imperial_length')
 
 REPLACE = TERMS.pattern_dict('replace')
 
+CONJ = ['or', 'and']
 MISSING = """ without missing lack lacking except excepting not """.split()

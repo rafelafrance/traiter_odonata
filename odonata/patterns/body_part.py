@@ -1,24 +1,36 @@
 """Extract body part annotations."""
 
 import spacy
-from traiter.const import COMMA, DASH, DASH_RE, INT_TOKEN_RE
+from traiter.const import DASH_RE
 
-from ..pylib.const import MISSING, REPLACE
+from odonata.pylib.const import MISSING, REPLACE
+from odonata.pylib.token import COMPILE
 
 PART = ['part', 'fly']
-ANY_PART = PART + ['part_loc']
-NUMBERED = ['abdomen_seg', 'stripe', 'segments']
-AS_PART = PART + ['abdomen_seg', 'segments']
+ANY_PART_ = PART + ['part_loc']
+AS_PART_ = PART + ['abdomen_seg', 'segments']
 
 PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.split()
 BOTH = """ both either """.split()
 
+MAP = {
+    'adp': {'POS': 'ADP'},
+    'any_part+': {'ENT_TYPE': {'IN': ANY_PART_}, 'OP': '+'},
+    'any_part*': {'ENT_TYPE': {'IN': ANY_PART_}, 'OP': '*'},
+    'both': {'LOWER': {'IN': BOTH}},
+    'both?': {'LOWER': {'IN': BOTH}, 'OP': '?'},
+    'cconj': {'POS': {'IN': ['ADP', 'CCONJ']}},
+    'n-seg': {'ENT_TYPE': {'IN': ['abdomen_seg', 'stripe', 'segments']}},
+    'part+': {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
+    'part_mod': {'LOWER': {'IN': PART_MOD}},
+    'part_mod?': {'LOWER': {'IN': PART_MOD}, 'OP': '?'},
+    'segments': {'LOWER': {'REGEX': fr'^s\d+{DASH_RE}\d+$'}},
+}
+
 SEGMENTS = [
     {
         'label': 'segments',
-        'patterns': [
-            [{'LOWER': {'REGEX': fr'^s\d+{DASH_RE}\d+$'}}]
-        ],
+        'patterns': COMPILE.to_patterns(MAP, 'segments')
     }
 ]
 
@@ -26,92 +38,23 @@ BODY_PART = [
     {
         'label': 'body_part',
         'on_match': 'body_part.v1',
-        'patterns': [
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': PART_MOD}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': NUMBERED}},
-            ],
-            [
-                {'ENT_TYPE': {'IN': NUMBERED}},
-                {'TEXT': {'IN': DASH}},
-                {'TEXT': {'REGEX': INT_TOKEN_RE}},
-            ],
-            [
-                {'ENT_TYPE': {'IN': NUMBERED}},
-                {'TEXT': {'IN': DASH}},
-                {'ENT_TYPE': {'IN': NUMBERED}},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'LOWER': {'IN': PART_MOD}},
-                {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
-            ],
-            [
-                {'IS_ALPHA': True},
-                {'TEXT': {'IN': DASH}},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '*'},
-                {'LOWER': {'IN': PART_MOD}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': BOTH}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-                {'POS': {'IN': ['ADP', 'CCONJ']}},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'LOWER': {'IN': PART_MOD}},
-                {'TEXT': {'IN': COMMA}, 'OP': '?'},
-                {'LOWER': {'IN': PART_MOD}},
-                {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'LOWER': {'IN': BOTH}},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-                {'POS': 'ADP'},
-                {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'LOWER': {'IN': BOTH}},
-                {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
-                {'POS': 'ADP'},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': MISSING}, 'OP': '?'},
-                {'LOWER': {'IN': PART_MOD}},
-                {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
-                {'TEXT': {'IN': COMMA}},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-            ],
-            [
-                {'LOWER': {'IN': BOTH}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-                {'POS': {'IN': ['ADP', 'CCONJ']}},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-                {'POS': {'IN': ['ADP', 'CCONJ']}},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '*'},
-            ],
-            [
-                {'LOWER': {'IN': BOTH}, 'OP': '?'},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-                {'POS': {'IN': ['ADP', 'CCONJ']}},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-                {'POS': {'IN': ['ADP', 'CCONJ']}},
-                {'ENT_TYPE': {'IN': ANY_PART}, 'OP': '+'},
-            ],
-        ],
+        'patterns': COMPILE.to_patterns(
+            MAP,
+            'both? any_part+ cconj any_part+ cconj any_part+',
+            'both? any_part+ cconj any_part+ cconj any_part*',
+            'both? any_part+ cconj any_part+',
+            'a-z+ - any_part+',
+            'missing? any_part+',
+            'missing? any_part* part_mod? part+',
+            'missing? both any_part+ adp part+',
+            'missing? both part+ adp any_part+',
+            'missing? part_mod ,? part_mod part+',
+            'missing? part_mod part+ , any_part+',
+            'missing? part_mod part+',
+            'n-seg - 0-9+',
+            'n-seg - n-seg',
+            'part_mod? n-seg',
+        ),
     },
 ]
 
@@ -125,7 +68,7 @@ def body_part(ent):
         data['missing'] = True
 
     label = 'body_part'
-    if not any(t for t in ent if t._.cached_label in AS_PART):
+    if not any(t for t in ent if t._.cached_label in AS_PART_):
         label = 'body_part_loc'
         ent._.new_label = label
 

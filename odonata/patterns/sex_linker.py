@@ -1,6 +1,6 @@
 """Link traits to the sex of the odonate."""
 
-from ..pylib.const import REPLACE
+from odonata.pylib.const import REPLACE
 
 SKIPS = """ vernacular sci_name heading """.split()
 

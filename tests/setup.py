@@ -2,7 +2,6 @@
 
 from typing import Dict, List
 
-# from spacy import displacy
 from traiter.util import shorten
 
 from odonata.pylib.pipeline import trait_pipeline
@@ -19,6 +18,7 @@ def test(text: str) -> List[Dict]:
     # from pprint import pp
     # pp(traits)
 
+    # from spacy import displacy
     # options = {'collapse_punct': False}
     # displacy.serve(doc, options=options)
 
