@@ -10,7 +10,7 @@ COMPILE = DependencyCompiler({
     'body_part': {'ENT_TYPE': 'body_part'},
     'trait': {'ENT_TYPE': {'IN': TRAITS}},
     'linker': {'DEP': {'IN': LINKERS}},
-    'verb': {'POS': {'IN': ['VERB']}},
+    'verb': {'POS': 'VERB'},
 })
 
 BODY_PART_LINKER = [

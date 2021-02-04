@@ -7,6 +7,7 @@ from traiter.terms.itis import Itis, ITIS_DB
 
 VOCAB_DIR = Path.cwd() / 'odonata' / 'vocabulary'
 
+# #########################################################################
 # Term relate constants
 TERMS = Itis.shared('animals insect_anatomy units colors')
 TERMS += Itis.read_csv(VOCAB_DIR / 'odonata_terms.csv')
@@ -25,6 +26,14 @@ TERMS.drop('imperial_length')
 
 REPLACE = TERMS.pattern_dict('replace')
 
+# #########################################################################
+# Tokenizer constants
+ABBREVS = """
+    Jan. Feb. Mar. Apr. Jun. Jul. Aug. Sep. Sept. Oct. Nov. Dec.
+    mm. cm. m.
+    """.split()
+
+# #########################################################################
 # Pattern related constants
 CONJ = ['or', 'and']
 MISSING = """ without missing lack lacking except excepting not """.split()
