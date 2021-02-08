@@ -1,7 +1,7 @@
 """Build the NLP pipeline."""
 
 import spacy
-from traiter.patterns.matcher_patterns import add_ruler_patterns
+from traiter.patterns.matcher_patterns import add_ruler_patterns, as_dicts
 from traiter.pipes.add_entity_data import ADD_ENTITY_DATA
 from traiter.pipes.cache import CACHE_LABEL
 from traiter.pipes.debug import DEBUG_ENTITIES, DEBUG_TOKENS
@@ -40,7 +40,7 @@ def pipeline():
     term_ruler = nlp.add_pipe(
         'entity_ruler', name='term_ruler', config=config, before='parser')
     term_ruler.add_patterns(TERMS.for_entity_ruler())
-    add_ruler_patterns(term_ruler, DOC_HEADING, RANGE, SEGMENTS)
+    add_ruler_patterns(term_ruler, [DOC_HEADING, RANGE, SEGMENTS])
 
     nlp.add_pipe('merge_entities', name='term_merger')
 
@@ -48,13 +48,11 @@ def pipeline():
 
     config = {'overwrite_ents': True}
     match_ruler = nlp.add_pipe('entity_ruler', name='match_ruler', config=config)
-    add_ruler_patterns(match_ruler, *ENTITY_MATCHERS)
+    add_ruler_patterns(match_ruler, ENTITY_MATCHERS)
 
-    config = {'patterns': [e.as_dict() for e in ENTITY_MATCHERS]}
-    nlp.add_pipe(ADD_ENTITY_DATA, config=config)
+    nlp.add_pipe(ADD_ENTITY_DATA, config={'patterns': as_dicts(ENTITY_MATCHERS)})
 
-    config = {'patterns': [e.as_dict() for e in LINKERS]}
-    nlp.add_pipe(DEPENDENCY, name='linkers', config=config)
+    nlp.add_pipe(DEPENDENCY, name='linkers', config={'patterns': as_dicts(LINKERS)})
 
     return nlp
 
