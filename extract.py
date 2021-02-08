@@ -9,13 +9,13 @@ from spacy.tokens import Doc
 from tqdm import tqdm
 
 from odonata.patterns.sex_linker import sex_linker
-from odonata.pylib.pipeline import sentence_pipeline, trait_pipeline
+from odonata.pylib.pipeline import sentence_pipeline, pipeline
 from odonata.writers.html_ import html_writer
 
 
 def paulson_guide(args):
     """Parse Paulson's Odonate guide."""
-    trait_nlp = trait_pipeline()
+    trait_nlp = pipeline()
     sent_nlp = sentence_pipeline()
 
     filter_lines = re.compile(r'(\d+|Description)')

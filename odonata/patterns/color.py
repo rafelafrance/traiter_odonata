@@ -1,8 +1,7 @@
 """Common color snippets."""
 
-import spacy
 from traiter.const import DASH
-from traiter.matcher_compiler import MatcherCompiler
+from traiter.patterns.matcher_patterns import MatcherPatterns
 
 from odonata.pylib.const import COMMON_PATTERNS, MISSING, REPLACE
 
@@ -10,40 +9,7 @@ ALL_COLORS = ['color', 'color_mod']
 JOINERS = DASH + ['with', 'or', 'to', 'and']
 COLOR_ADJ = """ fine thick broad thin mostly entire entirely narrow """.split()
 
-COMPILE = MatcherCompiler(COMMON_PATTERNS | {
-    'any_color': {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
-    'any_color?': {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
-    'join?': {'TEXT': {'IN': JOINERS}, 'OP': '?'},
-    'color_adj?': {'TEXT': {'IN': COLOR_ADJ}, 'OP': '?'},
-    'color_mod': {'ENT_TYPE': 'color_mod', 'OP': '+'},
-    'color_mod?': {'ENT_TYPE': 'color_mod', 'OP': '*'},
-    'color': {'ENT_TYPE': 'color', 'OP': '+'},
-})
 
-COLOR = [
-    {
-        'label': 'color',
-        'on_match': 'color.v1',
-        'patterns': COMPILE(
-            'missing? color - any_color?',
-            'missing? any_color? - color',
-
-            'missing? any_color? color any_color?',
-
-            ('missing? color_adj? any_color join? any_color? join? any_color? '
-             'color any_color? join? any_color'),
-
-            'missing? color_adj? any_color join? any_color? join? any_color? color',
-
-            'missing? color_adj? color_mod',
-            'missing? color_adj? color_mod join? color_mod',
-            'missing? color_adj? color_mod join? color_mod join? color_mod',
-        ),
-    },
-]
-
-
-@spacy.registry.misc(COLOR[0]['on_match'])
 def color(ent):
     """Enrich the match."""
     data = {}
@@ -60,3 +26,33 @@ def color(ent):
     data[label] = REPLACE.get(lower, lower)
 
     ent._.data = data
+
+
+COLOR = MatcherPatterns(
+    'color',
+    on_match=color,
+    decoder=COMMON_PATTERNS | {
+        'any_color': {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '+'},
+        'any_color?': {'ENT_TYPE': {'IN': ALL_COLORS}, 'OP': '*'},
+        'join?': {'TEXT': {'IN': JOINERS}, 'OP': '?'},
+        'color_adj?': {'TEXT': {'IN': COLOR_ADJ}, 'OP': '?'},
+        'color_mod': {'ENT_TYPE': 'color_mod', 'OP': '+'},
+        'color_mod?': {'ENT_TYPE': 'color_mod', 'OP': '*'},
+        'color': {'ENT_TYPE': 'color', 'OP': '+'},
+    },
+    patterns=[
+        'missing? color - any_color?',
+        'missing? any_color? - color',
+
+        'missing? any_color? color any_color?',
+
+        ('missing? color_adj? any_color join? any_color? join? any_color? '
+         'color any_color? join? any_color'),
+
+        'missing? color_adj? any_color join? any_color? join? any_color? color',
+
+        'missing? color_adj? color_mod',
+        'missing? color_adj? color_mod join? color_mod',
+        'missing? color_adj? color_mod join? color_mod join? color_mod',
+    ],
+)

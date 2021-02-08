@@ -1,8 +1,7 @@
 """Extract body part annotations."""
 
-import spacy
 from traiter.const import DASH_RE
-from traiter.matcher_compiler import MatcherCompiler
+from traiter.patterns.matcher_patterns import MatcherPatterns
 
 from odonata.pylib.const import COMMON_PATTERNS, MISSING, REPLACE
 
@@ -13,7 +12,7 @@ AS_PART_ = PART + ['abdomen_seg', 'segments']
 PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.split()
 BOTH = """ both either """.split()
 
-COMPILE = MatcherCompiler(COMMON_PATTERNS | {
+DECODER = COMMON_PATTERNS | {
     'adp': {'POS': 'ADP'},
     'any_part+': {'ENT_TYPE': {'IN': ANY_PART_}, 'OP': '+'},
     'any_part*': {'ENT_TYPE': {'IN': ANY_PART_}, 'OP': '*'},
@@ -25,40 +24,9 @@ COMPILE = MatcherCompiler(COMMON_PATTERNS | {
     'part_mod': {'LOWER': {'IN': PART_MOD}},
     'part_mod?': {'LOWER': {'IN': PART_MOD}, 'OP': '?'},
     'segments': {'LOWER': {'REGEX': fr'^s\d+{DASH_RE}\d+$'}},
-})
-
-SEGMENTS = [
-    {
-        'label': 'segments',
-        'patterns': COMPILE('segments')
-    }
-]
-
-BODY_PART = [
-    {
-        'label': 'body_part',
-        'on_match': 'body_part.v1',
-        'patterns': COMPILE(
-            'both? any_part+ cconj any_part+ cconj any_part+',
-            'both? any_part+ cconj any_part+ cconj any_part*',
-            'both? any_part+ cconj any_part+',
-            'a-z+ - any_part+',
-            'missing? any_part+',
-            'missing? any_part* part_mod? part+',
-            'missing? both any_part+ adp part+',
-            'missing? both part+ adp any_part+',
-            'missing? part_mod ,? part_mod part+',
-            'missing? part_mod part+ , any_part+',
-            'missing? part_mod part+',
-            'n-seg - 0-9+',
-            'n-seg - n-seg',
-            'part_mod? n-seg',
-        ),
-    },
-]
+}
 
 
-@spacy.registry.misc(BODY_PART[0]['on_match'])
 def body_part(ent):
     """Enrich the match."""
     data = {}
@@ -75,3 +43,25 @@ def body_part(ent):
     data[label] = REPLACE.get(lower, lower)
 
     ent._.data = data
+
+
+SEGMENTS = MatcherPatterns('segments', patterns='segments', decoder=DECODER)
+
+BODY_PART = MatcherPatterns(
+    'body_part', on_match=body_part, decoder=DECODER,
+    patterns=[
+        'both? any_part+ cconj any_part+ cconj any_part+',
+        'both? any_part+ cconj any_part+ cconj any_part*',
+        'both? any_part+ cconj any_part+',
+        'a-z+ - any_part+',
+        'missing? any_part+',
+        'missing? any_part* part_mod? part+',
+        'missing? both any_part+ adp part+',
+        'missing? both part+ adp any_part+',
+        'missing? part_mod ,? part_mod part+',
+        'missing? part_mod part+ , any_part+',
+        'missing? part_mod part+',
+        'n-seg - 0-9+',
+        'n-seg - n-seg',
+        'part_mod? n-seg',
+    ])

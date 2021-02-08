@@ -1,11 +1,13 @@
 """Get total the total length."""
 
-from odonata.patterns.range import RANGE_ACTION
+from traiter.patterns.matcher_patterns import MatcherPatterns
 
-TOTAL_LENGTH = [
-    {
-        'label': 'total_length',
-        'on_match': RANGE_ACTION,
-        'patterns': [[{'ENT_TYPE': 'total_length_key'}, {'ENT_TYPE': 'range'}]]
-    },
-]
+from odonata.patterns.range import range_
+
+TOTAL_LENGTH = MatcherPatterns(
+    'total_length',
+    on_match=range_,
+    patterns=[
+        [{'ENT_TYPE': 'total_length_key'}, {'ENT_TYPE': 'range'}]
+    ]
+)

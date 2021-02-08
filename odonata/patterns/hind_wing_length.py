@@ -1,11 +1,13 @@
 """Get total the hind wing length."""
 
-from odonata.patterns.range import RANGE_ACTION
+from traiter.patterns.matcher_patterns import MatcherPatterns
 
-HIND_WING_LENGTH = [
-    {
-        'label': 'hind_wing_length',
-        'on_match': RANGE_ACTION,
-        'patterns': [[{'ENT_TYPE': 'hind_wing_length_key'}, {'ENT_TYPE': 'range'}]]
-    },
-]
+from odonata.patterns.range import range_
+
+HIND_WING_LENGTH = MatcherPatterns(
+    'hind_wing_length',
+    on_match=range_,
+    patterns=[
+        [{'ENT_TYPE': 'hind_wing_length_key'}, {'ENT_TYPE': 'range'}]
+    ]
+)

@@ -1,13 +1,12 @@
-"""Build the NLP trait_pipeline."""
+"""Build the NLP pipeline."""
 
 import spacy
-from traiter.pattern_util import add_ruler_patterns
+from traiter.patterns.matcher_patterns import add_ruler_patterns
 from traiter.pipes.add_entity_data import ADD_ENTITY_DATA
 from traiter.pipes.cache import CACHE_LABEL
 from traiter.pipes.debug import DEBUG_ENTITIES, DEBUG_TOKENS
 from traiter.pipes.dependency import DEPENDENCY
 from traiter.tokenizer_util import append_abbrevs
-from traiter.pipes.sentence import SENTENCE
 
 from odonata.patterns.body_part import BODY_PART, SEGMENTS
 from odonata.patterns.body_part_linker import BODY_PART_LINKER
@@ -32,7 +31,7 @@ ENTITY_MATCHERS = [
 LINKERS = [BODY_PART_LINKER, SEX_DIFF_LINKER]
 
 
-def trait_pipeline():
+def pipeline():
     """Setup the pipeline for extracting traits."""
     nlp = spacy.load('en_core_web_sm', exclude=['ner', 'lemmatizer'])
     append_abbrevs(nlp, ABBREVS)
@@ -51,10 +50,11 @@ def trait_pipeline():
     match_ruler = nlp.add_pipe('entity_ruler', name='match_ruler', config=config)
     add_ruler_patterns(match_ruler, *ENTITY_MATCHERS)
 
-    config = {'patterns': ENTITY_MATCHERS}
+    config = {'patterns': [e.as_dict() for e in ENTITY_MATCHERS]}
     nlp.add_pipe(ADD_ENTITY_DATA, config=config)
 
-    nlp.add_pipe(DEPENDENCY, name='linkers', config={'patterns': LINKERS})
+    config = {'patterns': [e.as_dict() for e in LINKERS]}
+    nlp.add_pipe(DEPENDENCY, name='linkers', config=config)
 
     return nlp
 

@@ -4,9 +4,9 @@ from typing import Dict, List
 
 from traiter.util import shorten
 
-from odonata.pylib.pipeline import trait_pipeline
+from odonata.pylib.pipeline import pipeline
 
-NLP = trait_pipeline()  # Singleton for testing
+NLP = pipeline()  # Singleton for testing
 
 
 def test(text: str) -> List[Dict]:
@@ -19,7 +19,7 @@ def test(text: str) -> List[Dict]:
     # pp(traits)
 
     # from spacy import displacy
-    # options = {'collapse_punct': False}
+    # options = {'collapse_punct': False, 'compact': True}
     # displacy.serve(doc, options=options)
 
     return traits
