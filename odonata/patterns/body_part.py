@@ -1,6 +1,6 @@
 """Extract body part annotations."""
 
-from traiter.const import DASH_RE
+from spacy import registry
 from traiter.patterns.matcher_patterns import MatcherPatterns
 
 from odonata.pylib.const import COMMON_PATTERNS, MISSING, REPLACE
@@ -12,43 +12,17 @@ AS_PART_ = PART + ['abdomen_seg', 'segments']
 PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.split()
 BOTH = """ both either """.split()
 
-DECODER = COMMON_PATTERNS | {
-    'adp': {'POS': 'ADP'},
-    'any_part+': {'ENT_TYPE': {'IN': ANY_PART_}, 'OP': '+'},
-    'any_part*': {'ENT_TYPE': {'IN': ANY_PART_}, 'OP': '*'},
-    'both': {'LOWER': {'IN': BOTH}},
-    'both?': {'LOWER': {'IN': BOTH}, 'OP': '?'},
-    'cconj': {'POS': {'IN': ['ADP', 'CCONJ']}},
-    'n-seg': {'ENT_TYPE': {'IN': ['abdomen_seg', 'stripe', 'segments']}},
-    'part+': {'ENT_TYPE': {'IN': PART}, 'OP': '+'},
-    'part_mod': {'LOWER': {'IN': PART_MOD}},
-    'part_mod?': {'LOWER': {'IN': PART_MOD}, 'OP': '?'},
-    'segments': {'LOWER': {'REGEX': fr'^s\d+{DASH_RE}\d+$'}},
-}
-
-
-def body_part(ent):
-    """Enrich the match."""
-    data = {}
-
-    if any(t for t in ent if t.lower_ in MISSING):
-        data['missing'] = True
-
-    label = 'body_part'
-    if not any(t for t in ent if t._.cached_label in AS_PART_):
-        label = 'body_part_loc'
-        ent._.new_label = label
-
-    lower = ent.text.lower()
-    data[label] = REPLACE.get(lower, lower)
-
-    ent._.data = data
-
-
-SEGMENTS = MatcherPatterns('segments', patterns='segments', decoder=DECODER)
-
 BODY_PART = MatcherPatterns(
-    'body_part', on_match=body_part, decoder=DECODER,
+    'body_part', on_match='body_part.v1',
+    decoder=COMMON_PATTERNS | {
+        'adp': {'POS': 'ADP'},
+        'any_part': {'ENT_TYPE': {'IN': ANY_PART_}},
+        'both': {'LOWER': {'IN': BOTH}},
+        'cconj': {'POS': {'IN': ['ADP', 'CCONJ']}},
+        'n-seg': {'ENT_TYPE': {'IN': ['abdomen_seg', 'stripe', 'segments']}},
+        'part': {'ENT_TYPE': {'IN': PART}},
+        'part_mod': {'LOWER': {'IN': PART_MOD}},
+    },
     patterns=[
         'both? any_part+ cconj any_part+ cconj any_part+',
         'both? any_part+ cconj any_part+ cconj any_part*',
@@ -65,3 +39,22 @@ BODY_PART = MatcherPatterns(
         'n-seg - n-seg',
         'part_mod? n-seg',
     ])
+
+
+@registry.misc(BODY_PART.on_match)
+def body_part(ent):
+    """Enrich the match."""
+    data = {}
+
+    if any(t for t in ent if t.lower_ in MISSING):
+        data['missing'] = True
+
+    label = 'body_part'
+    if not any(t for t in ent if t._.cached_label in AS_PART_):
+        label = 'body_part_loc'
+        ent._.new_label = label
+
+    lower = ent.text.lower()
+    data[label] = REPLACE.get(lower, lower)
+
+    ent._.data = data
