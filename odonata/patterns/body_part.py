@@ -13,7 +13,8 @@ PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.spli
 BOTH = """ both either """.split()
 
 BODY_PART = MatcherPatterns(
-    'body_part', on_match='body_part.v1',
+    'body_part',
+    on_match='odonata.body_part.v1',
     decoder=COMMON_PATTERNS | {
         'adp': {'POS': 'ADP'},
         'any_part': {'ENT_TYPE': {'IN': ANY_PART_}},

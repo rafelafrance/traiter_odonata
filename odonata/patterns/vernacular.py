@@ -11,7 +11,9 @@ from odonata.pylib.const import COMMON_PATTERNS
 SLASH_RE = re.compile('|'.join(SLASH))
 
 VERNACULAR = MatcherPatterns(
-    'vernacular', on_match='vernacular.v1', decoder=COMMON_PATTERNS,
+    'vernacular',
+    on_match='odonata.vernacular.v1',
+    decoder=COMMON_PATTERNS,
     patterns=[
         'common_name',
         'a-z+ / common_name',

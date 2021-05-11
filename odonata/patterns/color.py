@@ -12,7 +12,8 @@ COLOR_ADJ = """ fine thick broad thin mostly entire entirely narrow """.split()
 
 
 COLOR = MatcherPatterns(
-    'color', on_match='color.v1',
+    'color',
+    on_match='odonata.color.v1',
     decoder=COMMON_PATTERNS | {
         'any_color': {'ENT_TYPE': {'IN': ALL_COLORS}},
         'join': {'TEXT': {'IN': JOINERS}},

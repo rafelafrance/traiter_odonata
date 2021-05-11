@@ -1,10 +1,11 @@
 """Build the NLP pipeline."""
 
 import spacy
-from traiter.patterns.matcher_patterns import add_ruler_patterns, as_dicts
+from traiter.patterns.matcher_patterns import (
+    add_ruler_patterns, as_dicts, patterns_to_dispatch)
 from traiter.pipes.add_entity_data import ADD_ENTITY_DATA
 from traiter.pipes.cache import CACHE_LABEL
-from traiter.pipes.debug import DEBUG_ENTITIES, DEBUG_TOKENS
+# from traiter.pipes.debug import debug_ents, debug_tokens
 from traiter.pipes.dependency import DEPENDENCY
 from traiter.pipes.simple_entity_data import SIMPLE_ENTITY_DATA
 from traiter.tokenizer_util import append_abbrevs
@@ -18,8 +19,6 @@ from odonata.patterns.sex_diff import SEX_DIFF
 from odonata.patterns.term_patterns import DOC_HEADING, RANGE, SEGMENTS
 from odonata.patterns.vernacular import VERNACULAR
 from odonata.pylib.const import ABBREVS, REPLACE, TERMS
-
-DEBUG_COUNT = 0  # Used to rename debug pipes
 
 ENTITY_MATCHERS = [
     BODY_PART, COLOR, HIND_WING_LENGTH, SCI_NAME, SEX_DIFF, TOTAL_LENGTH, VERNACULAR]
@@ -47,19 +46,10 @@ def pipeline():
     match_ruler = nlp.add_pipe('entity_ruler', name='match_ruler', config=config)
     add_ruler_patterns(match_ruler, ENTITY_MATCHERS)
 
-    nlp.add_pipe(ADD_ENTITY_DATA, config={'patterns': as_dicts(ENTITY_MATCHERS)})
+    config = {'dispatch': patterns_to_dispatch(ENTITY_MATCHERS)}
+    nlp.add_pipe(ADD_ENTITY_DATA, config=config)
+    # debug_tokens(nlp, 'testing')
 
     nlp.add_pipe(DEPENDENCY, name='linkers', config={'patterns': as_dicts(LINKERS)})
 
     return nlp
-
-
-def add_debug_pipes(nlp, message='', tokens=True, entities=False):
-    """Add pipes for debugging."""
-    global DEBUG_COUNT
-    DEBUG_COUNT += 1
-    config = {'message': message}
-    if tokens:
-        nlp.add_pipe(DEBUG_TOKENS, name=f'tokens{DEBUG_COUNT}', config=config)
-    if entities:
-        nlp.add_pipe(DEBUG_ENTITIES, name=f'entities{DEBUG_COUNT}', config=config)

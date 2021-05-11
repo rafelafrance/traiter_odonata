@@ -6,7 +6,9 @@ from traiter.patterns.matcher_patterns import MatcherPatterns
 from odonata.pylib.const import COMMON_PATTERNS
 
 SCI_NAME = MatcherPatterns(
-    'sci_name', on_match='sci_name.v1', decoder=COMMON_PATTERNS,
+    'sci_name',
+    on_match='odonata.sci_name.v1',
+    decoder=COMMON_PATTERNS,
     patterns=[
         'odonata',
         'odonata / odonata_species',

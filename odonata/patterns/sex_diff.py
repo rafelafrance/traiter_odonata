@@ -10,7 +10,8 @@ SIMILAR = """ like similar as than """.split()
 TRAITS = """color color_mod body_part body_part_loc""".split()
 
 SEX_DIFF = MatcherPatterns(
-    'sex_diff', on_match='sex_diff.v1',
+    'sex_diff',
+    on_match='odonata.sex_diff.v1',
     decoder=COMMON_PATTERNS | {
         'adp': {'POS': {'IN': ['ADP']}},
         'cconj': {'POS': {'IN': ['CCONJ']}},
