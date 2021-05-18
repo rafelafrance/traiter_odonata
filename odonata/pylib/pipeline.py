@@ -5,7 +5,7 @@ from traiter.patterns.matcher_patterns import (
     add_ruler_patterns, as_dicts, patterns_to_dispatch)
 from traiter.pipes.add_entity_data import ADD_ENTITY_DATA
 from traiter.pipes.cache import CACHE_LABEL
-# from traiter.pipes.debug import debug_ents, debug_tokens
+# from traiter.pipes.debug import DEBUG_ENTITIES, DEBUG_TOKENS
 from traiter.pipes.dependency import DEPENDENCY
 from traiter.pipes.simple_entity_data import SIMPLE_ENTITY_DATA
 from traiter.tokenizer_util import append_abbrevs
@@ -48,7 +48,6 @@ def pipeline():
 
     config = {'dispatch': patterns_to_dispatch(ENTITY_MATCHERS)}
     nlp.add_pipe(ADD_ENTITY_DATA, config=config)
-    # debug_tokens(nlp, 'testing')
 
     nlp.add_pipe(DEPENDENCY, name='linkers', config={'patterns': as_dicts(LINKERS)})
 
