@@ -32,7 +32,7 @@ def sqlite3_db(args, rows):
 
 def delete_old_recs(args, cxn):
     """Remove old records before inserting new ones."""
-    sql = f'select source_id from sources where source = ? limit 1'
+    sql = f'select source_id from sources where guide = ? limit 1'
     try:
         source_id = cxn.execute(sql, (args.text_file.name,)).fetchone()[0]
         for table in ('sources', 'traits', 'fields'):
@@ -67,8 +67,8 @@ def get_traits(rows, cxn):
                 if field in ('trait',):
                     continue
                 field_rec = {
-                    'trait_id': trait_id,
                     'source_id': row['source_id'],
+                    'trait_id': trait_id,
                     'field': field,
                     'value': value,
                 }
@@ -106,7 +106,7 @@ def get_sources(args, rows, cxn):
         source_id += 1
         source = {
             'source_id': source_id,
-            'source': row['source'],
+            'guide': row['guide'],
             'text_': row['text'],
             'converted': converted,
             'extracted': extracted,
@@ -123,12 +123,12 @@ def create_tables(cxn):
     cxn.executescript("""
         CREATE TABLE IF NOT EXISTS sources (
             source_id INTEGER PRIMARY KEY,
-            source    TEXT,
+            guide     TEXT,
             text_     TEXT,
             converted DATE,
             extracted DATE
         );
-        CREATE INDEX IF NOT EXISTS sources_source ON sources (source);
+        CREATE INDEX IF NOT EXISTS sources_source ON sources (guide);
     """)
 
     cxn.executescript("""
@@ -155,5 +155,6 @@ def create_tables(cxn):
             value
         );
         CREATE INDEX IF NOT EXISTS fields_source_id ON fields (source_id);
+        CREATE INDEX IF NOT EXISTS fields_trait_id ON fields (trait_id);
         CREATE INDEX IF NOT EXISTS fields_field ON fields (field);
     """)

@@ -35,7 +35,7 @@ def paulson_reader(args):
 
         if taxon and traits:
             rows.append({
-                'source': args.text_file.name,
+                'guide': args.text_file.stem,
                 'taxon': taxon,
                 'text': line,
                 'traits': traits,
