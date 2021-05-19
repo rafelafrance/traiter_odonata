@@ -8,7 +8,7 @@ SKIPS = """ vernacular sci_name heading """.split()
 def sex_linker(doc):
     """Link traits to sex."""
 
-    sex = 'both sexes'
+    sex = ''
     for ent in doc.ents:
         label = ent.label_
 

@@ -7,7 +7,7 @@ from traiter.const import DASH_RE, FLOAT_RE
 from traiter.patterns.matcher_patterns import MatcherPatterns
 from traiter.util import to_positive_float
 
-RANGE_ACTION = 'range.v1'
+RANGE_ACTION = 'odonata.range.v1'
 
 SEGMENTS = MatcherPatterns(
     'segments',

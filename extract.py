@@ -2,43 +2,28 @@
 """Extract Odonata traits from scientific literature."""
 
 import argparse
-import re
 import textwrap
+from pathlib import Path
 
-from spacy.tokens import Doc
-from tqdm import tqdm
-
-from odonata.patterns.sex_linker import sex_linker
-from odonata.pylib.pipeline import sentence_pipeline, pipeline
+from odonata.pylib.log import finished, started
+from odonata.readers.paulson import paulson_reader
 from odonata.writers.html_ import html_writer
+from odonata.writers.sqlite3_db import sqlite3_db
+
+GUIDE = {
+    'paulson': paulson_reader,
+}
 
 
-def paulson_guide(args):
+def parse_guide(args):
     """Parse Paulson's Odonate guide."""
-    trait_nlp = pipeline()
-    sent_nlp = sentence_pipeline()
-
-    filter_lines = re.compile(r'(\d+|Description)')
-    lines = args.input.readlines()
-    lines = [ln for ln in lines if filter_lines.match(ln)]
-    lines = [' '.join(ln.split()) for ln in lines]
-
-    rows = []
-    for sent_doc in tqdm(sent_nlp.pipe(lines)):
-        texts = [s.text for s in sent_doc.sents]
-        starts = [s.start_char for s in sent_doc.sents]
-        docs = [d for d in trait_nlp.pipe(texts)]
-        for start, doc in zip(starts, docs):
-            for ent in doc.ents:
-                ent._.data['start'] += start
-                ent._.data['end'] += start
-        doc = Doc.from_docs(docs)
-        sex_linker(doc)
-        traits = [e._.data for e in doc.ents]
-        rows.append({'doc': doc, 'traits': traits})
+    rows = GUIDE[args.guide](args)
 
     if args.html_file:
         html_writer(args, rows)
+
+    if args.db:
+        sqlite3_db(args, rows)
 
 
 def parse_args():
@@ -48,17 +33,32 @@ def parse_args():
         description=textwrap.dedent(description), fromfile_prefix_chars='@')
 
     arg_parser.add_argument(
-        '--input', '-i', type=argparse.FileType(),
-        help="""Which guide in text form to parse""")
+        '--text-file', '-t', type=Path,
+        help="""The text version of the guide to extract.""")
+
+    guides = list(GUIDE.keys())
+    arg_parser.add_argument(
+        '--guide', '-g', choices=[guides], default=guides[0],
+        help="""The guide format. """)
 
     arg_parser.add_argument(
-        '--html-file', '-H', type=argparse.FileType('w'),
+        '--html-file', '-H', type=Path,
         help="""Output the results to this HTML file.""")
+
+    arg_parser.add_argument(
+        '--db', '-D', type=Path,
+        help="""Output to this sqlite3 database.""")
+
+    arg_parser.add_argument(
+        '--clear-db', action='store_true',
+        help="""Clear the duck_db before writing to it.""")
 
     args = arg_parser.parse_args()
     return args
 
 
 if __name__ == '__main__':
+    started()
     ARGS = parse_args()
-    paulson_guide(ARGS)
+    parse_guide(ARGS)
+    finished()
