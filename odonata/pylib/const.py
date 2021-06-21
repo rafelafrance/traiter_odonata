@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from traiter.const import CLOSE, COMMA, DASH, OPEN, SLASH
-from traiter.terms.itis import Itis, ITIS_DB
+from traiter.terms.itis import ITIS_DB, Itis
 
 VOCAB_DIR = Path.cwd() / 'odonata' / 'vocabulary'
 

@@ -10,38 +10,38 @@ class TestBodyPart(unittest.TestCase):
 
     def test_body_part_01(self):
         self.assertEqual(
-            test('tip with fine dorsal line and lower sides pale.'),
-            [{'color_mod': 'tip',
-              'trait': 'color_mod', 'start': 0, 'end': 3,
-              'body_part': 'dorsal line and lower sides'},
-             {'body_part': 'dorsal line and lower sides',
-              'trait': 'body_part', 'start': 14, 'end': 41},
-             {'color_mod': 'pale',
-              'trait': 'color_mod', 'start': 42, 'end': 46,
-              'body_part': 'dorsal line and lower sides'}]
+            test('S2–S4'),
+            [{'body_part': ['s2', 's3', 's4'],
+              'trait': 'body_part', 'start': 0, 'end': 5}]
         )
 
     def test_body_part_02(self):
         self.assertEqual(
             test('underside extends onto lower sides.'),
-            [{'body_part_loc': 'underside',
-              'trait': 'body_part_loc', 'start': 0, 'end': 9},
-             {'body_part': 'lower sides',
-              'trait': 'body_part', 'start': 23, 'end': 34}]
+            [{'body_subpart': 'underside', 'trait': 'body_subpart', 'start': 0,
+              'end': 9},
+             {'body_subpart': 'lower sides',
+              'trait': 'body_subpart',
+              'start': 23,
+              'end': 34}]
         )
 
     def test_body_part_03(self):
         self.assertEqual(
             test('on either side of front'),
-            [{'body_part_loc': 'either side of front',
-              'trait': 'body_part_loc', 'start': 3, 'end': 23}]
+            [{'body_subpart': 'side of front',
+              'trait': 'body_subpart', 'start': 10, 'end': 23}]
         )
 
     def test_body_part_04(self):
         self.assertEqual(
             test('with narrow, unmarked wings'),
-            [{'body_part': 'narrow, unmarked wings',
-              'trait': 'body_part', 'start': 5, 'end': 27}]
+            [{'color_mod': 'unmarked',
+              'trait': 'color_mod',
+              'start': 13,
+              'end': 21,
+              'body_part': 'wing'},
+             {'body_part': 'wing', 'trait': 'body_part', 'start': 22, 'end': 27}]
         )
 
     def test_body_part_05(self):
@@ -54,7 +54,8 @@ class TestBodyPart(unittest.TestCase):
     def test_body_part_06(self):
         self.assertEqual(
             test('S2–10'),
-            [{'body_part': 's2–10', 'trait': 'body_part', 'start': 0, 'end': 5}]
+            [{'body_part': ['s2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10'],
+              'trait': 'body_part', 'start': 0, 'end': 5}]
         )
 
     def test_body_part_07(self):
@@ -68,8 +69,24 @@ class TestBodyPart(unittest.TestCase):
     def test_body_part_08(self):
         self.assertEqual(
             test('underside of thorax and abdomen tip.'),
-            [{'body_part': 'underside of thorax and abdomen',
-              'trait': 'body_part', 'start': 0, 'end': 31},
-             {'color_mod': 'tip', 'trait': 'color_mod', 'start': 32, 'end': 35,
-              'body_part': 'underside of thorax and abdomen'}]
+            [{'body_part': 'underside of thorax',
+              'trait': 'body_part',
+              'start': 0,
+              'end': 19},
+             {'body_part': 'abdomen tip', 'trait': 'body_part', 'start': 24, 'end': 35}]
+        )
+
+    def test_body_part_09(self):
+        self.assertEqual(
+            test('Abdomen with dorsal markings on S3–6 narrow,'),
+            [{'body_part': 'abdomen', 'trait': 'body_part', 'start': 0, 'end': 7},
+             {'color_mod': 'dorsal markings',
+              'trait': 'color_mod',
+              'start': 13,
+              'end': 28,
+              'body_part': 'abdomen'},
+             {'body_part': ['s3', 's4', 's5', 's6'],
+              'trait': 'body_part',
+              'start': 32,
+              'end': 36}]
         )

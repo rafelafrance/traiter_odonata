@@ -6,35 +6,41 @@ from traiter.patterns.matcher_patterns import MatcherPatterns
 
 from odonata.pylib.const import COMMON_PATTERNS, MISSING, REPLACE
 
-ALL_COLORS = ['color', 'color_mod']
 JOINERS = DASH + ['with', 'or', 'to', 'and']
 COLOR_ADJ = """ fine thick broad thin mostly entire entirely narrow """.split()
+
+DECODER = COMMON_PATTERNS | {
+    'color': {'ENT_TYPE': 'color'},
+    'color_mod': {'ENT_TYPE': 'color_mod'},
+    'any_color': {'ENT_TYPE': {'IN': ['color', 'color_mod']}},
+    'prep': {'LOWER': {'IN': JOINERS}},
+    'adj': {'LOWER': {'IN': COLOR_ADJ}},
+    'part_loc': {'ENT_TYPE': 'part_loc'},
+    'tip': {'LOWER': 'tip'},
+}
 
 
 COLOR = MatcherPatterns(
     'color',
     on_match='odonata.color.v1',
-    decoder=COMMON_PATTERNS | {
-        'any_color': {'ENT_TYPE': {'IN': ALL_COLORS}},
-        'join': {'TEXT': {'IN': JOINERS}},
-        'color_adj': {'TEXT': {'IN': COLOR_ADJ}},
-        'color_mod': {'ENT_TYPE': 'color_mod'},
-        'color': {'ENT_TYPE': 'color'},
-    },
+    decoder=DECODER,
     patterns=[
-        'missing? color+ - any_color*',
-        'missing? any_color* - color+',
+        'missing? any_color* -? color+',
+        'missing? any_color* prep? color+',
+        'missing? any_color* prep? tip',
+        'missing? adj? any_color+',
+        'any_color+ prep any_color+ prep color',
+        'any_color+ prep any_color+ prep color any_color',
+    ],
+)
 
-        'missing? any_color* color+ any_color*',
 
-        ('missing? color_adj? any_color+ join? any_color* join? any_color* '
-         'color+ any_color* join? any_color+'),
-
-        'missing? color_adj? any_color+ join? any_color* join? any_color* color+',
-
-        'missing? color_adj? color_mod+',
-        'missing? color_adj? color_mod+ join? color_mod+',
-        'missing? color_adj? color_mod+ join? color_mod+ join? color_mod+',
+COLOR_MOD = MatcherPatterns(
+    'color_mod',
+    on_match='odonata.color_mod.v1',
+    decoder=DECODER,
+    patterns=[
+        'part_loc color_mod',
     ],
 )
 
@@ -56,3 +62,10 @@ def color(ent):
     data[label] = REPLACE.get(lower, lower)
 
     ent._.data = data
+
+
+@registry.misc(COLOR_MOD.on_match)
+def color_mod(ent):
+    """Enrich the match."""
+    lower = ent.text.lower()
+    ent._.data = {'color_mod': REPLACE.get(lower, lower)}

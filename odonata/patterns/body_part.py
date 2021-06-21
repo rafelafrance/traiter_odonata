@@ -1,45 +1,68 @@
 """Extract body part annotations."""
 
+import re
+
 from spacy import registry
 from traiter.patterns.matcher_patterns import MatcherPatterns
 
 from odonata.pylib.const import COMMON_PATTERNS, MISSING, REPLACE
 
-PART = ['part', 'fly']
-ANY_PART_ = PART + ['part_loc']
-AS_PART_ = PART + ['abdomen_seg', 'segments']
+SEG_SPLITTER = re.compile(
+    r'(?P<name> [s]) (?P<low> \d+) \D+ (?P<high> \d+)', flags=re.VERBOSE)
 
-PART_MOD = """ fine thick broad thin narrow irregular moderate unmarked """.split()
-BOTH = """ both either """.split()
+DECODER = COMMON_PATTERNS | {
+    'seg9': {'ENT_TYPE': {'IN': ['abdomen_seg', 'segments']}},
+    'part': {'ENT_TYPE': {'IN': ['part', 'fly']}},
+    'subpart': {'ENT_TYPE': 'subpart'},
+    'part_loc': {'ENT_TYPE': 'part_loc'},
+    'prep': {'POS': 'ADP'},
+}
 
 BODY_PART = MatcherPatterns(
     'body_part',
     on_match='odonata.body_part.v1',
-    decoder=COMMON_PATTERNS | {
-        'adp': {'POS': 'ADP'},
-        'any_part': {'ENT_TYPE': {'IN': ANY_PART_}},
-        'both': {'LOWER': {'IN': BOTH}},
-        'cconj': {'POS': {'IN': ['ADP', 'CCONJ']}},
-        'n-seg': {'ENT_TYPE': {'IN': ['abdomen_seg', 'stripe', 'segments']}},
-        'part': {'ENT_TYPE': {'IN': PART}},
-        'part_mod': {'LOWER': {'IN': PART_MOD}},
-    },
+    decoder=DECODER,
     patterns=[
-        'both? any_part+ cconj any_part+ cconj any_part+',
-        'both? any_part+ cconj any_part+ cconj any_part*',
-        'both? any_part+ cconj any_part+',
-        'a-z+ - any_part+',
-        'missing? any_part+',
-        'missing? any_part* part_mod? part+',
-        'missing? both any_part+ adp part+',
-        'missing? both part+ adp any_part+',
-        'missing? part_mod ,? part_mod part+',
-        'missing? part_mod part+ , any_part+',
-        'missing? part_mod part+',
-        'n-seg - 0-9+',
-        'n-seg - n-seg',
-        'part_mod? n-seg',
+        'missing? part',
+        'part_loc prep? part',
+        'part subpart',
     ])
+
+BODY_SUBPART = MatcherPatterns(
+    'body_subpart',
+    on_match='odonata.body_subpart.v1',
+    decoder=DECODER,
+    patterns=[
+        'subpart+',
+        'part_loc+',
+        'part_loc+ subpart+',
+        'part_loc+ prep part_loc+',
+    ],
+)
+
+BODY_SEGMENTS = MatcherPatterns(
+    'body_segments',
+    on_match='odonata.segment.v1',
+    decoder=DECODER,
+    patterns=[
+        'seg9',
+        'seg9 - seg9',
+    ])
+
+
+@registry.misc(BODY_SEGMENTS.on_match)
+def segment(ent):
+    """Enrich the match."""
+    data = {}
+    ent._.new_label = 'body_part'
+    lower = ent.text.lower()
+    if match := re.match(SEG_SPLITTER, lower):
+        low, high = int(match.group('low')), int(match.group(3))
+        low, high = (low, high) if high > low else (high, low)
+        data['body_part'] = [f'{match.group("name")}{i}' for i in range(low, high + 1)]
+    else:
+        data['body_part'] = lower
+    ent._.data = data
 
 
 @registry.misc(BODY_PART.on_match)
@@ -50,12 +73,14 @@ def body_part(ent):
     if any(t for t in ent if t.lower_ in MISSING):
         data['missing'] = True
 
-    label = 'body_part'
-    if not any(t for t in ent if t._.cached_label in AS_PART_):
-        label = 'body_part_loc'
-        ent._.new_label = label
-
     lower = ent.text.lower()
-    data[label] = REPLACE.get(lower, lower)
+    data['body_part'] = REPLACE.get(lower, lower)
 
     ent._.data = data
+
+
+@registry.misc(BODY_SUBPART.on_match)
+def body_subpart(ent):
+    """Enrich the match."""
+    lower = ent.text.lower()
+    ent._.data = {'body_subpart': REPLACE.get(lower, lower)}

@@ -31,6 +31,8 @@ habitat,streams,lower,
 habitat,wet grassy,lower,
 hind_wing_length_key,hw,lower,hind wing length
 hind_wing_length_key,hw:,lower,hind wing length
+life_stage,immature,lower,
+life_stage,immatures,lower,
 part,anal veins,lower,
 part,costa,lower,
 part,cubitus,lower,

@@ -8,7 +8,8 @@ SKIPS = """ vernacular sci_name heading """.split()
 def sex_linker(doc):
     """Link traits to sex."""
 
-    sex = ''
+    sex, life_stage = '', ''
+
     for ent in doc.ents:
         label = ent.label_
 
@@ -18,7 +19,14 @@ def sex_linker(doc):
         if label == 'sex':
             sex = ent._.data['sex']
             sex = REPLACE.get(sex, sex)
-        else:
+            life_stage = ''
+        elif label == 'life_stage':
+            life_stage = ent._.data['life_stage']
+            life_stage = REPLACE.get(life_stage, life_stage)
+            sex = ''
+        elif sex:
             ent._.data['sex'] = ent._.data.get('sex', sex)
+        elif life_stage:
+            ent._.data['life_stage'] = ent._.data.get('life_stage', life_stage)
 
     return doc

@@ -39,9 +39,12 @@ class TestBodyPartLinker(unittest.TestCase):
     def test_body_part_linker_04(self):
         self.assertEqual(
             test('narrow wings with dusky wingtips.'),
-            [{'body_part': 'narrow wings', 'trait': 'body_part', 'start': 0, 'end': 12},
-             {'color_mod': 'dusky', 'body_part': 'wingtip',
-              'trait': 'color_mod', 'start': 18, 'end': 23},
+            [{'body_part': 'wing', 'trait': 'body_part', 'start': 7, 'end': 12},
+             {'color_mod': 'dusky',
+              'trait': 'color_mod',
+              'start': 18,
+              'end': 23,
+              'body_part': 'wingtip'},
              {'body_part': 'wingtip', 'trait': 'body_part', 'start': 24, 'end': 32}]
         )
 

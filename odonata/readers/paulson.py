@@ -6,7 +6,7 @@ import re
 from tqdm import tqdm
 from traiter.util import shorten
 
-from odonata.patterns.sex_linker import sex_linker
+from odonata.patterns.sex_life_stage_linker import sex_linker
 from odonata.pylib.pipeline import pipeline
 
 
@@ -15,6 +15,9 @@ def paulson_reader(args):
     nlp = pipeline()
 
     lines = read_lines(args)
+
+    if hasattr(args, 'limit'):
+        lines = lines[:args.limit]
 
     rows = []
     taxon = ''
