@@ -3,7 +3,8 @@
 from traiter.patterns.dependency_patterns import DependencyPatterns
 from traiter.pipes.dependency import NEAREST_ANCHOR
 
-SEX_DIFF_TRAITS = """ color color_mod body_part body_part_loc """.split()
+SEX_DIFF_TRAITS = """
+    color color_mod body_part body_part_loc body_subpart life_stage """.split()
 
 LINKERS = """ prep conj cc """.split()
 

@@ -45,6 +45,7 @@ COMMON_PATTERNS = {
     'and': {'LOWER': {'IN': CONJ}},
     '-': {'TEXT': {'IN': DASH}},
     '0-9+': {'IS_DIGIT': True},
+    '99': {'IS_DIGIT': True},
     'a-z+': {'IS_ALPHA': True},
     'missing': {'LOWER': {'IN': MISSING}},
     'odonata': {'ENT_TYPE': 'odonata'},
@@ -53,3 +54,11 @@ COMMON_PATTERNS = {
     ')': {'TEXT': {'IN': OPEN}},
     '/': {'TEXT': {'IN': SLASH}},
 }
+
+# #########################################################################
+# Entities
+
+FORGET = """
+    doc_heading group hind_wing_length_key
+    metric_length odonata_species range stripe
+    """.split()

@@ -1,12 +1,17 @@
 """Link traits to the sex of the odonate."""
 
+from spacy.language import Language
+
 from odonata.pylib.const import REPLACE
 
-SKIPS = """ vernacular sci_name heading """.split()
+SEX_LIFE_STAGE_LINKER = 'odonata.sex_life_stage_linker.v1'
+
+SKIPS = """ vernacular sci_name heading total_length hind_wing_length """.split()
 
 
-def sex_linker(doc):
-    """Link traits to sex."""
+@Language.component(SEX_LIFE_STAGE_LINKER)
+def sex_life_stage_linker(doc):
+    """Link traits to sex and life stage."""
 
     sex, life_stage = '', ''
 

@@ -8,7 +8,7 @@ from traiter.patterns.matcher_patterns import MatcherPatterns
 from odonata.pylib.const import COMMON_PATTERNS, MISSING, REPLACE
 
 SEG_SPLITTER = re.compile(
-    r'(?P<name> [s]) (?P<low> \d+) \D+ (?P<high> \d+)', flags=re.VERBOSE)
+    r'(?P<name> [s])\w* \s? (?P<low> \d+) \D+ (?P<high> \d+)', flags=re.VERBOSE)
 
 DECODER = COMMON_PATTERNS | {
     'seg9': {'ENT_TYPE': {'IN': ['abdomen_seg', 'segments']}},
@@ -16,6 +16,8 @@ DECODER = COMMON_PATTERNS | {
     'subpart': {'ENT_TYPE': 'subpart'},
     'part_loc': {'ENT_TYPE': 'part_loc'},
     'prep': {'POS': 'ADP'},
+    'seg_word': {'LOWER': {'IN': ['segment', 'segments']}},
+    '9-9': {'ENT_TYPE': 'range'},
 }
 
 BODY_PART = MatcherPatterns(
@@ -47,6 +49,8 @@ BODY_SEGMENTS = MatcherPatterns(
     patterns=[
         'seg9',
         'seg9 - seg9',
+        'seg_word 99',
+        'seg_word 9-9',
     ])
 
 

@@ -84,7 +84,7 @@ class TestBodyPart(unittest.TestCase):
               'trait': 'color_mod',
               'start': 13,
               'end': 28,
-              'body_part': 'abdomen'},
+              'body_part': ['s3', 's4', 's5', 's6']},
              {'body_part': ['s3', 's4', 's5', 's6'],
               'trait': 'body_part',
               'start': 32,
