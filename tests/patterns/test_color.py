@@ -105,7 +105,11 @@ class TestColor(unittest.TestCase):
             test("""
                 Description Large, white-ringed northern emerald of large lakes."""),
             [{'color': 'white-ringed', 'trait': 'color', 'start': 19, 'end': 31},
-             {'habitat': 'lakes', 'trait': 'habitat', 'start': 58, 'end': 63}]
+             {'habitat': 'lake',
+              'category': 'lentic',
+              'trait': 'habitat',
+              'start': 58,
+              'end': 63}]
         )
 
     def test_color_12(self):
