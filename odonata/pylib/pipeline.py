@@ -6,7 +6,7 @@ from traiter.patterns.matcher_patterns import (
 from traiter.pipes.add_entity_data import ADD_ENTITY_DATA
 from traiter.pipes.cache import CACHE_LABEL
 from traiter.pipes.cleanup import CLEANUP
-from traiter.pipes.debug import debug_tokens
+# from traiter.pipes.debug import debug_tokens
 from traiter.pipes.dependency import DEPENDENCY
 from traiter.pipes.sentence import SENTENCE
 from traiter.pipes.simple_entity_data import SIMPLE_ENTITY_DATA
@@ -18,6 +18,7 @@ from odonata.patterns.color_like import COLOR_LIKE
 from odonata.patterns.color_linker import COLOR_LINKER
 from odonata.patterns.color_mod import COLOR_MOD
 from odonata.patterns.color_mod_linker import COLOR_MOD_LINKER
+from odonata.patterns.habitat import HABITAT
 from odonata.patterns.hind_wing_length import HIND_WING_LENGTH
 from odonata.patterns.sci_name import SCI_NAME
 from odonata.patterns.sex_life_stage_linker import SEX_LIFE_STAGE_LINKER
@@ -28,7 +29,7 @@ from odonata.pylib.const import ABBREVS, FORGET, REPLACE, TERMS
 
 ENTITY_MATCHERS = [
     BODY_PART, BODY_SEGMENTS, BODY_SUBPART, COLOR, COLOR_LIKE, COLOR_MOD,
-    HIND_WING_LENGTH, SCI_NAME, TOTAL_LENGTH, VERNACULAR]
+    HABITAT, HIND_WING_LENGTH, SCI_NAME, TOTAL_LENGTH, VERNACULAR]
 
 LINKERS = [COLOR_LINKER, COLOR_MOD_LINKER]
 

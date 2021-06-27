@@ -13,22 +13,6 @@ flight_period_key,fp,lower,flight period
 flight_period_key,fp:,lower,flight period
 fly,damselfly,lower,
 fly,dragonfly,lower,
-habitat,habitat,lower,
-habitat,habitats,lower,
-habitat,lake,lower,
-habitat,lakes,lower,
-habitat,marsh,lower,
-habitat,marshes,lower,
-habitat,marshy,lower,
-habitat,pond,lower,
-habitat,ponds,lower,
-habitat,puddle,lower,
-habitat,puddles,lower,
-habitat,river,lower,
-habitat,rivers,lower,
-habitat,stream,lower,
-habitat,streams,lower,
-habitat,wet grassy,lower,
 hind_wing_length_key,hw,lower,hind wing length
 hind_wing_length_key,hw:,lower,hind wing length
 life_stage,immature,lower,

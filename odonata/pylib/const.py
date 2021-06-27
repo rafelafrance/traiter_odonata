@@ -8,10 +8,11 @@ from traiter.terms.itis import ITIS_DB, Itis
 VOCAB_DIR = Path.cwd() / 'odonata' / 'vocabulary'
 
 # #########################################################################
-# Term relate constants
+# Term related constants
 TERMS = Itis.shared('animals insect_anatomy units colors')
 TERMS += Itis.read_csv(VOCAB_DIR / 'odonata_terms.csv')
 TERMS += Itis.read_csv(VOCAB_DIR / 'odonata_species.csv')
+TERMS += Itis.read_csv(VOCAB_DIR / 'habitat_terms.csv')
 
 if ITIS_DB.exists():
     TERMS += Itis.itis_common_names(taxon='Odonata')
@@ -25,6 +26,7 @@ TERMS += Itis.taxon_level_terms(
 TERMS.drop('imperial_length')
 
 REPLACE = TERMS.pattern_dict('replace')
+CATEGORY = TERMS.pattern_dict('category')
 
 # #########################################################################
 # Tokenizer constants
