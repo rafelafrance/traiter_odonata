@@ -1,13 +1,13 @@
-"""Link the color mod trait to other traits like body_part and color_mod. """
+"""Link the color like trait to other traits like body_part and color_mod. """
 
 from traiter.patterns.dependency_patterns import DependencyPatterns
 from traiter.pipes.dependency import LINK_NEAREST
 
-COLOR_MOD_LINKER = DependencyPatterns(
-    'color_mod_linker',
+COLOR_LIKE_LINKER = DependencyPatterns(
+    'color_like_linker',
     on_match={
         'func': LINK_NEAREST,
-        'kwargs': {'anchor': 'color_mod'}
+        'kwargs': {'anchor': 'color_like'}
     },
     decoder={
         'color': {'ENT_TYPE': 'color'},
@@ -18,17 +18,17 @@ COLOR_MOD_LINKER = DependencyPatterns(
         'prep': {'DEP': 'prep'},
     },
     patterns=[
-        'part    .  mod',
-        'subpart .  mod',
-        'color   .  mod',
+        'part    .  like',
+        'subpart .  like',
+        'color   .  like',
         'like    .  mod',
-        'mod     .  color',
+        'like    .  color',
         'mod     .  like',
-        'mod     .  part',
-        'mod     >> part',
-        'color   >> mod',
-        'like    >> mod',
-        'mod     >> subpart >> part',
+        'like    .  part',
+        'like    >> part',
+        'color   >> like',
+        'like    >> like',
+        'like    >> subpart >> part',
         # 'subpart << color',
         # 'color   >> part',
         # 'color   >> part > subpart',

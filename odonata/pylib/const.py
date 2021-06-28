@@ -64,3 +64,8 @@ FORGET = """
     doc_heading group hind_wing_length_key
     metric_length odonata_species range stripe
     """.split()
+
+KEEP = """
+    color color_like habitat hind_wing_length 
+    total_length vernacular
+    """.split()

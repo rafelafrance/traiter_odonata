@@ -23,6 +23,7 @@ DOC_HEADING = MatcherPatterns(
     patterns=[
         [{'TEXT': 'Description'}],
         [{'TEXT': 'Flight'}, {'TEXT': 'Season'}],
+        [{'TEXT': 'Habitat'}],
         [{'TEXT': 'Identification'}],
         [{'TEXT': 'Natural'}, {'TEXT': 'History'}],
     ],

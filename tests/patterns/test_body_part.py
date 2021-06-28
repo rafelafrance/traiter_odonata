@@ -47,7 +47,7 @@ class TestBodyPart(unittest.TestCase):
     def test_body_part_05(self):
         self.assertEqual(
             test('lack stigmas'),
-            [{'body_part': 'lack stigmas', 'missing': True,
+            [{'body_part': 'stigma missing', 'missing': True,
               'trait': 'body_part', 'start': 0, 'end': 12}]
         )
 
@@ -69,11 +69,10 @@ class TestBodyPart(unittest.TestCase):
     def test_body_part_08(self):
         self.assertEqual(
             test('underside of thorax and abdomen tip.'),
-            [{'body_part': 'underside of thorax',
+            [{'body_part': ['thorax underside', 'abdomen tip'],
               'trait': 'body_part',
               'start': 0,
-              'end': 19},
-             {'body_part': 'abdomen tip', 'trait': 'body_part', 'start': 24, 'end': 35}]
+              'end': 35}]
         )
 
     def test_body_part_09(self):

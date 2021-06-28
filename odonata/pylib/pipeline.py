@@ -17,6 +17,7 @@ from odonata.patterns.color import COLOR
 from odonata.patterns.color_like import COLOR_LIKE
 from odonata.patterns.color_linker import COLOR_LINKER
 from odonata.patterns.color_mod import COLOR_MOD
+from odonata.patterns.color_like_linker import COLOR_LIKE_LINKER
 from odonata.patterns.color_mod_linker import COLOR_MOD_LINKER
 from odonata.patterns.habitat import HABITAT
 from odonata.patterns.hind_wing_length import HIND_WING_LENGTH
@@ -31,7 +32,7 @@ ENTITY_MATCHERS = [
     BODY_PART, BODY_SEGMENTS, BODY_SUBPART, COLOR, COLOR_LIKE, COLOR_MOD,
     HABITAT, HIND_WING_LENGTH, SCI_NAME, TOTAL_LENGTH, VERNACULAR]
 
-LINKERS = [COLOR_LINKER, COLOR_MOD_LINKER]
+LINKERS = [COLOR_LINKER, COLOR_LIKE_LINKER, COLOR_MOD_LINKER]
 
 
 def pipeline():

@@ -59,9 +59,13 @@ class TestColor(unittest.TestCase):
 
     def test_color_07(self):
         self.assertEqual(
-            test('clear or faintly washed with yellowish tint'),
-            [{'color': 'clear or faintly washed with yellowish tint',
-              'trait': 'color', 'start': 0, 'end': 43}]
+            test('Wings clear or faintly washed with yellowish tint'),
+            [{'body_part': 'wing', 'trait': 'body_part', 'start': 0, 'end': 5},
+             {'color': 'clear or faintly washed with yellowish tint',
+              'trait': 'color',
+              'start': 6,
+              'end': 49,
+              'body_part': 'wing'}]
         )
 
     def test_color_08(self):
@@ -75,13 +79,16 @@ class TestColor(unittest.TestCase):
     def test_color_09(self):
         self.assertEqual(
             test('Colored much like male but not pruinose,'),
-            [{'color_like': 'like male', 'trait': 'color_like', 'start': 13, 'end': 22},
+            [{'color_like': 'colored much like male',
+              'trait': 'color_like',
+              'start': 0,
+              'end': 22},
              {'missing': True,
               'color_mod': 'not pruinose',
               'trait': 'color_mod',
               'start': 27,
               'end': 39,
-              'color_like': 'like male'}]
+              'color_like': 'colored much like male'}]
         )
 
     def test_color_10(self):
@@ -106,7 +113,7 @@ class TestColor(unittest.TestCase):
                 Description Large, white-ringed northern emerald of large lakes."""),
             [{'color': 'white-ringed', 'trait': 'color', 'start': 19, 'end': 31},
              {'habitat': 'lake',
-              'category': 'lentic',
+              'habitat_cat': 'lentic',
               'trait': 'habitat',
               'start': 58,
               'end': 63}]
@@ -202,4 +209,16 @@ class TestColor(unittest.TestCase):
               'trait': 'color_mod',
               'start': 29,
               'end': 53}]
+        )
+
+    def test_color_17(self):
+        self.assertEqual(
+            test('Narrow wings with dusky wingtips.'),
+            [{'body_part': 'wing', 'trait': 'body_part', 'start': 7, 'end': 12},
+             {'color_mod': 'dusky',
+              'trait': 'color_mod',
+              'start': 18,
+              'end': 23,
+              'body_part': 'wingtip'},
+             {'body_part': 'wingtip', 'trait': 'body_part', 'start': 24, 'end': 32}]
         )

@@ -4,20 +4,24 @@ import re
 
 from spacy import registry
 from traiter.patterns.matcher_patterns import MatcherPatterns
+from traiter.util import squash
 
 from odonata.pylib.const import COMMON_PATTERNS, MISSING, REPLACE
 
 SEG_SPLITTER = re.compile(
     r'(?P<name> [s])\w* \s? (?P<low> \d+) \D+ (?P<high> \d+)', flags=re.VERBOSE)
+PARTS = ['part', 'fly']
+AND = ['and', '&']
 
 DECODER = COMMON_PATTERNS | {
     'seg9': {'ENT_TYPE': {'IN': ['abdomen_seg', 'segments']}},
-    'part': {'ENT_TYPE': {'IN': ['part', 'fly']}},
+    'part': {'ENT_TYPE': {'IN': PARTS}},
     'subpart': {'ENT_TYPE': 'subpart'},
-    'part_loc': {'ENT_TYPE': 'part_loc'},
+    'loc': {'ENT_TYPE': 'part_loc'},
     'prep': {'POS': 'ADP'},
     'seg_word': {'LOWER': {'IN': ['segment', 'segments']}},
     '9-9': {'ENT_TYPE': 'range'},
+    'and': {'LOWER': {'IN': AND}},
 }
 
 BODY_PART = MatcherPatterns(
@@ -26,8 +30,9 @@ BODY_PART = MatcherPatterns(
     decoder=DECODER,
     patterns=[
         'missing? part',
-        'part_loc prep? part',
+        'loc prep? part',
         'part subpart',
+        'loc? prep? subpart? part and part subpart?',
     ])
 
 BODY_SUBPART = MatcherPatterns(
@@ -36,9 +41,9 @@ BODY_SUBPART = MatcherPatterns(
     decoder=DECODER,
     patterns=[
         'subpart+',
-        'part_loc+',
-        'part_loc+ subpart+',
-        'part_loc+ prep part_loc+',
+        'loc+',
+        'loc+ subpart+',
+        'loc+ prep loc+',
     ],
 )
 
@@ -74,11 +79,26 @@ def body_part(ent):
     """Enrich the match."""
     data = {}
 
-    if any(t for t in ent if t.lower_ in MISSING):
-        data['missing'] = True
+    parts = []
+    part = []
+    for token in ent:
+        label = token._.cached_label
+        lower = REPLACE.get(token.lower_, token.lower_)
+        if label in PARTS:
+            part.insert(0, lower)
+        elif label == 'subpart':
+            part.append(lower)
+        elif label == 'part_loc':
+            part.append(lower)
+        elif lower in MISSING:
+            part.append('missing')
+            data['missing'] = True
+        elif lower in AND:
+            parts.append(' '.join(part))
+            part = []
 
-    lower = ent.text.lower()
-    data['body_part'] = REPLACE.get(lower, lower)
+    parts.append(' '.join(part))
+    data['body_part'] = squash(parts)
 
     ent._.data = data
 

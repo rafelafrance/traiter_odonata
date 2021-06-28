@@ -7,7 +7,7 @@ from traiter.patterns.matcher_patterns import MatcherPatterns
 from odonata.pylib.const import COMMON_PATTERNS, REPLACE
 
 COLORED = """ colored """.split()
-SIMILAR = """ like similar as than """.split()
+SIMILAR = """ like similar as than exactly """.split()
 TRAITS = """color color_mod body_part body_part_loc""".split()
 
 COLOR_LIKE = MatcherPatterns(
@@ -21,11 +21,16 @@ COLOR_LIKE = MatcherPatterns(
         'sex': {'ENT_TYPE': 'sex'},
         'similar': {'LOWER': {'IN': SIMILAR}},
         'colored': {'LOWER': {'IN': COLORED}},
+        'adv': {'DEP': 'advmod'},
+        'mod': {'ENT_TYPE': 'color_mod'},
+        'prep': {'DEP': 'prep'},
+        'loc': {'ENT_TYPE': 'part_loc'},
     },
     patterns=[
         'similar adp? sex',
         'sconj det? adp sex',
-        'colored similar sex',
+        'colored adv? similar sex',
+        'mod prep? loc prep* sex',
     ],
 )
 

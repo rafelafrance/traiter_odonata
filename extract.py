@@ -53,6 +53,10 @@ def parse_args():
         '--clear-db', action='store_true',
         help="""Clear the duck_db before writing to it.""")
 
+    arg_parser.add_argument(
+        '--limit', type=int,
+        help="""Limit the input records. Typically used for debugging.""")
+
     args = arg_parser.parse_args()
     return args
 

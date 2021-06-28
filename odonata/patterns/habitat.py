@@ -24,6 +24,6 @@ def habitat(ent):
     lower = ent.text.lower()
 
     data['habitat'] = REPLACE.get(lower, lower)
-    data['category'] = CATEGORY.get(lower, lower)
+    data['habitat_cat'] = CATEGORY.get(lower, lower)
 
     ent._.data = data
