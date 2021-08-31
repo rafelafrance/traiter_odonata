@@ -6,9 +6,12 @@ const DESC = 'descendants=true';
 const GROUP = 'nomenclature_group=Species';
 const URL = `${ENDPOINT}?${PROJECT}&${ODONATA}&${DESC}&${GROUP}&${PER}`;
 
-const TW_COL = 10;
+const TW_COL = 11;
+const TW_HEADER = 'K1';
 const GENUS_COL = 7;
 const SPECIES_COL = 8;
+
+const TODAY = Utilities.formatDate(new Date(), 'GMT', 'yyyy-MM-dd');
 
 
 function onOpen() {
@@ -21,25 +24,26 @@ function onOpen() {
 
 
 function checkNames() {
-    species = getTaxonWorksSpecies();
-    tw_primary = buildPrimaryTable(species);
-    tw_secondary = buildSecondaryTable(tw_primary);
+    const sheet = SpreadsheetApp.getActiveSheet();
+    const range = sheet.getRange(TW_HEADER);
+    range.setValue(`Taxon Works (${TODAY})`);
+
+    let species = getTaxonWorksSpecies();
+    let tw_primary = buildPrimaryTable(species);
+    let tw_secondary = buildSecondaryTable(tw_primary);
     notInTaxonWorks(tw_primary, tw_secondary);
 }
 
 
 function checkNamesBothWays() {
-    species = getTaxonWorksSpecies();
-    tw_primary = buildPrimaryTable(species);
-    tw_secondary = buildSecondaryTable(tw_primary);
-    notInTaxonWorks(tw_primary, tw_secondary);
+    checkNames();
     notInCheckList(tw_primary);
 }
 
 
 function getTaxonWorksSpecies() {
-    jsonData = UrlFetchApp.fetch(URL);
-    species = JSON.parse(jsonData.getContentText())
+    let jsonData = UrlFetchApp.fetch(URL);
+    let species = JSON.parse(jsonData.getContentText())
         .filter(s => s.rank == 'species');
     species.forEach(s => s.matched = false);
     return species;
