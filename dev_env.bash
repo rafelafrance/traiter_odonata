@@ -17,7 +17,7 @@ python -m spacy download en_core_web_sm
 
 pip install -e ../traiter
 
-# Used for dev tools
+# Dev only pip installs
 pip install -U pynvim
 pip install -U 'python-lsp-server[all]'
 pip install -U autopep8 flake8 isort pylint yapf pydocstyle

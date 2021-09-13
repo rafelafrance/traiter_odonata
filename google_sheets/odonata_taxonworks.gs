@@ -6,17 +6,12 @@ const DESC = 'descendants=true';
 const GROUP = 'nomenclature_group=Species';
 const URL = `${ENDPOINT}?${PROJECT}&${ODONATA}&${DESC}&${GROUP}&${PER}`;
 
-const TW_COL = 11;
-const TW_HEADER = 'K1';
-const GENUS_COL = 7;
-const SPECIES_COL = 8;
-
 const TODAY = Utilities.formatDate(new Date(), 'GMT', 'yyyy-MM-dd');
 
 
 function onOpen() {
     SpreadsheetApp.getUi()
-        .createMenu('TaxonWorks')
+        .createMenu('Taxon Works')
         .addItem('Check names', 'checkNames')
         .addItem('Check names (both ways)', 'checkNamesBothWays')
         .addToUi();
@@ -24,20 +19,69 @@ function onOpen() {
 
 
 function checkNames() {
-    const sheet = SpreadsheetApp.getActiveSheet();
-    const range = sheet.getRange(TW_HEADER);
-    range.setValue(`Taxon Works (${TODAY})`);
-
+    updateTaxonWorksHeader();
     let species = getTaxonWorksSpecies();
     let tw_primary = buildPrimaryTable(species);
     let tw_secondary = buildSecondaryTable(tw_primary);
     notInTaxonWorks(tw_primary, tw_secondary);
+    return tw_primary;
 }
 
 
 function checkNamesBothWays() {
-    checkNames();
+    let tw_primary = checkNames();
     notInCheckList(tw_primary);
+}
+
+
+function updateTaxonWorksHeader() {
+    const taxonWorksCol = getTaxonWorksColumn();
+    const sheet = SpreadsheetApp.getActiveSheet();
+    const range = sheet.getRange(1, taxonWorksCol);
+    range.setValue(`Taxon Works (${TODAY})`);
+}
+
+
+function getGenusColumn() {
+    const sheet = SpreadsheetApp.getActiveSheet();
+    const lastCol = sheet.getLastColumn();
+    const range = sheet.getRange(1, 1, 1, lastCol);
+    const values = range.getValues()[0];
+
+    var genusCol = -1;
+    Object.values(values).forEach((val, i) => {
+        if (genusCol == -1
+            && val.toLowerCase() == 'genus'
+            && values[i+1].toLowerCase() == 'species')
+        {
+            genusCol = i;
+        }
+    });
+    if (genusCol == -1) {
+      throw('Could not find the "GENUS" column.');
+    }
+    return genusCol + 1;
+}
+
+
+function getTaxonWorksColumn() {
+    const sheet = SpreadsheetApp.getActiveSheet();
+    const lastCol = sheet.getLastColumn();
+    const range = sheet.getRange(1, 1, 1, lastCol);
+    const values = range.getValues();
+
+    var taxonWorksCol = -1;
+    Object.values(values[0]).forEach((val, i) => {
+        if (taxonWorksCol == -1
+            && val.toLowerCase().startsWith('taxon works'))
+        {
+            taxonWorksCol = i;
+        }
+    });
+    if (taxonWorksCol == -1) {
+      throw('Could not find the "Taxon Works" column.');
+    }
+    return taxonWorksCol + 1;
 }
 
 
@@ -70,11 +114,13 @@ function buildSecondaryTable(tw_primary) {
 function notInTaxonWorks(tw_primary, tw_secondary) {
     const sheet = SpreadsheetApp.getActiveSheet();
     const last = sheet.getLastRow();
+    const taxonWorksCol = getTaxonWorksColumn();
+    const genusCol = getGenusColumn();
 
-    const msg_range = sheet.getRange(2, TW_COL, last - 1);
+    const msg_range = sheet.getRange(2, taxonWorksCol, last - 1);
     msg_range.clear();
 
-    const nameRange = sheet.getRange(2, GENUS_COL, last - 1, 2);
+    const nameRange = sheet.getRange(2, genusCol, last - 1, 2);
     nameRange.getValues().forEach((raw, n) => {
         const row = n + 2;
         const name = `${raw[0]} ${raw[1]}`;
@@ -82,11 +128,11 @@ function notInTaxonWorks(tw_primary, tw_secondary) {
             tw_primary[name].matched = true;
         } else if (tw_secondary.hasOwnProperty(name)) {
             tw_secondary[name].matched = true;
-            const range = sheet.getRange(row, TW_COL)
+            const range = sheet.getRange(row, taxonWorksCol)
                 .setValue(tw_secondary[name].name_string)
                 .setBackground('yellow');
         } else if (name.length > 3) {
-            const range = sheet.getRange(row, TW_COL)
+            const range = sheet.getRange(row, taxonWorksCol)
                 .setValue('missing').setBackground('red');
         }
     });
@@ -96,6 +142,7 @@ function notInTaxonWorks(tw_primary, tw_secondary) {
 function notInCheckList(tw_primary) {
     const sheet = SpreadsheetApp.getActiveSheet();
     const last = sheet.getLastRow();
+    const taxonWorksCol = getTaxonWorksColumn();
 
     let missing = [];
     Object.values(tw_primary).filter(s => !s.matched)
@@ -106,7 +153,7 @@ function notInCheckList(tw_primary) {
     if (missing.length) {
         missing = missing.sort();
         const last = sheet.getLastRow();
-        const range = sheet.getRange(last + 1, TW_COL, missing.length);
+        const range = sheet.getRange(last + 1, taxonWorksCol, missing.length);
         range.setValues(missing).setBackground('red');
     }
 }

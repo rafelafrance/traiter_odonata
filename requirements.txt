@@ -1,5 +1,5 @@
-pandas==1.2.4
-regex==2021.8.21
-tqdm==4.60.0
-Jinja2==2.11.3
-flake8==3.9.2
+pandas~=1.2.4
+regex~=2021.8.21
+tqdm~=4.60.0
+Jinja2~=2.11.3
+flake8~=3.9.2
