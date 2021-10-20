@@ -1,7 +1,7 @@
 const ENDPOINT = 'https://sfg.taxonworks.org/api/v1/taxon_names';
 const PROJECT = 'project_token=iu4ty6tOdWg_-cceoQjhyQ';
 const ODONATA = 'taxon_name_id=707405';
-const PER = 'per=10000'; // Get them all in a single request
+const PER = 'per=12000'; // Get them all in a single request
 const DESC = 'descendants=true';
 const GROUP = 'nomenclature_group=Species';
 const URL = `${ENDPOINT}?${PROJECT}&${ODONATA}&${DESC}&${GROUP}&${PER}`;
@@ -88,6 +88,7 @@ function getTaxonWorksColumn() {
 function getTaxonWorksSpecies() {
     let jsonData = UrlFetchApp.fetch(URL);
     let species = JSON.parse(jsonData.getContentText())
+        .filter(s => s.id == s.cached_valid_taxon_name_id)
         .filter(s => s.rank == 'species');
     species.forEach(s => s.matched = false);
     return species;
