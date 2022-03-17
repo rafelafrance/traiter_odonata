@@ -33,6 +33,7 @@ COLOR_LINKER = DependencyPatterns(
         'color   >> mod',
         'color   >> like',
         'color   .  prep . part',
+        'color   .  prep . subpart >> part',
         'part    >> ( color ) mod ',
         'like . conj . part . color',
     ],

@@ -6,7 +6,6 @@ from traiter.patterns.matcher_patterns import (
 from traiter.pipes.add_entity_data import ADD_ENTITY_DATA
 from traiter.pipes.cache import CACHE_LABEL
 from traiter.pipes.cleanup import CLEANUP
-# from traiter.pipes.debug import debug_tokens
 from traiter.pipes.dependency import DEPENDENCY
 from traiter.pipes.sentence import SENTENCE
 from traiter.pipes.simple_entity_data import SIMPLE_ENTITY_DATA
@@ -27,6 +26,8 @@ from odonata.patterns.term_patterns import DOC_HEADING, RANGE, SEGMENTS
 from odonata.patterns.total_length import TOTAL_LENGTH
 from odonata.patterns.vernacular import VERNACULAR
 from odonata.pylib.const import ABBREVS, FORGET, REPLACE, TERMS
+
+# from traiter.pipes.debug import debug_tokens
 
 ENTITY_MATCHERS = [
     BODY_PART, BODY_SEGMENTS, BODY_SUBPART, COLOR, COLOR_LIKE, COLOR_MOD,
