@@ -1,7 +1,7 @@
 """These patterns are used to link traits."""
 
 from traiter.patterns.dependency_patterns import DependencyPatterns
-from traiter.pipes.dependency import NEAREST_ANCHOR
+from traiter.pipes.dependency import LINK_NEAREST
 
 SEX_DIFF_TRAITS = """
     color color_mod body_part body_part_loc body_subpart life_stage """.split()
@@ -11,7 +11,7 @@ LINKERS = """ prep conj cc """.split()
 SEX_DIFF_LINKER = DependencyPatterns(
     'sex_diff_linker',
     on_match={
-        'func': NEAREST_ANCHOR,
+        'func': LINK_NEAREST,
         'kwargs': {'anchor': 'sex_diff', 'exclude': ''}
     },
     decoder={
