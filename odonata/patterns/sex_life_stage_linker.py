@@ -1,5 +1,3 @@
-"""Link traits to the sex of the odonate."""
-
 from spacy.language import Language
 
 from odonata.pylib.const import REPLACE

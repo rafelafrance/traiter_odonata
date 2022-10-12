@@ -1,7 +1,5 @@
-"""Link the color mod trait to other traits like body_part and color_mod. """
-
 from traiter.patterns.dependency_patterns import DependencyPatterns
-from traiter.pipes.dependency import LINK_NEAREST
+from traiter.old_pipes.dependency_pipe import LINK_NEAREST
 
 COLOR_MOD_LINKER = DependencyPatterns(
     'color_mod_linker',

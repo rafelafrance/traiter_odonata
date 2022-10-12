@@ -1,5 +1,3 @@
-"""Common color snippets."""
-
 from spacy import registry
 from traiter.const import DASH
 from traiter.patterns.matcher_patterns import MatcherPatterns

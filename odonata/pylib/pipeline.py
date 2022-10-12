@@ -3,12 +3,12 @@
 import spacy
 from traiter.patterns.matcher_patterns import (
     add_ruler_patterns, as_dicts, patterns_to_dispatch)
-from traiter.pipes.add_entity_data import ADD_ENTITY_DATA
-from traiter.pipes.cache import CACHE_LABEL
-from traiter.pipes.cleanup import CLEANUP
-from traiter.pipes.dependency import DEPENDENCY
-from traiter.pipes.sentence import SENTENCE
-from traiter.pipes.simple_entity_data import SIMPLE_ENTITY_DATA
+from traiter.old_pipes.add_entity_data import ADD_ENTITY_DATA
+from traiter.old_pipes.cache import CACHE_LABEL
+from traiter.old_pipes.cleanup import CLEANUP
+from traiter.old_pipes.dependency import DEPENDENCY
+from traiter.old_pipes.sentence import SENTENCE
+from traiter.old_pipes.simple_entity_data import SIMPLE_ENTITY_DATA
 from traiter.tokenizer_util import append_abbrevs
 
 from odonata.patterns.body_part import BODY_PART, BODY_SEGMENTS, BODY_SUBPART
@@ -64,7 +64,7 @@ def pipeline():
     nlp.add_pipe(DEPENDENCY, name='linkers', config={'patterns': as_dicts(LINKERS)})
     nlp.add_pipe(SEX_LIFE_STAGE_LINKER)
 
-    nlp.add_pipe(CLEANUP, config={'entities': FORGET})
+    nlp.add_pipe(CLEANUP, config={'forget': FORGET})
 
     # debug_tokens(nlp)
 
