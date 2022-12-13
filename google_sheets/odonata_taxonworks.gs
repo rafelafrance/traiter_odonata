@@ -19,18 +19,26 @@ function onOpen() {
 
 
 function checkNames() {
+  try {
     updateTaxonWorksHeader();
     let species = getTaxonWorksSpecies();
     let tw_primary = buildPrimaryTable(species);
     let tw_secondary = buildSecondaryTable(tw_primary);
     notInTaxonWorks(tw_primary, tw_secondary);
     return tw_primary;
+  } catch (err) {
+    Logger.log(err.message);
+  }
 }
 
 
 function checkNamesBothWays() {
+  try {
     let tw_primary = checkNames();
     notInCheckList(tw_primary);
+  } catch (err) {
+    Logger.log(err.message);
+  }
 }
 
 
